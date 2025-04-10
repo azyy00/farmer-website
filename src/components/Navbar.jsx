@@ -1,11 +1,12 @@
-import { Box, Flex, Text, Button, Stack, useColorModeValue, useBreakpointValue, Menu, MenuButton, MenuList, MenuItem, IconButton, useDisclosure } from '@chakra-ui/react'
+import { Box, Flex, Text, Button, Stack, useColorModeValue, useBreakpointValue, Menu, MenuButton, MenuList, MenuItem, IconButton, useDisclosure, useColorMode } from '@chakra-ui/react'
 import { Link, useLocation } from 'react-router-dom'
 import { HamburgerIcon } from '@chakra-ui/icons'
-import { FaHome, FaBook, FaStar, FaInfoCircle, FaUsers } from 'react-icons/fa'
+import { FaHome, FaBook, FaStar, FaInfoCircle, FaUsers, FaSun, FaMoon } from 'react-icons/fa'
 
 const Navbar = () => {
   const location = useLocation();
   const { isOpen, onToggle } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const navItems = [
     { name: 'Home', path: '/', icon: <FaHome /> },
@@ -18,29 +19,29 @@ const Navbar = () => {
   return (
     <Box>
       <Flex
-        bg={useColorModeValue('white', 'gray.800')}
-        color={useColorModeValue('gray.600', 'white')}
+        bg={useColorModeValue('background.light', 'background.dark')}
+        color={useColorModeValue('secondary.600', 'white')}
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
         borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.900')}
+        borderColor={useColorModeValue('secondary.300', 'gray.900')}
         align={'center'}
         position="sticky"
         top="0"
         zIndex="sticky"
         boxShadow="sm"
       >
-        <Flex flex={{ base: 1 }} justify={{ base: 'start', md: 'start' }}>
+        <Flex flex={{ base: 1 }} justify={{ base: 'start', md: 'space-between' }} align="center">
           <Text
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
-            color={useColorModeValue('green.600', 'green.200')}
+            color={useColorModeValue('primary.600', 'primary.200')}
             fontWeight="bold"
             fontSize="lg"
             _hover={{
-              color: useColorModeValue('green.700', 'green.300'),
+              color: useColorModeValue('primary.700', 'primary.300'),
               transition: 'all 0.2s'
             }}
           >
@@ -48,22 +49,22 @@ const Navbar = () => {
           </Text>
 
           {/* Desktop Navigation */}
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <Stack direction={'row'} spacing={4}>
+          <Flex display={{ base: 'none', md: 'flex' }} ml={10} align="center">
+            <Stack direction={'row'} spacing={4} align="center">
               {navItems.map((item) => (
                 <Link key={item.path} to={item.path}>
                   <Button
                     variant="ghost"
                     leftIcon={item.icon}
-                    color={location.pathname === item.path ? 'green.500' : undefined}
+                    color={location.pathname === item.path ? 'primary.600' : undefined}
                     _hover={{
-                      bg: useColorModeValue('green.50', 'green.900'),
-                      color: useColorModeValue('green.700', 'green.200'),
+                      bg: useColorModeValue('primary.50', 'primary.900'),
+                      color: useColorModeValue('primary.700', 'primary.200'),
                       transform: 'translateY(-2px)',
                       transition: 'all 0.2s'
                     }}
                     _active={{
-                      bg: useColorModeValue('green.100', 'green.800'),
+                      bg: useColorModeValue('primary.100', 'primary.800'),
                     }}
                   >
                     {item.name}
@@ -72,6 +73,18 @@ const Navbar = () => {
               ))}
             </Stack>
           </Flex>
+
+          {/* Dark Mode Toggle */}
+          <IconButton
+            aria-label="Toggle dark mode"
+            icon={colorMode === 'light' ? <FaMoon /> : <FaSun />}
+            onClick={toggleColorMode}
+            variant="ghost"
+            _hover={{
+              bg: useColorModeValue('primary.50', 'primary.900'),
+              color: useColorModeValue('primary.700', 'primary.200'),
+            }}
+          />
         </Flex>
 
         {/* Mobile Navigation */}
@@ -84,7 +97,7 @@ const Navbar = () => {
               variant='outline'
               onClick={onToggle}
               _hover={{
-                bg: useColorModeValue('green.50', 'green.900'),
+                bg: useColorModeValue('primary.50', 'primary.900'),
               }}
             />
             <MenuList>
@@ -94,10 +107,10 @@ const Navbar = () => {
                   as={Link} 
                   to={item.path}
                   icon={item.icon}
-                  bg={location.pathname === item.path ? useColorModeValue('green.50', 'green.900') : undefined}
+                  bg={location.pathname === item.path ? useColorModeValue('primary.50', 'primary.900') : undefined}
                   _hover={{
-                    bg: useColorModeValue('green.50', 'green.900'),
-                    color: useColorModeValue('green.700', 'green.200'),
+                    bg: useColorModeValue('primary.50', 'primary.900'),
+                    color: useColorModeValue('primary.700', 'primary.200'),
                   }}
                 >
                   {item.name}

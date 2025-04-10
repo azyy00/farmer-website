@@ -1,31 +1,140 @@
 import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue } from '@chakra-ui/react'
+import { FaLayerGroup, FaNetworkWired, FaMobileAlt } from 'react-icons/fa'
 
 const Section = ({ title, content }) => (
   <Box
-    bg={useColorModeValue('white', 'gray.800')}
+    bg={useColorModeValue('background.light', 'background.dark')}
     p={6}
     borderRadius="lg"
-    boxShadow="md"
-    border="1px"
-    borderColor={useColorModeValue('gray.200', 'gray.700')}
+    boxShadow={useColorModeValue(
+      '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
+      '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
+    )}
+    border="2px"
+    borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+    transition="all 0.3s ease"
+    _hover={{
+      transform: 'translateY(-5px)',
+      boxShadow: useColorModeValue(
+        '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+        '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+      ),
+      cursor: 'pointer'
+    }}
+    _active={{
+      transform: 'translateY(-2px)',
+      boxShadow: useColorModeValue(
+        '0 8px 12px -4px rgba(0, 0, 0, 0.15), 0 4px 8px -3px rgba(0, 0, 0, 0.08)',
+        '0 8px 12px -4px rgba(0, 0, 0, 0.5), 0 4px 8px -3px rgba(0, 0, 0, 0.3)'
+      )
+    }}
   >
-    <Heading size="md" mb={4} color={useColorModeValue('green.600', 'green.200')}>
+    <Heading 
+      size="md" 
+      mb={4} 
+      color={useColorModeValue('primary.600', 'primary.200')} 
+      fontFamily={'heading'}
+      transition="color 0.2s ease"
+      _hover={{ transform: 'scale(1.01)' }}
+    >
       {title}
     </Heading>
-    <Text textAlign="justify" fontSize="lg">
+    <Text 
+      textAlign="justify" 
+      fontSize="lg" 
+      fontFamily={'body'} 
+      color={useColorModeValue('black', 'white')}
+      lineHeight="1.8"
+    >
       {content}
     </Text>
   </Box>
 )
 
+const KeyTakeaway = ({ title, content, icon: Icon }) => (
+  <Box
+    bg={useColorModeValue('background.light', 'background.dark')}
+    p={6}
+    borderRadius="lg"
+    textAlign="center"
+    boxShadow={useColorModeValue(
+      '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
+      '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
+    )}
+    border="2px"
+    borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+    transition="all 0.3s ease"
+    _hover={{
+      transform: 'translateY(-5px)',
+      boxShadow: useColorModeValue(
+        '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+        '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+      )
+    }}
+  >
+    <VStack spacing={4} align="center">
+      <Box
+        p={4}
+        borderRadius="full"
+        bg={useColorModeValue('primary.50', 'primary.900')}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        transition="all 0.2s ease"
+        _hover={{ transform: 'scale(1.1)' }}
+      >
+        <Box
+          as={Icon}
+          fontSize="32px"
+          color={useColorModeValue('primary.600', 'primary.200')}
+        />
+      </Box>
+      <Heading 
+        size="sm"
+        fontFamily={'heading'}
+        color={useColorModeValue('primary.600', 'primary.200')}
+      >
+        {title}
+      </Heading>
+      <Text 
+        fontFamily={'body'}
+        color={useColorModeValue('black', 'white')}
+        lineHeight="1.8"
+      >
+        {content}
+      </Text>
+    </VStack>
+  </Box>
+)
+
 const Conclusion = () => {
+  const backgroundColor = useColorModeValue('white', 'gray.900');
+  
+  const keyTakeaways = [
+    {
+      title: "Communication Diversity",
+      content: "Multiple communication channels are essential for reaching all farmers effectively",
+      icon: FaLayerGroup
+    },
+    {
+      title: "Infrastructure Needs",
+      content: "Improved infrastructure is crucial for better program implementation",
+      icon: FaNetworkWired
+    },
+    {
+      title: "Digital Integration",
+      content: "Gradual integration of digital tools while maintaining traditional methods",
+      icon: FaMobileAlt
+    }
+  ];
+
   return (
-    <Box py={12}>
+    <Box py={12} bg={backgroundColor} color={useColorModeValue('black', 'white')}>
       <Container maxW={'container.xl'}>
         <VStack spacing={12}>
           {/* Conclusion Section */}
           <Box width="full">
-            <Heading size="xl" textAlign="center" mb={8}>
+            <Heading size="xl" textAlign="center" mb={8} fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
               Conclusion and Recommendations
             </Heading>
             
@@ -44,49 +153,13 @@ const Conclusion = () => {
 
           {/* Key Takeaways */}
           <Box width="full">
-            <Heading size="lg" textAlign="center" mb={6}>
+            <Heading size="lg" textAlign="center" mb={6} fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
               Key Takeaways
             </Heading>
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-              <Box
-                bg={useColorModeValue('green.50', 'green.900')}
-                p={6}
-                borderRadius="lg"
-                textAlign="center"
-              >
-                <Heading size="sm" mb={3}>
-                  Communication Diversity
-                </Heading>
-                <Text>
-                  Multiple communication channels are essential for reaching all farmers effectively
-                </Text>
-              </Box>
-              <Box
-                bg={useColorModeValue('green.50', 'green.900')}
-                p={6}
-                borderRadius="lg"
-                textAlign="center"
-              >
-                <Heading size="sm" mb={3}>
-                  Infrastructure Needs
-                </Heading>
-                <Text>
-                  Improved infrastructure is crucial for better program implementation
-                </Text>
-              </Box>
-              <Box
-                bg={useColorModeValue('green.50', 'green.900')}
-                p={6}
-                borderRadius="lg"
-                textAlign="center"
-              >
-                <Heading size="sm" mb={3}>
-                  Digital Integration
-                </Heading>
-                <Text>
-                  Gradual integration of digital tools while maintaining traditional methods
-                </Text>
-              </Box>
+              {keyTakeaways.map((takeaway, index) => (
+                <KeyTakeaway key={index} {...takeaway} />
+              ))}
             </SimpleGrid>
           </Box>
         </VStack>

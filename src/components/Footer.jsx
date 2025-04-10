@@ -3,8 +3,8 @@ import { Box, Container, Stack, Text, useColorModeValue } from '@chakra-ui/react
 const Footer = () => {
   return (
     <Box
-      bg={useColorModeValue('gray.50', 'gray.900')}
-      color={useColorModeValue('gray.700', 'gray.200')}
+      bg={useColorModeValue('background.light', 'background.dark')}
+      color={useColorModeValue('secondary.600', 'secondary.300')}
     >
       <Container
         as={Stack}
@@ -15,9 +15,13 @@ const Footer = () => {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}
       >
-        <Text>© 2024 Agricultural Office Research. All rights reserved</Text>
-        <Stack direction={'row'} spacing={6}>
-          <Text>Bachelor of Arts in Communication</Text>
+        <Text fontFamily={'body'} fontSize={'sm'}>
+          © 2024 Agricultural Office Research. All rights reserved
+        </Text>
+        <Stack direction={'row'} spacing={6} align="center">
+          <Text fontFamily={'body'} fontSize={'sm'}>
+            Bachelor of Arts in Communication
+          </Text>
         </Stack>
       </Container>
     </Box>
