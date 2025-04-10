@@ -1,8 +1,15 @@
-import { Box, Container, Heading, Text, VStack, Button, SimpleGrid, useColorModeValue, Icon, Flex, Image } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, VStack, Button, SimpleGrid, useColorModeValue, Icon, Flex, Image, Avatar, AvatarGroup } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
 import { Link } from 'react-router-dom'
 import { FaBook, FaChartBar, FaLightbulb } from 'react-icons/fa'
-import farmerImage from '../assets/7966603_3796236.jpg'
+import { useState, useEffect } from 'react'
+import scroll1 from '../assets/scroll1.png'
+import scroll3 from '../assets/scroll3.png'
+import scroll4 from '../assets/scroll4.jpg'
+import m1 from '../assets/members/m1.png'
+import m2 from '../assets/members/m2.png'
+import m3 from '../assets/members/m3.jpg'
+
 
 // Keyframe animations for fade-in and slide-in effects
 const fadeIn = keyframes`
@@ -11,11 +18,54 @@ const fadeIn = keyframes`
 `
 
 const slideIn = keyframes`
-  from { opacity: 0; transform: translateX(-30px); }
-  to { opacity: 1; transform: translateX(0); }
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 `
 
 const Home = () => {
+  const [currentImage, setCurrentImage] = useState(0);
+  const images = [scroll1, scroll3, scroll4];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const getImagePosition = (index) => {
+    const diff = (index - currentImage + images.length) % images.length;
+    if (diff === 0) return 'center';
+    if (diff === 1 || diff === -(images.length - 1)) return 'right';
+    return 'left';
+  };
+
+  const getImageStyle = (position) => {
+    switch (position) {
+      case 'left':
+        return {
+          transform: 'translateX(-100%) scale(0.8)',
+          opacity: 0.5,
+          zIndex: 0
+        };
+      case 'center':
+        return {
+          transform: 'translateX(0) scale(1)',
+          opacity: 1,
+          zIndex: 1
+        };
+      case 'right':
+        return {
+          transform: 'translateX(100%) scale(0.8)',
+          opacity: 0.5,
+          zIndex: 0
+        };
+      default:
+        return {};
+    }
+  };
+
   // Animation settings
   const animation = `${fadeIn} 1s ease-out`
   const imageAnimation = `${slideIn} 1s ease-out`
@@ -66,7 +116,30 @@ const Home = () => {
                 mb={2}
                 textAlign={{ base: 'center', md: 'left' }}
               >
-                A research study by Madelo B. Biando, Apple Mae R. Castor, and Apple Jewel S. Borais
+                A research study by Madelo B. Biando, Apple Mae R. Castor, and{' '}
+                <Flex display="inline-flex" alignItems="center" gap={2}>
+                  Apple Jewel S. Borais
+                  <AvatarGroup size='sm' max={3} spacing='-1.5rem'>
+                    <Avatar 
+                      name="Apple Jewel"
+                      src={m1}
+                      borderWidth="2px"
+                      borderColor={useColorModeValue('white', 'gray.800')}
+                    />
+                    <Avatar 
+                      name="Apple Mae"
+                      src={m2}
+                      borderWidth="2px"
+                      borderColor={useColorModeValue('white', 'gray.800')}
+                    />
+                    <Avatar 
+                      name="Madelo"
+                      src={m3}
+                      borderWidth="2px"
+                      borderColor={useColorModeValue('white', 'gray.800')}
+                    />
+                  </AvatarGroup>
+                </Flex>
               </Text>
               <Text 
                 fontSize="lg" 
@@ -91,24 +164,59 @@ const Home = () => {
             {/* Image Content */}
             <Box
               flex="1"
-              animation={imageAnimation}
+              position="relative"
+              height="400px"
               display={{ base: 'none', md: 'block' }}
+              overflow="hidden"
+              borderRadius="xl"
+              boxShadow="xl"
             >
-              <Image
-                src={farmerImage}
-                alt="Farmers working together"
-                borderRadius="xl"
-                boxShadow="xl"
-                maxW="600px"
-                w="100%"
-                h="auto"
-                objectFit="cover"
-                loading="lazy"
-                _hover={{
-                  transform: 'scale(1.05)',
-                  transition: 'transform 0.3s ease-in-out'
-                }}
-              />
+              <Flex
+                position="relative"
+                width="100%"
+                height="100%"
+                alignItems="center"
+                justifyContent="center"
+              >
+                {images.map((img, index) => (
+                  <Box
+                    key={index}
+                    position="absolute"
+                    width="100%"
+                    height="100%"
+                    transition="all 0.5s ease-in-out"
+                    style={getImageStyle(getImagePosition(index))}
+                  >
+                    <Image
+                      src={img}
+                      alt={`Farmer illustration ${index + 1}`}
+                      width="100%"
+                      height="100%"
+                      objectFit="cover"
+                      loading={index === 0 ? "eager" : "lazy"}
+                    />
+                  </Box>
+                ))}
+              </Flex>
+              <Flex
+                position="absolute"
+                bottom="4"
+                left="50%"
+                transform="translateX(-50%)"
+                gap={2}
+                zIndex="2"
+              >
+                {images.map((_, index) => (
+                  <Box
+                    key={index}
+                    w="2"
+                    h="2"
+                    borderRadius="full"
+                    bg={currentImage === index ? useColorModeValue('green.600', 'green.200') : "gray.300"}
+                    transition="background-color 0.3s ease"
+                  />
+                ))}
+              </Flex>
             </Box>
           </Flex>
         </Container>
@@ -130,20 +238,29 @@ const Home = () => {
               fontSize="lg" 
               lineHeight="tall" 
               textAlign="justify"
-              bg={useColorModeValue('white', 'gray.800')}
+              bg={useColorModeValue('background.light', 'background.dark')}
               p={6}
               borderRadius="lg"
-              boxShadow="sm"
+              boxShadow={useColorModeValue(
+                '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
+                '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
+              )}
+              border="2px"
+              borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+              transition="all 0.3s ease"
               _hover={{
-                boxShadow: 'md',
-                transform: 'translateY(-2px)',
-                transition: 'all 0.2s'
+                transform: 'translateY(-5px)',
+                boxShadow: useColorModeValue(
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+                )
               }}
+              color={useColorModeValue('black', 'white')}
             >
               The Local Agricultural Office (LAO) in Goa, Partido, Camarines Sur, has carried out several agricultural projects in the barangays of Matacla, Digdigon, and Hiwacloy to assist local farmers and raise agricultural output. Through an analysis of important elements like the difficulties faced during implementation, the communication tactics used by the LAO, and the programs' overall effects on the farming community, this study assessed the efficacy of these initiatives. 
               Using semi-structured interviews with ten local registered farmers, the study used a qualitative research approach to obtain in-depth perspectives. Although the LAO used various communication techniques, such as face-to-face farmer encounters, community gatherings, and other outreach techniques, the results showed that several obstacles prevented these initiatives from being fully effective.
             
-              </Text>
+            </Text>
           </Box>
         </VStack>
       </Container>
@@ -164,15 +281,24 @@ const Home = () => {
               fontSize="lg" 
               lineHeight="tall" 
               textAlign="justify"
-              bg={useColorModeValue('white', 'gray.800')}
+              bg={useColorModeValue('background.light', 'background.dark')}
               p={6}
               borderRadius="lg"
-              boxShadow="sm"
+              boxShadow={useColorModeValue(
+                '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
+                '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
+              )}
+              border="2px"
+              borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+              transition="all 0.3s ease"
               _hover={{
-                boxShadow: 'md',
-                transform: 'translateY(-2px)',
-                transition: 'all 0.2s'
+                transform: 'translateY(-5px)',
+                boxShadow: useColorModeValue(
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+                )
               }}
+              color={useColorModeValue('black', 'white')}
             >
               The growth of the farming industry, especially in rural areas, greatly depends on the execution of local agricultural initiatives. The main objective of this study is to assess how well the Local Agricultural Office's 
               programs serve farmers. The outreach program under consideration specifically offers several support channels for farmers who are enrolled with authorized cooperatives and the Registry System for the Basic Sectors in Agriculture (RSBSA).  
@@ -192,15 +318,29 @@ const Home = () => {
       <Container maxW={'container.xl'} py={12}>
         <VStack spacing={8} align="stretch">
           <Box 
-            bg={useColorModeValue('white', 'gray.900')} 
+            bg={useColorModeValue('background.light', 'background.dark')}
             p={6} 
             borderRadius="lg"
-            boxShadow="sm"
+            boxShadow={useColorModeValue(
+              '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
+              '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
+            )}
+            border="2px"
+            borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+            transition="all 0.3s ease"
+            _hover={{
+              transform: 'translateY(-5px)',
+              boxShadow: useColorModeValue(
+                '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+                '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+              )
+            }}
           >
             <Heading 
               size="md" 
               mb={4}
-              color={useColorModeValue('green.600', 'green.200')}
+              color={useColorModeValue('primary.600', 'primary.200')}
+              fontFamily={'heading'}
             >
               Keywords
             </Heading>
@@ -210,8 +350,8 @@ const Home = () => {
                   key={keyword}
                   px={3}
                   py={1}
-                  bg={useColorModeValue('green.100', 'green.700')}
-                  color={useColorModeValue('green.700', 'green.100')}
+                  bg={useColorModeValue('primary.50', 'primary.900')}
+                  color={useColorModeValue('primary.600', 'primary.200')}
                   borderRadius="full"
                   fontSize="sm"
                   fontWeight="medium"
@@ -232,10 +372,13 @@ const Home = () => {
               height="100px"
               leftIcon={<Icon as={FaBook} boxSize={6} />}
               _hover={{
-                transform: 'translateY(-2px)',
-                boxShadow: 'lg',
+                transform: 'translateY(-5px)',
+                boxShadow: useColorModeValue(
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+                )
               }}
-              transition="all 0.2s"
+              transition="all 0.3s ease"
               aria-label="Research Methodology"
             >
               Research Methodology
@@ -248,10 +391,13 @@ const Home = () => {
               height="100px"
               leftIcon={<Icon as={FaChartBar} boxSize={6} />}
               _hover={{
-                transform: 'translateY(-2px)',
-                boxShadow: 'lg',
+                transform: 'translateY(-5px)',
+                boxShadow: useColorModeValue(
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+                )
               }}
-              transition="all 0.2s"
+              transition="all 0.3s ease"
               aria-label="Results & Discussion"
             >
               Results & Discussion
@@ -264,10 +410,13 @@ const Home = () => {
               height="100px"
               leftIcon={<Icon as={FaLightbulb} boxSize={6} />}
               _hover={{
-                transform: 'translateY(-2px)',
-                boxShadow: 'lg',
+                transform: 'translateY(-5px)',
+                boxShadow: useColorModeValue(
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+                )
               }}
-              transition="all 0.2s"
+              transition="all 0.3s ease"
               aria-label="Conclusion & Recommendations"
             >
               Conclusion & Recommendations

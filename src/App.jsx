@@ -37,7 +37,7 @@ function App() {
       <Router>
         <Box minH="100vh" display="flex" flexDirection="column">
           <Navbar />
-          <Box flex="1">
+          <Box flex="1" pt="60px">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/researchers" element={<Researchers />} />

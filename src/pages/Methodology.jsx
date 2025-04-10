@@ -1,6 +1,19 @@
 import { keyframes } from '@emotion/react';
-import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue } from '@chakra-ui/react';
-import { FaClipboardList, FaUsers, FaTools, FaPenFancy, FaChartLine } from 'react-icons/fa';
+import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, Image, Grid, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react';
+import { FaClipboardList, FaUsers, FaTools, FaPenFancy, FaChartLine, FaCamera } from 'react-icons/fa';
+import { useState } from 'react';
+
+// Import all data gathering images
+import Dg1 from '../assets/datagathering-pictures/Dg1.png';
+import Dg2 from '../assets/datagathering-pictures/Dg2.png';
+import Dg3 from '../assets/datagathering-pictures/Dg3.png';
+import Dg4 from '../assets/datagathering-pictures/Dg4.png';
+import Dg5 from '../assets/datagathering-pictures/Dg5.png';
+import Dg6 from '../assets/datagathering-pictures/Dg6.png';
+import Dg7 from '../assets/datagathering-pictures/Dg7.png';
+import Dg8 from '../assets/datagathering-pictures/Dg8.png';
+import Dg9 from '../assets/datagathering-pictures/Dg9.png';
+import D10 from '../assets/datagathering-pictures/D10.png';
 
 // Keyframe animation for fade-in effect
 const fadeIn = keyframes`
@@ -69,6 +82,98 @@ const MethodologySection = ({ title, content, icon }) => (
   </Box>
 )
 
+const ImageGallery = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const images = [
+    { src: Dg1, alt: "Data Gathering 1" },
+    { src: Dg2, alt: "Data Gathering 2" },
+    { src: Dg3, alt: "Data Gathering 3" },
+    { src: Dg4, alt: "Data Gathering 4" },
+    { src: Dg5, alt: "Data Gathering 5" },
+    { src: Dg6, alt: "Data Gathering 6" },
+    { src: Dg7, alt: "Data Gathering 7" },
+    { src: Dg8, alt: "Data Gathering 8" },
+    { src: Dg9, alt: "Data Gathering 9" },
+    { src: D10, alt: "Data Gathering 10" }
+  ];
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image);
+    onOpen();
+  };
+
+  return (
+    <Box>
+      <Grid 
+        templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)" }}
+        gap={6}
+        px={4}
+      >
+        {images.map((image, index) => (
+          <Box
+            key={index}
+            position="relative"
+            height="200px"
+            borderRadius="lg"
+            overflow="hidden"
+            cursor="pointer"
+            onClick={() => handleImageClick(image)}
+            transition="all 0.3s ease"
+            _hover={{
+              transform: 'scale(1.05)',
+              boxShadow: useColorModeValue(
+                '0 12px 20px -6px rgba(0, 0, 0, 0.15)',
+                '0 12px 20px -6px rgba(0, 0, 0, 0.5)'
+              )
+            }}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              objectFit="cover"
+              w="100%"
+              h="100%"
+              transition="transform 0.3s ease"
+              _hover={{
+                transform: 'scale(1.1)'
+              }}
+            />
+          </Box>
+        ))}
+      </Grid>
+
+      <Modal isOpen={isOpen} onClose={onClose} size="4xl">
+        <ModalOverlay backdropFilter="blur(10px)" />
+        <ModalContent bg="transparent" boxShadow="none">
+          <ModalCloseButton 
+            color="white" 
+            bg={useColorModeValue('rgba(0,0,0,0.2)', 'rgba(255,255,255,0.2)')}
+            borderRadius="full"
+            _hover={{
+              bg: useColorModeValue('rgba(0,0,0,0.3)', 'rgba(255,255,255,0.3)')
+            }}
+          />
+          <ModalBody p={0}>
+            {selectedImage && (
+              <Image
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                w="100%"
+                h="auto"
+                maxH="90vh"
+                objectFit="contain"
+                borderRadius="lg"
+              />
+            )}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </Box>
+  );
+};
+
 const Methodology = () => {
   const sections = [
     {
@@ -103,19 +208,50 @@ const Methodology = () => {
   return (
     <Box py={12} bg={backgroundColor} color={useColorModeValue('black', 'white')} animation={`${fadeIn} 0.5s ease-out`}>
       <Container maxW={'container.xl'}>
-        <VStack spacing={8}>
-          <Heading size="xl" textAlign="center" mb={4} fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
-            Research Methodology
-          </Heading>
-          <Text fontSize="lg" textAlign="center" maxW="3xl" fontFamily={'body'} color={useColorModeValue('black', 'white')}>
-            A comprehensive qualitative study examining communication strategies in agricultural outreach
-          </Text>
-          
-          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8} width="full">
-            {sections.map((section, index) => (
-              <MethodologySection key={index} {...section} />
-            ))}
-          </SimpleGrid>
+        <VStack spacing={12}>
+          {/* Methodology Section */}
+          <VStack spacing={8}>
+            <Heading size="xl" textAlign="center" mb={4} fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+              Research Methodology
+            </Heading>
+            <Text fontSize="lg" textAlign="center" maxW="3xl" fontFamily={'body'} color={useColorModeValue('black', 'white')}>
+              A comprehensive qualitative study examining communication strategies in agricultural outreach
+            </Text>
+            
+            <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8} width="full">
+              {sections.map((section, index) => (
+                <MethodologySection key={index} {...section} />
+              ))}
+            </SimpleGrid>
+          </VStack>
+
+          {/* Data Gathering Photos Section */}
+          <VStack spacing={8} width="full">
+            <Heading 
+              size="xl" 
+              textAlign="center" 
+              fontFamily={'heading'} 
+              color={useColorModeValue('primary.600', 'primary.200')}
+              display="flex"
+              alignItems="center"
+              gap={3}
+            >
+              <FaCamera />
+              Data Gathering Documentation
+            </Heading>
+            <Text 
+              fontSize="lg" 
+              textAlign="center" 
+              maxW="3xl" 
+              fontFamily={'body'} 
+              color={useColorModeValue('black', 'white')}
+              mb={6}
+            >
+              Visual documentation of our research process and interactions with the agricultural community
+            </Text>
+            
+            <ImageGallery />
+          </VStack>
         </VStack>
       </Container>
     </Box>

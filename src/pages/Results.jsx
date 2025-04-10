@@ -1,5 +1,17 @@
 import { Box, Container, Heading, Text, VStack, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, useColorModeValue } from '@chakra-ui/react'
 import { FaComments, FaUsers, FaFileAlt, FaMobileAlt, FaExclamationTriangle, FaUserClock, FaTablet } from 'react-icons/fa'
+import { keyframes } from '@emotion/react'
+
+// Animation keyframes
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`
+
+const slideInRight = keyframes`
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+`
 
 const Results = () => {
   const backgroundColor = useColorModeValue('white', 'gray.900');
@@ -51,7 +63,7 @@ const Results = () => {
   return (
     <Box py={12} bg={backgroundColor} color={useColorModeValue('black', 'white')}>
       <Container maxW={'container.xl'}>
-        <VStack spacing={8}>
+        <VStack spacing={8} animation={`${fadeIn} 1s ease-out`}>
           <Heading size="xl" textAlign="center" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
             Results and Discussion
           </Heading>
@@ -69,6 +81,7 @@ const Results = () => {
                 mb={4}
                 bg={useColorModeValue('background.light', 'background.dark')}
                 transition="all 0.3s ease"
+                animation={`${slideInRight} ${0.3 + index * 0.2}s ease-out`}
                 _hover={{
                   transform: 'translateY(-2px)',
                   boxShadow: useColorModeValue(
@@ -118,6 +131,7 @@ const Results = () => {
                           border="2px"
                           borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
                           transition="all 0.3s ease"
+                          animation={`${fadeIn} ${0.3 + subIndex * 0.2}s ease-out`}
                           _hover={{
                             transform: 'translateY(-2px)',
                             boxShadow: useColorModeValue(
