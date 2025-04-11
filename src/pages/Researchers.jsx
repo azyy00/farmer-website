@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { keyframes } from '@emotion/react'
 import m1 from '../assets/members/m1.png'
 import m2 from '../assets/members/m2.png'
-import m3 from '../assets/members/M4.jpg'
+import m3 from '../assets/members/M4.png'
 
 // Animation keyframes
 const fadeIn = keyframes`
