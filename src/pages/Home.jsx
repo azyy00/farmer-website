@@ -309,6 +309,53 @@ const Home = () => {
            
             </Text>
           </Box>
+
+          {/* Objectives Section */}
+          <Box>
+            <Heading 
+              size="xl" 
+              mb={6}
+              color={useColorModeValue('green.600', 'green.200')}
+            >
+              Objectives
+            </Heading>
+            <Box
+              bg={useColorModeValue('background.light', 'background.dark')}
+              p={6}
+              borderRadius="lg"
+              boxShadow={useColorModeValue(
+                '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
+                '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
+              )}
+              border="2px"
+              borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+              transition="all 0.3s ease"
+              _hover={{
+                transform: 'translateY(-5px)',
+                boxShadow: useColorModeValue(
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+                  '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+                )
+              }}
+            >
+              <VStack spacing={6} align="start" width="100%">
+                <Text textAlign="justify" fontSize="lg" lineHeight="1.8" color={useColorModeValue('black', 'white')}>
+                  Generally, this study aims to explore the communication strategies, challenges, and implementation of outreach programs by the Local Agricultural Office.
+                </Text>
+                <Text fontWeight="bold" fontSize="lg" color={useColorModeValue('black', 'white')}>
+                  Specifically, this study aims to:
+                </Text>
+                <VStack spacing={4} align="start" pl={6}>
+                  <Text fontSize="lg" lineHeight="1.8" color={useColorModeValue('black', 'white')}>
+                    1. Explore the communication strategies and tools employed by the Local Agricultural Office in the implementation of Agricultural Programs.
+                  </Text>
+                  <Text fontSize="lg" lineHeight="1.8" color={useColorModeValue('black', 'white')}>
+                    2. Explore the challenges encountered in implementing the outreach Programs.
+                  </Text>
+                </VStack>
+              </VStack>
+            </Box>
+          </Box>
         </VStack>
       </Container>
             

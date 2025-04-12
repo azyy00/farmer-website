@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react';
-import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, Image, Grid, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react';
-import { FaClipboardList, FaUsers, FaTools, FaPenFancy, FaChartLine, FaCamera } from 'react-icons/fa';
-import { useState } from 'react';
+import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, Image, Grid, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Flex, IconButton } from '@chakra-ui/react';
+import { FaClipboardList, FaUsers, FaTools, FaPenFancy, FaChartLine, FaCamera, FaChevronLeft, FaChevronRight, FaPause, FaPlay } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 
 // Import all data gathering images
 import Dg1 from '../assets/datagathering-pictures/Dg1.png';
@@ -82,7 +82,11 @@ const MethodologySection = ({ title, content, icon }) => (
   </Box>
 )
 
-const ImageGallery = () => {
+const DataGatheringCarousel = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -99,70 +103,226 @@ const ImageGallery = () => {
     { src: D10, alt: "Data Gathering 10" }
   ];
 
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
-    onOpen();
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % images.length);
   };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX);
+    setIsPlaying(false); // Pause on touch
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 75) {
+      nextSlide();
+    }
+    if (touchStart - touchEnd < -75) {
+      prevSlide();
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+      setIsPlaying(false);
+    } else if (e.key === 'ArrowRight') {
+      nextSlide();
+      setIsPlaying(false);
+    } else if (e.key === ' ') {
+      togglePlayPause();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Auto-play effect
+  useEffect(() => {
+    let interval;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        nextSlide();
+      }, 4000); // Change slide every 4 seconds
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, currentSlide]);
+
+  const slideAnimation = keyframes`
+    from { transform: translateX(50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  `;
 
   return (
     <Box>
-      <Grid 
-        templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)" }}
-        gap={6}
-        px={4}
+      <Box
+        position="relative"
+        height={{ base: "300px", md: "400px", lg: "500px" }}
+        width="100%"
+        overflow="hidden"
+        borderRadius="xl"
+        boxShadow="2xl"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        tabIndex={0}
+        role="region"
+        aria-label="Image carousel"
       >
-        {images.map((image, index) => (
-          <Box
-            key={index}
-            position="relative"
-            height="200px"
-            borderRadius="lg"
-            overflow="hidden"
-            cursor="pointer"
-            onClick={() => handleImageClick(image)}
-            transition="all 0.3s ease"
-            _hover={{
-              transform: 'scale(1.05)',
-              boxShadow: useColorModeValue(
-                '0 12px 20px -6px rgba(0, 0, 0, 0.15)',
-                '0 12px 20px -6px rgba(0, 0, 0, 0.5)'
-              )
+        {/* Navigation Arrows and Play/Pause */}
+        <Flex
+          position="absolute"
+          width="100%"
+          justify="space-between"
+          align="center"
+          height="100%"
+          px={4}
+          zIndex={2}
+        >
+          <IconButton
+            aria-label="Previous slide"
+            icon={<FaChevronLeft />}
+            onClick={() => {
+              prevSlide();
+              setIsPlaying(false);
             }}
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              objectFit="cover"
-              w="100%"
-              h="100%"
-              transition="transform 0.3s ease"
-              _hover={{
-                transform: 'scale(1.1)'
-              }}
-            />
-          </Box>
-        ))}
-      </Grid>
+            variant="ghost"
+            color="white"
+            size="lg"
+            _hover={{ bg: 'rgba(0,0,0,0.5)' }}
+            _active={{ bg: 'rgba(0,0,0,0.7)' }}
+          />
+          <IconButton
+            aria-label="Next slide"
+            icon={<FaChevronRight />}
+            onClick={() => {
+              nextSlide();
+              setIsPlaying(false);
+            }}
+            variant="ghost"
+            color="white"
+            size="lg"
+            _hover={{ bg: 'rgba(0,0,0,0.5)' }}
+            _active={{ bg: 'rgba(0,0,0,0.7)' }}
+          />
+        </Flex>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="4xl">
+        {/* Play/Pause Button */}
+        <IconButton
+          aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
+          icon={isPlaying ? <FaPause /> : <FaPlay />}
+          onClick={togglePlayPause}
+          position="absolute"
+          top={4}
+          right={4}
+          zIndex={2}
+          variant="ghost"
+          color="white"
+          _hover={{ bg: 'rgba(0,0,0,0.5)' }}
+          _active={{ bg: 'rgba(0,0,0,0.7)' }}
+        />
+
+        {/* Images */}
+        <Box
+          position="relative"
+          height="100%"
+          width="100%"
+          onClick={() => {
+            setSelectedImage(images[currentSlide]);
+            onOpen();
+            setIsPlaying(false);
+          }}
+          cursor="pointer"
+        >
+          <Image
+            key={currentSlide}
+            src={images[currentSlide].src}
+            alt={images[currentSlide].alt}
+            objectFit="cover"
+            w="100%"
+            h="100%"
+            animation={`${slideAnimation} 0.7s ease-out`}
+          />
+          <Box
+            position="absolute"
+            bottom={0}
+            left={0}
+            right={0}
+            p={4}
+            background="linear-gradient(to top, rgba(0,0,0,0.7), transparent)"
+            color="white"
+          >
+            <Text fontSize="lg" fontWeight="bold">
+              {images[currentSlide].alt}
+            </Text>
+          </Box>
+        </Box>
+
+        {/* Progress Indicators */}
+        <Flex
+          position="absolute"
+          bottom={4}
+          width="100%"
+          justify="center"
+          gap={2}
+          zIndex={2}
+        >
+          {images.map((_, index) => (
+            <Box
+              key={index}
+              w={index === currentSlide ? "8px" : "6px"}
+              h={index === currentSlide ? "8px" : "6px"}
+              borderRadius="full"
+              bg={index === currentSlide ? "white" : "rgba(255,255,255,0.5)"}
+              cursor="pointer"
+              onClick={() => {
+                setCurrentSlide(index);
+                setIsPlaying(false);
+              }}
+              transition="all 0.2s"
+              _hover={{ transform: "scale(1.2)" }}
+            />
+          ))}
+        </Flex>
+      </Box>
+
+      {/* Fullscreen Modal */}
+      <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalOverlay backdropFilter="blur(10px)" />
         <ModalContent bg="transparent" boxShadow="none">
           <ModalCloseButton 
             color="white" 
-            bg={useColorModeValue('rgba(0,0,0,0.2)', 'rgba(255,255,255,0.2)')}
+            bg="rgba(0,0,0,0.2)"
             borderRadius="full"
             _hover={{
-              bg: useColorModeValue('rgba(0,0,0,0.3)', 'rgba(255,255,255,0.3)')
+              bg: "rgba(0,0,0,0.3)"
             }}
           />
-          <ModalBody p={0}>
+          <ModalBody 
+            display="flex" 
+            alignItems="center" 
+            justifyContent="center"
+            p={0}
+          >
             {selectedImage && (
               <Image
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                w="100%"
-                h="auto"
                 maxH="90vh"
+                maxW="90vw"
                 objectFit="contain"
                 borderRadius="lg"
               />
@@ -250,7 +410,7 @@ const Methodology = () => {
               Visual documentation of our research process and interactions with the agricultural community
             </Text>
             
-            <ImageGallery />
+            <DataGatheringCarousel />
           </VStack>
         </VStack>
       </Container>
