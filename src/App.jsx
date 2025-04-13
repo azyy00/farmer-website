@@ -1,4 +1,4 @@
-import { ChakraProvider, Box, extendTheme } from '@chakra-ui/react'
+import { ChakraProvider, Box, extendTheme, useColorModeValue } from '@chakra-ui/react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -8,6 +8,7 @@ import Methodology from './pages/Methodology'
 import Results from './pages/Results'
 import Conclusion from './pages/Conclusion'
 import Footer from './components/Footer'
+import ContactUs from './components/ContactUs'
 
 // Define a custom theme to apply consistent styling across the app
 const customTheme = extendTheme({
@@ -35,9 +36,9 @@ function App() {
   return (
     <ChakraProvider theme={customTheme}>
       <Router>
-        <Box minH="100vh" display="flex" flexDirection="column">
+        <Box minH="100vh" bg={useColorModeValue('gray.50', 'gray.900')}>
           <Navbar />
-          <Box flex="1" pt="60px">
+          <Box pt={{ base: '60px', md: '80px' }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/researchers" element={<Researchers />} />
@@ -45,6 +46,7 @@ function App() {
               <Route path="/methodology" element={<Methodology />} />
               <Route path="/results" element={<Results />} />
               <Route path="/conclusion" element={<Conclusion />} />
+              <Route path="/contact" element={<ContactUs />} />
             </Routes>
           </Box>
           <Footer />

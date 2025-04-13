@@ -1,7 +1,14 @@
-import { Box, Flex, Text, Button, Stack, useColorModeValue, useBreakpointValue, Menu, MenuButton, MenuList, MenuItem, IconButton, useDisclosure, useColorMode } from '@chakra-ui/react'
+import { Box, Flex, Text, Button, Stack, useColorModeValue, useBreakpointValue, Menu, MenuButton, MenuList, MenuItem, IconButton, useDisclosure, useColorMode, Switch, HStack } from '@chakra-ui/react'
 import { Link, useLocation } from 'react-router-dom'
 import { HamburgerIcon } from '@chakra-ui/icons'
-import { FaHome, FaBook, FaStar, FaInfoCircle, FaUsers, FaSun, FaMoon } from 'react-icons/fa'
+import { FaHome, FaBook, FaStar, FaInfoCircle, FaUsers, FaSun, FaMoon, FaEnvelope } from 'react-icons/fa'
+import { keyframes } from '@emotion/react'
+
+// Define animations
+const rotateAnimation = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`
 
 const Navbar = () => {
   const location = useLocation();
@@ -14,6 +21,7 @@ const Navbar = () => {
     { name: 'Results', path: '/results', icon: <FaStar /> },
     { name: 'Conclusion', path: '/conclusion', icon: <FaInfoCircle /> },
     { name: 'Researchers', path: '/researchers', icon: <FaUsers /> },
+    { name: 'Contact Us', path: '/contact', icon: <FaEnvelope /> },
   ]
 
   return (
@@ -47,7 +55,7 @@ const Navbar = () => {
             transition: 'all 0.2s'
           }}
         >
-          <Link to="/">Agricultural Office Research</Link>
+          <Link to="/">Agricultural Office Challenges in Goa</Link>
         </Text>
 
         {/* Desktop Navigation */}
@@ -77,16 +85,51 @@ const Navbar = () => {
         </Flex>
 
         {/* Dark Mode Toggle */}
-        <IconButton
-          aria-label="Toggle dark mode"
-          icon={colorMode === 'light' ? <FaMoon /> : <FaSun />}
-          onClick={toggleColorMode}
-          variant="ghost"
+        <HStack 
+          spacing={2} 
+          ml={4}
+          p={2}
+          borderRadius="full"
+          bg={useColorModeValue('gray.100', 'gray.700')}
+          transition="all 0.3s ease"
           _hover={{
-            bg: useColorModeValue('primary.50', 'primary.900'),
-            color: useColorModeValue('primary.700', 'primary.200'),
+            bg: useColorModeValue('gray.200', 'gray.600'),
           }}
-        />
+        >
+          <Box 
+            as={FaSun} 
+            color={useColorModeValue('orange.400', 'gray.400')}
+            transition="all 0.5s ease"
+            animation={colorMode === 'light' ? `${rotateAnimation} 4s linear infinite` : 'none'}
+            opacity={colorMode === 'light' ? 1 : 0.3}
+            fontSize="18px"
+          />
+          <Switch
+            colorScheme="green"
+            isChecked={colorMode === 'dark'}
+            onChange={toggleColorMode}
+            size="md"
+            sx={{
+              '& .chakra-switch__track': {
+                transition: 'all 0.3s ease',
+              },
+              '& .chakra-switch__thumb': {
+                transition: 'all 0.3s ease',
+                _before: {
+                  transition: 'all 0.3s ease',
+                }
+              }
+            }}
+          />
+          <Box 
+            as={FaMoon} 
+            color={useColorModeValue('gray.400', 'blue.200')}
+            transition="all 0.5s ease"
+            transform={colorMode === 'dark' ? 'rotate(360deg)' : 'rotate(0deg)'}
+            opacity={colorMode === 'dark' ? 1 : 0.3}
+            fontSize="16px"
+          />
+        </HStack>
       </Flex>
 
       {/* Mobile Navigation */}

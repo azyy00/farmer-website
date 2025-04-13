@@ -220,9 +220,9 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-      icon: FaUsers
-    },
-    {
+          icon: FaUsers
+        },
+        {
       title: "Time Management",
       content: (
         <VStack spacing={4} align="start">
@@ -252,9 +252,9 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-      icon: FaUserClock
-    },
-    {
+          icon: FaUserClock
+        },
+        {
       title: "Digital Divide",
       content: (
         <VStack spacing={4} align="start">
@@ -284,7 +284,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-      icon: FaTablet
+          icon: FaTablet
     },
     {
       title: "Communication Barriers",
@@ -359,24 +359,35 @@ const Results = () => {
           {/* Main Heading */}
           <Box width="100%" mb={8}>
             <VStack spacing={6}>
-              <Heading size="xl" textAlign="center" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
-                Results and Discussion
-              </Heading>
+          <Heading size="xl" textAlign="center" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+            Results and Discussion
+          </Heading>
               <Text fontSize="lg" textAlign="center" maxW="3xl" fontFamily={'body'} color={useColorModeValue('black', 'white')}>
-                Analysis of communication strategies and challenges in agricultural program implementation
-              </Text>
+            Analysis of communication strategies and challenges in agricultural program implementation
+          </Text>
             </VStack>
           </Box>
 
           {/* Communication Strategies Table */}
-          <Box width="100%" overflowX="auto">
-            <VStack align="start" spacing={4} mb={8}>
+          <Box width="100%" overflowX="auto" maxW="100vw" sx={{
+            WebkitOverflowScrolling: 'touch',
+            '&::-webkit-scrollbar': {
+              height: '8px',
+              borderRadius: '8px',
+              backgroundColor: useColorModeValue('rgba(0, 0, 0, 0.05)', 'rgba(255, 255, 255, 0.05)')
+            },
+            '&::-webkit-scrollbar-thumb': {
+              borderRadius: '8px',
+              backgroundColor: useColorModeValue('rgba(0, 0, 0, 0.1)', 'rgba(255, 255, 255, 0.1)')
+            }
+          }}>
+            <VStack align="start" spacing={4} mb={8} minW={{ base: "800px", lg: "100%" }}>
               <Heading size="md" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
                 Table 1: Communication Strategies in Agricultural Programs
               </Heading>
               <Box 
                 width="100%" 
-                border="2px" 
+                border="2px"
                 borderColor={useColorModeValue('green.500', 'green.200')} 
                 borderRadius="lg" 
                 overflow="hidden"
@@ -459,7 +470,7 @@ const Results = () => {
                         <Td 
                           borderRight="1px"
                           borderColor={useColorModeValue('green.100', 'green.700')}
-                          p={4}
+                  p={4}
                         >
                           {row.weaknesses}
                         </Td>
@@ -529,14 +540,14 @@ const Results = () => {
                         bg={useColorModeValue('primary.50', 'primary.900')}
                       >
                         <Icon
-                          as={finding.icon}
+                      as={finding.icon} 
                           boxSize={6}
-                          color={useColorModeValue('primary.600', 'primary.200')}
+                      color={useColorModeValue('primary.600', 'primary.200')}
                         />
                       </Box>
-                      <Heading size="md" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
-                        {finding.title}
-                      </Heading>
+                    <Heading size="md" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+                      {finding.title}
+                    </Heading>
                       {finding.content}
                     </VStack>
                   </CardBody>
@@ -706,19 +717,19 @@ const Results = () => {
                   borderRadius="xl"
                   overflow="hidden"
                   boxShadow="lg"
-                  transition="all 0.3s ease"
-                  _hover={{
+                          transition="all 0.3s ease"
+                          _hover={{
                     transform: 'translateY(-4px)',
                     boxShadow: 'xl'
                   }}
                   direction={{ base: 'column', md: 'row' }}
                   width="100%"
-                >
-                  <Box
+                          >
+                            <Box 
                     p={6}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
+                              display="flex"
+                              alignItems="center"
+                              justifyContent="center"
                     minW={{ base: '100%', md: '200px' }}
                   >
                     <Icon
@@ -732,7 +743,7 @@ const Results = () => {
                       <VStack align="start" spacing={4}>
                         <Heading size="md" fontFamily={'heading'} color={useColorModeValue('green.600', 'green.200')}>
                           {challenge.title}
-                        </Heading>
+                          </Heading>
                         {typeof challenge.content === 'string' ? (
                           <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
                             {challenge.content}
@@ -742,15 +753,26 @@ const Results = () => {
                         )}
                       </VStack>
                     </CardBody>
-                  </Box>
+                        </Box>
                 </Card>
-              ))}
-            </VStack>
+                      ))}
+                    </VStack>
           </VStack>
 
           {/* Challenges Table */}
-          <Box width="100%" overflowX="auto">
-            <VStack align="start" spacing={4} mb={8}>
+          <Box width="100%" overflowX="auto" maxW="100vw" sx={{
+            WebkitOverflowScrolling: 'touch',
+            '&::-webkit-scrollbar': {
+              height: '8px',
+              borderRadius: '8px',
+              backgroundColor: useColorModeValue('rgba(0, 0, 0, 0.05)', 'rgba(255, 255, 255, 0.05)')
+            },
+            '&::-webkit-scrollbar-thumb': {
+              borderRadius: '8px',
+              backgroundColor: useColorModeValue('rgba(0, 0, 0, 0.1)', 'rgba(255, 255, 255, 0.1)')
+            }
+          }}>
+            <VStack align="start" spacing={4} mb={8} minW={{ base: "800px", lg: "100%" }}>
               <Heading size="md" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
                 Table 2: Challenges in the Implementation of Outreach Programs
               </Heading>
