@@ -1,28 +1,41 @@
-import { Box, Container, Stack, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Container, Stack, Text, VStack, useColorModeValue } from '@chakra-ui/react'
 
 const Footer = () => {
   return (
     <Box
       bg={useColorModeValue('background.light', 'background.dark')}
       color={useColorModeValue('secondary.600', 'secondary.300')}
+      borderTop="1px"
+      borderColor={useColorModeValue('gray.200', 'gray.700')}
     >
       <Container
-        as={Stack}
         maxW={'6xl'}
-        py={4}
-        direction={{ base: 'column', md: 'row' }}
-        spacing={4}
-        justify={{ base: 'center', md: 'space-between' }}
-        align={{ base: 'center', md: 'center' }}
+        py={6}
       >
-        <Text fontFamily={'body'} fontSize={'sm'}>
-          © 2024 Agricultural Office Research. All rights reserved
-        </Text>
-        <Stack direction={'row'} spacing={6} align="center">
-          <Text fontFamily={'body'} fontSize={'sm'}>
+        <VStack spacing={3} align="center">
+          <Text 
+            fontFamily={'body'} 
+            fontSize={'sm'} 
+            textAlign="center"
+            fontWeight="bold"
+          >
+            © 2024 Madelo B. Biando, Apple Mae R. Castor, Apple Jewel S. Borais. All rights reserved.
+          </Text>
+          <Text 
+            fontFamily={'body'} 
+            fontSize={'sm'} 
+            textAlign="center"
+          >
             Bachelor of Arts in Communication
           </Text>
-        </Stack>
+          <Text 
+            fontFamily={'body'} 
+            fontSize={'sm'} 
+            textAlign="center"
+          >
+            Partido State University
+          </Text>
+        </VStack>
       </Container>
     </Box>
   )
