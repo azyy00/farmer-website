@@ -5,6 +5,7 @@ import { keyframes } from '@emotion/react'
 import m1 from '../assets/members/M4.png'
 import m2 from '../assets/members/m2.png'
 import m3 from '../assets/members/m3.jpg'
+import Ad from '../assets/members/Ads.png'
 
 // Animation keyframes
 const fadeIn = keyframes`
@@ -208,7 +209,11 @@ const Researchers = () => {
     name: 'Ruth Daphne Prila Pesimo',
     role: 'Research Adviser',
     description: 'Providing guidance and expertise in research methodology and communication studies.',
-    image: null
+    image: Ad,
+    contacts: {
+      phone: '09388792731',
+      address: 'San Jose St., Goa, Camarines Sur'
+    }
   };
 
   return (
