@@ -26,22 +26,31 @@ const Navbar = () => {
 
   return (
     <Flex
-      bg={useColorModeValue('rgba(255, 255, 255, 0.8)', 'rgba(26, 32, 44, 0.8)')}
+      bg={useColorModeValue('rgba(255, 255, 255, 0.9)', 'rgba(26, 32, 44, 0.9)')}
       color={useColorModeValue('secondary.600', 'white')}
       minH={'60px'}
-      py={{ base: 2 }}
-      px={{ base: 4 }}
+      py={2}
+      px={4}
       borderBottom={1}
       borderStyle={'solid'}
-      borderColor={useColorModeValue('secondary.300', 'gray.900')}
+      borderColor={useColorModeValue('gray.200', 'gray.700')}
       align={'center'}
       position="fixed"
-      top="0"
-      left="0"
-      right="0"
+      top={0}
+      left={0}
+      right={0}
       zIndex={1000}
       backdropFilter="blur(10px)"
-      boxShadow="0 2px 10px rgba(0,0,0,0.05)"
+      margin={0}
+      _after={{
+        content: '""',
+        position: 'absolute',
+        bottom: '-1px',
+        left: 0,
+        right: 0,
+        height: '1px',
+        bg: useColorModeValue('gray.200', 'gray.700')
+      }}
     >
       <Flex flex={{ base: 1 }} justify={{ base: 'start', md: 'space-between' }} align="center">
         <Text

@@ -36,9 +36,9 @@ function App() {
   return (
     <ChakraProvider theme={customTheme}>
       <Router>
-        <Box minH="100vh" bg={useColorModeValue('gray.50', 'gray.900')}>
+        <Box minH="100vh" bg={useColorModeValue('gray.50', 'gray.900')} margin={0} padding={0}>
           <Navbar />
-          <Box pt={{ base: '60px', md: '80px' }}>
+          <Box pt="60px">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/researchers" element={<Researchers />} />
