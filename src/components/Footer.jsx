@@ -32,6 +32,14 @@ const Footer = () => {
           >
             Bachelor of Arts in Communication • Partido State University
           </Text>
+          <Text 
+            fontFamily={'body'} 
+            fontSize={'xs'} 
+            textAlign="center"
+            color={useColorModeValue('gray.500', 'gray.500')}
+          >
+            Website developed by Anthony B. Azuela
+          </Text>
         </VStack>
       </Container>
     </Box>

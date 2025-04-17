@@ -11,12 +11,16 @@ This website presents the findings of a qualitative research study conducted by:
 
 Under the guidance of Ruth Daphne Prila Pesimo (Adviser)
 
-## Developer of the Website
+## Website Developer
 
-- Anthony B. Azuela
-  - Designed and developed the entire website
-  - Implemented responsive UI/UX
-  - Handled deployment and maintenance
+### Anthony B. Azuela
+- Lead Developer and UI/UX Designer
+- Implemented the entire website architecture using React and Chakra UI
+- Created responsive and interactive user interfaces
+- Developed data visualization components
+- Handled website deployment and maintenance
+- Integrated bilingual content support
+- Optimized performance and accessibility
 
 ## Features
 
@@ -44,6 +48,7 @@ This project is deployed on Vercel. Visit [https://bacom-researchs-site.vercel.a
 This research website and its contents are protected by copyright law. No part of this website may be reproduced, distributed, or transmitted in any form or by any means without the prior written permission of the copyright holder.
 
 Research Content © 2024 Madelo B. Biando, Apple Mae R. Castor, Apple Jewel S. Borais. All rights reserved.
+Website Development © 2024 Anthony B. Azuela. All rights reserved.
 
 For permissions requests, please contact:
 - Email: biandomadelo847@gmail.com
