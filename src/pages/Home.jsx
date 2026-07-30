@@ -1,7 +1,6 @@
-import { Box, Container, Heading, Text, VStack, Button, SimpleGrid, useColorModeValue, Icon, Flex, Image, Avatar, AvatarGroup } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, VStack, Button, SimpleGrid, Icon, Flex, Image, Avatar, AvatarGroup } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
-import { Link } from 'react-router-dom'
-import { PiArrowRight, PiBookOpenText, PiLightbulb } from 'react-icons/pi'
+import { PiArrowRight } from 'react-icons/pi'
 import fieldPoster from '../assets/field-farmer.webp'
 import fieldFarmer from '../assets/field-farmer.webp'
 import fieldPair from '../assets/field-pair.webp'
@@ -25,23 +24,19 @@ const fieldPhotos = [
 ]
 
 const Home = () => {
-  // Colors and typography. Every colour-mode hook is resolved here so that none
-  // of them end up inside a loop or conditional further down the tree, which
-  // would break the rules of hooks.
-  const primaryColor = useColorModeValue('green.600', 'green.200');
-  const secondaryColor = useColorModeValue('gray.600', 'gray.300');
-  const backgroundColor = useColorModeValue('white', 'gray.900');
-  const cardBg = useColorModeValue('background.light', 'background.dark');
-  const cardBorder = useColorModeValue('gray.200', 'whiteAlpha.100');
-  const cardShadow = useColorModeValue('sm', 'darkSm');
-  const cardHoverShadow = useColorModeValue('lg', 'darkLg');
-  const cardText = useColorModeValue('black', 'white');
-  const avatarRing = 'whiteAlpha.700';
-  const badgeBg = useColorModeValue('green.100', 'green.800');
-  const keywordBg = useColorModeValue('primary.50', 'primary.900');
-  const keywordColor = useColorModeValue('primary.600', 'primary.200');
-  const bandBg = useColorModeValue('gray.100', 'gray.800');
-  const bandBorder = useColorModeValue('gray.200', 'whiteAlpha.100');
+  // Single Swiss-Industrial substrate: carbon ink on documentation paper.
+  const primaryColor = 'ink.500';
+  const secondaryColor = 'gray.700';
+  const backgroundColor = 'paper.500';
+  const cardBg = 'paper.500';
+  const cardBorder = 'ink.500';
+  const cardShadow = 'md';
+  const cardText = 'ink.500';
+  const avatarRing = 'paper.500';
+  const badgeBg = 'gray.100';
+  const keywordBg = 'ink.500';
+  const keywordColor = 'paper.500';
+  const bandBg = 'ink.500';
 
   return (
     <Box fontFamily="body" bg={backgroundColor} color={secondaryColor}>
@@ -81,67 +76,97 @@ const Home = () => {
             '@media (prefers-reduced-motion: reduce)': { display: 'none' },
           }}
         />
-        {/* Scrim for text legibility (WCAG AA over the moving footage) */}
+        {/* Ink scrim + 1-bit dither overlay so the footage reads as a degraded
+            document plate rather than glossy video. */}
         <Box
           position="absolute"
           inset={0}
-          bgGradient="linear(to-r, rgba(20,28,20,0.86), rgba(20,28,20,0.55) 55%, rgba(20,28,20,0.35))"
+          bgGradient="linear(to-r, rgba(10,10,10,0.9), rgba(10,10,10,0.55) 60%, rgba(10,10,10,0.35))"
         />
         <Box
+          aria-hidden="true"
           position="absolute"
           inset={0}
-          bgGradient="linear(to-t, rgba(16,24,16,0.8), transparent 45%)"
+          mixBlendMode="multiply"
+          opacity={0.5}
+          sx={{
+            backgroundImage:
+              'radial-gradient(rgba(10,10,10,0.9) 1px, transparent 1.4px)',
+            backgroundSize: '4px 4px',
+          }}
         />
+
+        {/* Figure framing: hazard-red plate label + corner crosshairs */}
+        <Text
+          position="absolute"
+          top={{ base: 20, md: 24 }}
+          left={{ base: 4, md: 8 }}
+          zIndex={2}
+          fontFamily="mono"
+          fontSize={{ base: '10px', md: '12px' }}
+          fontWeight={700}
+          letterSpacing="0.14em"
+          color="paper.500"
+          bg="red.500"
+          px={2}
+          py={1}
+        >
+          [ FIG.01 // FIELD SURVEY · GOA-CAM-SUR ]
+        </Text>
+        {['top left', 'top right', 'bottom left', 'bottom right'].map((pos) => {
+          const [v, h] = pos.split(' ')
+          return (
+            <Text
+              key={pos}
+              aria-hidden="true"
+              position="absolute"
+              {...{ [v]: '10px', [h]: '10px' }}
+              zIndex={2}
+              color="paper.500"
+              fontFamily="mono"
+              fontSize="16px"
+              lineHeight={1}
+            >
+              +
+            </Text>
+          )
+        })}
 
         <Container maxW="container.xl" position="relative" zIndex={1}>
           <VStack
             spacing={6}
             align={{ base: 'center', md: 'start' }}
-            maxW={{ md: '3xl' }}
+            maxW={{ md: '4xl' }}
             textAlign={{ base: 'center', md: 'left' }}
             animation={`${fadeIn} 1s ease-out`}
           >
-            <Text
-              fontSize="sm"
-              fontWeight="600"
-              letterSpacing="0.16em"
-              textTransform="uppercase"
-              color="primary.100"
-            >
-              Qualitative research study
-            </Text>
             <Heading
               as="h1"
-              fontSize={{ base: '2rem', md: '2.6rem', lg: '3.2rem' }}
-              lineHeight={1.08}
-              letterSpacing="-0.03em"
-              fontWeight="600"
-              color="white"
-              fontFamily="heading"
-              sx={{ textShadow: '0 2px 18px rgba(0,0,0,0.35)' }}
+              size="3xl"
+              color="paper.500"
+              mt={{ base: 6, md: 10 }}
             >
-              Communication Challenges in the Implementation of Agricultural Office in LGU Goa
+              Communication Challenges in Agricultural Programs / LGU Goa
             </Heading>
             <Flex align="center" gap={3} wrap="wrap" justify={{ base: 'center', md: 'flex-start' }}>
-              <AvatarGroup size="md" max={3} spacing="-0.75rem">
-                <Avatar name="Madelo Biando" src={m3} borderWidth="2px" borderColor={avatarRing} />
-                <Avatar name="Apple Jewel Borais" src={m1} borderWidth="2px" borderColor={avatarRing} />
-                <Avatar name="Apple Mae Castor" src={m2} borderWidth="2px" borderColor={avatarRing} />
+              <AvatarGroup size="md" max={3} spacing="-0.5rem">
+                <Avatar name="Madelo Biando" src={m3} borderWidth="2px" borderRadius="0" borderColor={avatarRing} />
+                <Avatar name="Apple Jewel Borais" src={m1} borderWidth="2px" borderRadius="0" borderColor={avatarRing} />
+                <Avatar name="Apple Mae Castor" src={m2} borderWidth="2px" borderRadius="0" borderColor={avatarRing} />
               </AvatarGroup>
-              <Text fontSize={{ base: 'md', md: 'lg' }} color="whiteAlpha.900" maxW="46ch">
-                A research study by Madelo B. Biando, Apple Mae R. Castor, and Apple Jewel S. Borais
+              <Text fontFamily="mono" fontSize={{ base: 'xs', md: 'sm' }} letterSpacing="0.04em" color="paper.500" maxW="52ch">
+                BIANDO, M.B. / CASTOR, A.M.R. / BORAIS, A.J.S.
               </Text>
             </Flex>
             <Button
-              as={Link}
-              to="/results"
+              onClick={() => document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' })}
               size="lg"
               px={8}
-              bg="white"
-              color="primary.700"
+              bg="red.500"
+              borderColor="paper.500"
+              color="paper.500"
               rightIcon={<Icon as={PiArrowRight} boxSize={5} />}
-              _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg', bg: 'primary.50' }}
-              _active={{ transform: 'translateY(0)' }}
+              _hover={{ bg: 'paper.500', color: 'ink.500', borderColor: 'paper.500' }}
             >
               Read the findings
             </Button>
@@ -149,19 +174,13 @@ const Home = () => {
         </Container>
       </Box>
 
-      {/* Field photographs supplied for the study, shown as a full-width band
-          between the hero and the abstract. */}
-      <Box as="section" bg={bandBg} borderY="1px solid" borderColor={bandBorder} py={{ base: 8, md: 12 }} px={4}>
-        <Container maxW="container.xl">
-          <SimpleGrid columns={{ base: 1, sm: 3 }} spacing={{ base: 4, md: 6 }}>
-            {fieldPhotos.map((photo, i) => (
-              <Box
-                key={photo.src}
-                overflow="hidden"
-                borderRadius="xl"
-                boxShadow={cardShadow}
-                sx={{ aspectRatio: '4 / 3' }}
-              >
+      {/* Field survey plates. Hard-bordered, mono-captioned, dividing-line grid
+          generated by a 2px ink parent behind 2px gaps. */}
+      <Box as="section" bg={bandBg} py={0} px={0} borderBottom="2px solid" borderColor="ink.500">
+        <SimpleGrid columns={{ base: 1, sm: 3 }} gap="2px" bg="ink.500">
+          {fieldPhotos.map((photo, i) => (
+            <Box key={photo.src} bg="paper.500" position="relative">
+              <Box overflow="hidden" sx={{ aspectRatio: '4 / 3' }} borderBottom="2px solid" borderColor="ink.500">
                 <Image
                   src={photo.src}
                   alt={photo.alt}
@@ -169,13 +188,18 @@ const Home = () => {
                   height="100%"
                   objectFit="cover"
                   loading={i === 0 ? 'eager' : 'lazy'}
-                  transition="transform 0.5s ease"
-                  _hover={{ transform: 'scale(1.04)' }}
+                  sx={{ filter: 'grayscale(1) contrast(1.08)' }}
+                  transition="filter 0.3s"
+                  _hover={{ sx: { filter: 'grayscale(0) contrast(1)' } }}
                 />
               </Box>
-            ))}
-          </SimpleGrid>
-        </Container>
+              <Flex justify="space-between" px={3} py={2} fontFamily="mono" fontSize="10px" letterSpacing="0.12em" textTransform="uppercase" color="ink.500">
+                <Text>PLATE 0{i + 1}</Text>
+                <Text color="red.500">FIELD / GOA</Text>
+              </Flex>
+            </Box>
+          ))}
+        </SimpleGrid>
       </Box>
 
       {/* Study credits. These two lines used to sit inside the hero, which
@@ -236,7 +260,7 @@ const Home = () => {
                   transition="all 0.3s ease"
                   _hover={{
                     transform: 'translateY(-5px)',
-                    boxShadow: cardHoverShadow
+                    boxShadow: 'lg'
                   }}
                   color={cardText}
                 >
@@ -270,7 +294,7 @@ const Home = () => {
                   transition="all 0.3s ease"
                   _hover={{
                     transform: 'translateY(-5px)',
-                    boxShadow: cardHoverShadow
+                    boxShadow: 'lg'
                   }}
                   color={cardText}
                 >
@@ -302,7 +326,7 @@ const Home = () => {
                   transition="all 0.3s ease"
                   _hover={{
                     transform: 'translateY(-5px)',
-                    boxShadow: cardHoverShadow
+                    boxShadow: 'lg'
                   }}
                 >
                   <VStack spacing={6} align="start" width="100%">
@@ -337,7 +361,7 @@ const Home = () => {
                 transition="all 0.3s ease"
                 _hover={{
                   transform: 'translateY(-5px)',
-                  boxShadow: cardHoverShadow
+                  boxShadow: 'lg'
                 }}
               >
                 <Heading 
@@ -366,68 +390,6 @@ const Home = () => {
                 </Flex>
               </Box>
 
-              {/* Quick links. Previously three identical full-width towers;
-                  now one lead action with two lighter secondary routes, so the
-                  row has a hierarchy instead of three equal shouts. */}
-              <Box mt={10} w="100%">
-                <Button
-                  as={Link}
-                  to="/results"
-                  colorScheme="green"
-                  size="lg"
-                  h="auto"
-                  py={6}
-                  px={7}
-                  w="100%"
-                  justifyContent="space-between"
-                  rightIcon={<Icon as={PiArrowRight} boxSize={5} />}
-                  borderRadius="xl"
-                  textAlign="left"
-                  _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
-                >
-                  <Box>
-                    <Text fontSize="lg" fontWeight="600" lineHeight="1.3">
-                      Results and discussion
-                    </Text>
-                    <Text fontSize="sm" fontWeight="400" opacity={0.85} lineHeight="1.4">
-                      Communication strategies and the barriers farmers described
-                    </Text>
-                  </Box>
-                </Button>
-
-                <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={4} mt={4}>
-                  {[
-                    { to: '/methodology', icon: PiBookOpenText, label: 'Methodology', hint: 'How the study was run' },
-                    { to: '/conclusion', icon: PiLightbulb, label: 'Conclusion', hint: 'Findings and recommendations' },
-                  ].map((link) => (
-                    <Button
-                      key={link.to}
-                      as={Link}
-                      to={link.to}
-                      variant="outline"
-                      colorScheme="green"
-                      size="lg"
-                      h="auto"
-                      py={5}
-                      px={5}
-                      justifyContent="flex-start"
-                      leftIcon={<Icon as={link.icon} boxSize={5} />}
-                      borderRadius="lg"
-                      textAlign="left"
-                      _hover={{ transform: 'translateY(-2px)', bg: keywordBg }}
-                    >
-                      <Box>
-                        <Text fontSize="md" fontWeight="600" lineHeight="1.3">
-                          {link.label}
-                        </Text>
-                        <Text fontSize="xs" fontWeight="400" opacity={0.75} lineHeight="1.4">
-                          {link.hint}
-                        </Text>
-                      </Box>
-                    </Button>
-                  ))}
-                </SimpleGrid>
-              </Box>
             </VStack>
           </VStack>
         </Container>

@@ -1,132 +1,127 @@
 import { extendTheme } from '@chakra-ui/react'
 
-// A single accent family. The pages historically reached for both `green.*`
-// and `primary.*` as if they were different colours; aliasing `green` to the
-// same ramp makes every existing usage land on one consistent accent.
-const accent = {
-  50: '#F1F7F1',
-  100: '#DCEBDB',
-  200: '#B9D6B8',
-  300: '#8EBB8E',
-  400: '#639B66',
-  500: '#457C4C',
-  600: '#33633C',
-  700: '#284E30',
-  800: '#1F3C26',
-  900: '#182E1E',
+// SWISS INDUSTRIAL BRUTALISM
+// Single light substrate: unbleached documentation paper, carbon ink, one
+// hazard-red accent. No gradients, no soft shadows, no rounded corners.
+
+const ink = '#0A0A0A'
+const paper = '#F4F4F0'
+const red = '#E61919'
+
+// Monochrome document greys, warmed slightly toward the paper. Chakra's `gray`
+// scale drives most surfaces and text across the reused page components.
+const mono = {
+  50: '#F4F4F0',
+  100: '#EAE8E3',
+  200: '#DAD8D2',
+  300: '#BFBCB4',
+  400: '#8F8D86',
+  500: '#66645E',
+  600: '#454340',
+  700: '#2A2926',
+  800: '#161513',
+  900: '#0A0A0A',
 }
 
-// Neutrals carry a faint warm/olive tint so they sit with the accent instead of
-// reading as a separate cool grey family.
-const neutral = {
-  50: '#FAFAF8',
-  100: '#F2F2EE',
-  200: '#E4E4DE',
-  300: '#CDCDC5',
-  400: '#A3A39A',
-  500: '#78786F',
-  600: '#585850',
-  700: '#40403A',
-  800: '#2A2A26',
-  900: '#1A1A17',
+// The pages historically coloured headings and accents with `green.*` /
+// `primary.*`. Remapped so those references resolve to carbon ink rather than a
+// colour - red is introduced deliberately in the section chrome, never by
+// accident. `.400` stays red so existing focus rings and small accents pick up
+// the one permitted accent.
+const inkAccent = {
+  50: '#F4F4F0',
+  100: '#EAE8E3',
+  200: '#DAD8D2',
+  300: '#8F8D86',
+  400: red,
+  500: '#161513',
+  600: ink,
+  700: ink,
+  800: ink,
+  900: ink,
+}
+
+const hazard = {
+  50: '#FDE8E8',
+  100: '#FBC9C9',
+  200: '#F79393',
+  300: '#F25C5C',
+  400: '#EF3B3B',
+  500: red,
+  600: '#C21212',
+  700: '#8F0D0D',
+  800: '#5E0808',
+  900: '#2E0404',
 }
 
 const theme = extendTheme({
   config: {
-    // System preference detection, so the site respects the visitor's OS
-    // setting rather than always opening in light mode.
-    initialColorMode: 'system',
+    // Single substrate: light only. No dark mode, no system following.
+    initialColorMode: 'light',
     useSystemColorMode: false,
   },
 
   fonts: {
-    heading: "'Newsreader Variable', Georgia, 'Times New Roman', serif",
-    body: "'Outfit Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    mono: "'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace",
+    heading: "'Archivo Black', 'Arial Black', Impact, sans-serif",
+    body: "'Archivo Variable', 'Helvetica Neue', Arial, sans-serif",
+    mono: "'JetBrains Mono Variable', 'IBM Plex Mono', monospace",
   },
 
-  fontWeights: {
-    normal: 400,
-    medium: 500,
-    semibold: 600,
-    bold: 700,
-  },
+  fontWeights: { normal: 400, medium: 500, semibold: 600, bold: 700, black: 900 },
 
   colors: {
-    primary: accent,
-    // Alias so pre-existing `green.*` references resolve to the same ramp.
-    green: accent,
-    gray: neutral,
-    secondary: { 300: neutral[300], 600: neutral[600] },
-    background: { light: '#FFFFFF', dark: neutral[800] },
+    ink: { 500: ink },
+    paper: { 500: paper },
+    primary: inkAccent,
+    green: inkAccent,
+    gray: mono,
+    red: hazard,
+    secondary: { 300: mono[300], 600: mono[600] },
+    background: { light: paper, dark: paper },
   },
 
-  // Shadows are tinted with the accent hue rather than pure black, so they read
-  // as light falling through the page instead of a grey smudge. One light
-  // source, from above.
+  // Hard offset shadows, never soft blur. This is the only permitted depth cue.
   shadows: {
-    xs: '0 1px 2px -1px rgba(24, 46, 30, 0.10)',
-    sm: '0 2px 4px -2px rgba(24, 46, 30, 0.12), 0 1px 2px -1px rgba(24, 46, 30, 0.07)',
-    md: '0 6px 14px -6px rgba(24, 46, 30, 0.16), 0 2px 5px -2px rgba(24, 46, 30, 0.08)',
-    lg: '0 14px 32px -12px rgba(24, 46, 30, 0.22), 0 5px 12px -6px rgba(24, 46, 30, 0.10)',
-    xl: '0 26px 52px -20px rgba(24, 46, 30, 0.28), 0 10px 20px -12px rgba(24, 46, 30, 0.14)',
-    darkSm: '0 2px 4px -2px rgba(0, 0, 0, 0.45), 0 1px 2px -1px rgba(0, 0, 0, 0.30)',
-    darkMd: '0 6px 14px -6px rgba(0, 0, 0, 0.55), 0 2px 5px -2px rgba(0, 0, 0, 0.35)',
-    darkLg: '0 14px 32px -12px rgba(0, 0, 0, 0.62), 0 5px 12px -6px rgba(0, 0, 0, 0.40)',
-    darkXl: '0 26px 52px -20px rgba(0, 0, 0, 0.70), 0 10px 20px -12px rgba(0, 0, 0, 0.45)',
+    xs: '2px 2px 0 rgba(10,10,10,1)',
+    sm: '3px 3px 0 rgba(10,10,10,1)',
+    md: '4px 4px 0 rgba(10,10,10,1)',
+    lg: '6px 6px 0 rgba(10,10,10,1)',
+    xl: '8px 8px 0 rgba(10,10,10,1)',
+    darkSm: '3px 3px 0 rgba(10,10,10,1)',
+    darkMd: '4px 4px 0 rgba(10,10,10,1)',
+    darkLg: '6px 6px 0 rgba(10,10,10,1)',
+    darkXl: '8px 8px 0 rgba(10,10,10,1)',
+    outline: `0 0 0 2px ${red}`,
   },
 
-  // Varied rather than one radius everywhere: tighter on inner elements,
-  // softer on the containers that hold them.
+  // Absolute rejection of border-radius. Every corner is 90 degrees.
   radii: {
-    sm: '4px',
-    md: '7px',
-    lg: '12px',
-    xl: '18px',
-    '2xl': '26px',
+    none: '0', sm: '0', base: '0', md: '0', lg: '0', xl: '0', '2xl': '0', '3xl': '0', full: '0',
   },
 
-  // A named scale beats scattered magic numbers like 999 and 9999.
   zIndices: {
-    base: 0,
-    raised: 10,
-    sticky: 100,
-    navigation: 1000,
-    overlay: 1200,
-    modal: 1400,
-    toast: 1600,
-    skipLink: 1800,
+    base: 0, raised: 10, sticky: 100, navigation: 1000,
+    overlay: 1200, modal: 1400, toast: 1600, skipLink: 1800,
   },
 
-  sizes: {
-    // Roughly 65 characters at the body size - the readable measure for the
-    // long research passages on Home, Methodology and Conclusion.
-    prose: '65ch',
-  },
+  sizes: { prose: '68ch' },
 
   styles: {
-    global: (props) => ({
-      html: {
-        scrollBehavior: 'smooth',
-      },
+    global: {
+      html: { scrollBehavior: 'smooth' },
       body: {
-        bg: props.colorMode === 'dark' ? neutral[900] : neutral[50],
-        color: props.colorMode === 'dark' ? neutral[100] : neutral[800],
-        fontFeatureSettings: "'kern', 'liga'",
+        bg: paper,
+        color: ink,
+        fontFamily: "'Archivo Variable', Arial, sans-serif",
+        fontFeatureSettings: "'kern'",
+        // Faint mechanical grain, unified across the document.
+        backgroundImage:
+          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E\")",
       },
-      // Paragraph rag: avoids single words stranded on a final line.
-      p: { textWrap: 'pretty' },
       'h1, h2, h3, h4': { textWrap: 'balance' },
-      // Figures in the results tables line up in columns.
       'table, [data-tabular]': { fontVariantNumeric: 'tabular-nums' },
-      '::selection': {
-        background: props.colorMode === 'dark' ? accent[700] : accent[100],
-      },
-      '*:focus-visible': {
-        outline: '3px solid',
-        outlineColor: accent[400],
-        outlineOffset: '2px',
-      },
+      '::selection': { background: red, color: paper },
+      '*:focus-visible': { outline: `3px solid ${red}`, outlineOffset: '2px' },
       '@media (prefers-reduced-motion: reduce)': {
         '*': {
           animationDuration: '0.01ms !important',
@@ -135,56 +130,87 @@ const theme = extendTheme({
           scrollBehavior: 'auto !important',
         },
       },
-    }),
+    },
   },
 
   components: {
     Heading: {
       baseStyle: {
-        fontWeight: 600,
-        letterSpacing: '-0.02em',
-        lineHeight: 1.15,
+        fontFamily: 'heading',
+        fontWeight: 900,
+        textTransform: 'uppercase',
+        letterSpacing: '-0.03em',
+        lineHeight: 0.92,
+        color: ink,
       },
       sizes: {
-        // Display sizes get heavier presence and tighter tracking.
-        '3xl': { fontSize: ['2.1rem', '3rem', '3.8rem', '4.4rem'], letterSpacing: '-0.035em' },
-        '2xl': { fontSize: ['1.9rem', '2.5rem', '3rem'], letterSpacing: '-0.03em' },
-        xl: { fontSize: ['1.6rem', '2rem', '2.4rem'], letterSpacing: '-0.025em' },
-        lg: { fontSize: ['1.45rem', '1.6rem', '1.8rem'], letterSpacing: '-0.02em' },
-        md: { fontSize: ['1.15rem', '1.25rem'], letterSpacing: '-0.015em' },
+        '4xl': { fontSize: 'clamp(3.5rem, 11vw, 11rem)', letterSpacing: '-0.05em' },
+        '3xl': { fontSize: 'clamp(2.6rem, 8vw, 6.5rem)', letterSpacing: '-0.045em' },
+        '2xl': { fontSize: 'clamp(2rem, 5vw, 3.6rem)', letterSpacing: '-0.04em' },
+        xl: { fontSize: 'clamp(1.6rem, 3.4vw, 2.6rem)', letterSpacing: '-0.03em' },
+        lg: { fontSize: 'clamp(1.3rem, 2.4vw, 1.8rem)', letterSpacing: '-0.025em' },
+        md: { fontSize: '1.15rem', letterSpacing: '-0.01em' },
       },
     },
 
-    Text: {
-      baseStyle: {
-        lineHeight: 1.7,
-      },
-    },
+    Text: { baseStyle: { lineHeight: 1.55 } },
 
     Button: {
       baseStyle: {
-        fontWeight: 500,
-        letterSpacing: '-0.005em',
-        borderRadius: 'md',
-        transition: 'transform 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease',
-        // Physical press feedback rather than a dead click.
-        _active: { transform: 'scale(0.98)' },
+        fontFamily: 'mono',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        letterSpacing: '0.06em',
+        borderRadius: 0,
+        border: '2px solid',
+        borderColor: ink,
+        transition: 'transform 0.1s steps(2), background-color 0.1s, color 0.1s',
+        _active: { transform: 'translate(2px, 2px)' },
+      },
+      variants: {
+        solid: {
+          bg: ink,
+          color: paper,
+          _hover: { bg: red, borderColor: ink, color: paper },
+        },
+        outline: {
+          bg: 'transparent',
+          color: ink,
+          _hover: { bg: ink, color: paper },
+        },
       },
     },
 
     Table: {
       baseStyle: {
+        table: { borderCollapse: 'collapse' },
         th: {
-          // Small, tracked sentence case reads better than the shouty
-          // all-caps default.
-          textTransform: 'none',
-          letterSpacing: '0.04em',
-          fontFamily: 'body',
-          fontWeight: 600,
+          // Paper ground with a heavy rule, so the reused pages' inline ink
+          // header colours stay legible (a filled-black header would hide them).
+          fontFamily: 'mono',
+          textTransform: 'uppercase',
+          letterSpacing: '0.08em',
+          fontWeight: 700,
+          fontSize: 'xs',
+          color: ink,
+          bg: paper,
+          borderTop: '2px solid',
+          borderBottom: '3px solid',
+          borderRight: '1px solid',
+          borderColor: ink,
+        },
+        td: {
+          border: '1px solid',
+          borderColor: ink,
           fontSize: 'sm',
         },
       },
     },
+
+    Input: { baseStyle: { field: { borderRadius: 0 } } },
+    Select: { baseStyle: { field: { borderRadius: 0 } } },
+    Textarea: { baseStyle: { borderRadius: 0 } },
+    Badge: { baseStyle: { borderRadius: 0, fontFamily: 'mono', textTransform: 'uppercase' } },
   },
 })
 

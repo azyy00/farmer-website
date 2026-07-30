@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-// Self-hosted variable fonts. Bundled with the app rather than fetched from a
-// third-party CDN, so there is no render-blocking cross-origin request, no
-// dependency on Google being reachable, and nothing leaked to another host.
-import '@fontsource-variable/newsreader'
-import '@fontsource-variable/outfit'
+// Swiss Industrial type system: Archivo Black (macro headers), Archivo (body),
+// JetBrains Mono (telemetry / metadata). Self-hosted and bundled by Vite.
+import '@fontsource/archivo-black'
+import '@fontsource-variable/archivo'
+import '@fontsource-variable/jetbrains-mono'
 
 import App from './App.jsx'
 

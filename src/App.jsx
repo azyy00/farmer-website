@@ -1,80 +1,67 @@
 import { lazy, Suspense } from 'react'
-import { ChakraProvider, ColorModeScript, Box, useColorModeValue, Link as ChakraLink } from '@chakra-ui/react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ChakraProvider, ColorModeScript, Box, Link as ChakraLink } from '@chakra-ui/react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import ScrollToTop from './components/ScrollToTop'
 import PageMeta from './components/PageMeta'
 import BackToTop from './components/BackToTop'
 import GrainOverlay from './components/GrainOverlay'
 import PageSkeleton from './components/PageSkeleton'
 import theme from './theme'
 
-// Each route is loaded on demand so a visitor landing on the home page does not
-// download the image-heavy Methodology and Results pages up front.
-const Home = lazy(() => import('./pages/Home'))
-const Researchers = lazy(() => import('./pages/Researchers'))
-const About = lazy(() => import('./pages/About'))
-const Methodology = lazy(() => import('./pages/Methodology'))
-const Results = lazy(() => import('./pages/Results'))
-const Conclusion = lazy(() => import('./pages/Conclusion'))
-const ContactUs = lazy(() => import('./components/ContactUs'))
+// The whole study is a single scrolling document now. The old per-route paths
+// redirect to the matching anchor so existing links keep working.
+const OnePage = lazy(() => import('./pages/OnePage'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
-const AppShell = () => {
-  const bg = useColorModeValue('gray.50', 'gray.900')
-  const skipLinkBg = useColorModeValue('primary.600', 'primary.200')
-  const skipLinkColor = useColorModeValue('white', 'gray.900')
+const AppShell = () => (
+  <Box minH="100dvh" bg="paper.500" display="flex" flexDirection="column" margin={0} padding={0}>
+    <ChakraLink
+      href="#main-content"
+      position="absolute"
+      left="-9999px"
+      top={2}
+      zIndex="skipLink"
+      bg="ink.500"
+      color="paper.500"
+      px={4}
+      py={2}
+      fontFamily="mono"
+      textTransform="uppercase"
+      fontWeight="bold"
+      _focus={{ left: 2 }}
+    >
+      Skip to main content
+    </ChakraLink>
 
-  return (
-    <Box minH="100dvh" bg={bg} display="flex" flexDirection="column" margin={0} padding={0}>
-      <ChakraLink
-        href="#main-content"
-        position="absolute"
-        left="-9999px"
-        top={2}
-        zIndex="skipLink"
-        bg={skipLinkBg}
-        color={skipLinkColor}
-        px={4}
-        py={2}
-        borderRadius="md"
-        fontWeight="bold"
-        _focus={{ left: 2 }}
-      >
-        Skip to main content
-      </ChakraLink>
+    <Navbar />
 
-      <Navbar />
-
-      <Box as="main" id="main-content" pt="64px" flex="1">
-        <Suspense fallback={<PageSkeleton />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/researchers" element={<Researchers />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/methodology" element={<Methodology />} />
-            <Route path="/results" element={<Results />} />
-            <Route path="/conclusion" element={<Conclusion />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </Box>
-
-      <Footer />
-      <BackToTop />
-      <GrainOverlay />
+    <Box as="main" id="main-content" pt="64px" flex="1">
+      <Suspense fallback={<PageSkeleton />}>
+        <Routes>
+          <Route path="/" element={<OnePage />} />
+          <Route path="/methodology" element={<Navigate to="/#methodology" replace />} />
+          <Route path="/results" element={<Navigate to="/#results" replace />} />
+          <Route path="/conclusion" element={<Navigate to="/#conclusion" replace />} />
+          <Route path="/researchers" element={<Navigate to="/#researchers" replace />} />
+          <Route path="/about" element={<Navigate to="/#top" replace />} />
+          <Route path="/contact" element={<Navigate to="/#contact" replace />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </Box>
-  )
-}
+
+    <Footer />
+    <BackToTop />
+    <GrainOverlay />
+  </Box>
+)
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <Router>
-        <ScrollToTop />
         <PageMeta />
         <AppShell />
       </Router>

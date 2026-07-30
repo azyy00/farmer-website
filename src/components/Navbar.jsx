@@ -1,181 +1,176 @@
-import {
-  Box,
-  Flex,
-  Text,
-  Button,
-  Stack,
-  useColorModeValue,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  IconButton,
-  HStack,
-} from '@chakra-ui/react'
-import { Link, useLocation } from 'react-router-dom'
-import {
-  PiHouse,
-  PiBookOpenText,
-  PiChartBar,
-  PiLightbulb,
-  PiUsersThree,
-  PiEnvelopeSimple,
-  PiList,
-} from 'react-icons/pi'
-import ColorModeMenu from './ColorModeMenu'
+import { useCallback, useEffect, useState } from 'react'
+import { Box, Flex, Text, HStack, IconButton, Collapse, VStack } from '@chakra-ui/react'
 import { LogoMark } from './Logo'
 
-// Phosphor rather than the Font Awesome solid set: one consistent stroke
-// weight across the whole interface, and less of a default look.
 const navItems = [
-  { name: 'Home', path: '/', icon: <PiHouse /> },
-  { name: 'Methodology', path: '/methodology', icon: <PiBookOpenText /> },
-  { name: 'Results', path: '/results', icon: <PiChartBar /> },
-  { name: 'Conclusion', path: '/conclusion', icon: <PiLightbulb /> },
-  { name: 'Researchers', path: '/researchers', icon: <PiUsersThree /> },
-  { name: 'Contact', path: '/contact', icon: <PiEnvelopeSimple /> },
+  { id: 'top', label: 'Home', code: 'D-01' },
+  { id: 'methodology', label: 'Method', code: 'D-02' },
+  { id: 'results', label: 'Results', code: 'D-03' },
+  { id: 'conclusion', label: 'Conclusion', code: 'D-04' },
+  { id: 'researchers', label: 'Team', code: 'D-05' },
+  { id: 'contact', label: 'Contact', code: 'D-06' },
 ]
 
-const Navbar = () => {
-  const location = useLocation()
+const scrollToId = (id) => {
+  const el = document.getElementById(id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    window.history.replaceState(null, '', id === 'top' ? '/' : `/#${id}`)
+  }
+}
 
-  // Hooks must run unconditionally and in a stable order, so every colour is
-  // resolved once here rather than inside the nav-item loop.
-  const bg = useColorModeValue('rgba(250, 250, 248, 0.82)', 'rgba(26, 26, 23, 0.82)')
-  const color = useColorModeValue('secondary.600', 'white')
-  const borderColor = useColorModeValue('gray.200', 'gray.700')
-  const brandColor = useColorModeValue('primary.600', 'primary.200')
-  const brandHoverColor = useColorModeValue('primary.700', 'primary.300')
-  const hoverBg = useColorModeValue('primary.50', 'primary.900')
-  const hoverColor = useColorModeValue('primary.700', 'primary.200')
-  const activeBg = useColorModeValue('primary.100', 'primary.800')
-  const activeColor = useColorModeValue('primary.700', 'primary.200')
-  const logoGround = useColorModeValue('rgba(250,250,248,0.92)', 'rgba(26,26,23,0.92)')
+const Navbar = () => {
+  const [active, setActive] = useState('top')
+  const [open, setOpen] = useState(false)
+
+  // Active-unit tracking via IntersectionObserver rather than a scroll handler.
+  useEffect(() => {
+    const sections = navItems
+      .map((i) => document.getElementById(i.id))
+      .filter(Boolean)
+    if (!sections.length) return undefined
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+        if (visible[0]) setActive(visible[0].target.id)
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: [0, 0.2, 0.5] }
+    )
+    sections.forEach((s) => observer.observe(s))
+    return () => observer.disconnect()
+  }, [])
+
+  const go = useCallback((id) => {
+    setOpen(false)
+    scrollToId(id)
+  }, [])
 
   return (
-    <Flex
+    <Box
       as="nav"
       aria-label="Main navigation"
-      bg={bg}
-      color={color}
-      minH="64px"
-      py={2}
-      px={{ base: 4, md: 6, xl: 10 }}
-      borderBottom="1px solid"
-      borderColor={borderColor}
-      align="center"
-      justify="space-between"
-      gap={3}
       position="fixed"
       top={0}
       left={0}
       right={0}
       zIndex="navigation"
-      backdropFilter="blur(14px) saturate(140%)"
-      margin={0}
+      bg="paper.500"
+      borderBottom="2px solid"
+      borderColor="ink.500"
     >
-      <Box
-        as={Link}
-        to="/"
-        display="flex"
-        alignItems="center"
-        gap={2.5}
-        sx={{ '--logo-ground': logoGround }}
-        _hover={{ '& .brand-text': { color: brandHoverColor } }}
+      <Flex
+        minH="64px"
+        align="center"
+        justify="space-between"
+        px={{ base: 3, md: 6, xl: 10 }}
+        gap={4}
       >
-        <LogoMark size={30} color={brandColor} title="Home" />
-        <Text
-          className="brand-text"
-          fontFamily="heading"
-          color={brandColor}
-          fontWeight="600"
-          fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
-          letterSpacing="-0.02em"
-          lineHeight={1.15}
-          noOfLines={2}
-          transition="color 0.2s"
+        <Flex
+          as="button"
+          onClick={() => go('top')}
+          align="center"
+          gap={2.5}
+          sx={{ '--logo-ground': '#F4F4F0' }}
+          textAlign="left"
         >
-          Agricultural Office Challenges in Goa
-        </Text>
-      </Box>
+          <LogoMark size={30} color="#0A0A0A" title="Home" />
+          <Text
+            fontFamily="heading"
+            fontWeight={900}
+            textTransform="uppercase"
+            fontSize={{ base: '0.7rem', md: '0.9rem' }}
+            letterSpacing="-0.01em"
+            lineHeight={0.95}
+            noOfLines={2}
+            maxW={{ base: '150px', md: 'none' }}
+          >
+            Agricultural Office Challenges / Goa
+          </Text>
+        </Flex>
 
-      {/* Desktop navigation */}
-      <Flex display={{ base: 'none', lg: 'flex' }} align="center">
-        <Stack direction="row" spacing={1} align="center">
+        {/* Desktop unit index */}
+        <HStack display={{ base: 'none', lg: 'flex' }} spacing={0} height="64px">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path
+            const on = active === item.id
             return (
-              <Button
-                key={item.path}
-                as={Link}
-                to={item.path}
-                variant="ghost"
-                size="sm"
-                leftIcon={item.icon}
-                aria-current={isActive ? 'page' : undefined}
-                bg={isActive ? activeBg : undefined}
-                color={isActive ? activeColor : undefined}
-                fontWeight={isActive ? 600 : 500}
-                position="relative"
-                _hover={{ bg: hoverBg, color: hoverColor }}
-                _after={
-                  isActive
-                    ? {
-                        content: '""',
-                        position: 'absolute',
-                        left: '14px',
-                        right: '14px',
-                        bottom: '2px',
-                        height: '2px',
-                        borderRadius: 'full',
-                        bg: 'currentColor',
-                      }
-                    : undefined
-                }
+              <Box
+                as="button"
+                key={item.id}
+                onClick={() => go(item.id)}
+                aria-current={on ? 'page' : undefined}
+                height="100%"
+                px={4}
+                borderLeft="1px solid"
+                borderColor="ink.500"
+                bg={on ? 'ink.500' : 'transparent'}
+                color={on ? 'paper.500' : 'ink.500'}
+                fontFamily="mono"
+                fontSize="12px"
+                fontWeight={700}
+                textTransform="uppercase"
+                letterSpacing="0.08em"
+                transition="none"
+                _hover={on ? {} : { bg: 'red.500', color: 'paper.500' }}
               >
-                {item.name}
-              </Button>
+                {item.label}
+              </Box>
             )
           })}
-        </Stack>
+        </HStack>
+
+        {/* Mobile trigger */}
+        <IconButton
+          display={{ base: 'flex', lg: 'none' }}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          onClick={() => setOpen((v) => !v)}
+          variant="outline"
+          fontFamily="mono"
+          fontWeight={700}
+          icon={<Text fontFamily="mono">{open ? '[X]' : '[≡]'}</Text>}
+        />
       </Flex>
 
-      <HStack spacing={2} flexShrink={0}>
-        <ColorModeMenu />
-
-        {/* Mobile navigation */}
-        <Box display={{ base: 'block', lg: 'none' }}>
-          <Menu autoSelect={false}>
-            <MenuButton
-              as={IconButton}
-              aria-label="Open navigation menu"
-              icon={<PiList />}
-              variant="outline"
-              _hover={{ bg: hoverBg }}
-            />
-            <MenuList zIndex="navigation">
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path
-                return (
-                  <MenuItem
-                    key={item.path}
-                    as={Link}
-                    to={item.path}
-                    icon={item.icon}
-                    aria-current={isActive ? 'page' : undefined}
-                    bg={isActive ? hoverBg : undefined}
-                    fontWeight={isActive ? 'semibold' : 'normal'}
-                    _hover={{ bg: hoverBg, color: hoverColor }}
-                  >
-                    {item.name}
-                  </MenuItem>
-                )
-              })}
-            </MenuList>
-          </Menu>
-        </Box>
-      </HStack>
-    </Flex>
+      {/* Mobile unit index */}
+      <Collapse in={open} animateOpacity>
+        <VStack
+          display={{ lg: 'none' }}
+          spacing={0}
+          align="stretch"
+          borderTop="2px solid"
+          borderColor="red.500"
+        >
+          {navItems.map((item) => {
+            const on = active === item.id
+            return (
+              <Flex
+                as="button"
+                key={item.id}
+                onClick={() => go(item.id)}
+                width="100%"
+                justify="space-between"
+                align="center"
+                px={4}
+                py={3}
+                borderBottom="1px solid"
+                borderColor="ink.500"
+                bg={on ? 'ink.500' : 'transparent'}
+                color={on ? 'paper.500' : 'ink.500'}
+                fontFamily="mono"
+                fontWeight={700}
+                textTransform="uppercase"
+                letterSpacing="0.08em"
+                fontSize="13px"
+              >
+                <Text>{item.label}</Text>
+                <Text opacity={0.6}>{item.code}</Text>
+              </Flex>
+            )
+          })}
+        </VStack>
+      </Collapse>
+    </Box>
   )
 }
 
