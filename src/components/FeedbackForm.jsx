@@ -25,8 +25,8 @@ const FeedbackForm = () => {
     // Simulate form submission
     setTimeout(() => {
       toast({
-        title: 'Feedback Submitted',
-        description: "Thank you for your valuable feedback!",
+        title: 'Feedback received',
+        description: 'Thank you for your feedback. We read every response.',
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -42,7 +42,7 @@ const FeedbackForm = () => {
       p={8}
       borderRadius="xl"
       boxShadow="xl"
-      border="2px"
+      border="1px solid"
       borderColor={useColorModeValue('green.100', 'green.700')}
       maxW="600px"
       mx="auto"

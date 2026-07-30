@@ -1,7 +1,7 @@
 import { Box, Container, Heading, Text, VStack, Button, SimpleGrid, useColorModeValue, Icon, Flex, Image, Avatar, AvatarGroup } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
 import { Link } from 'react-router-dom'
-import { FaBook, FaChartBar, FaLightbulb } from 'react-icons/fa'
+import { PiBookOpenText, PiLightbulb, PiArrowRight } from 'react-icons/pi'
 import { useState, useEffect } from 'react'
 import scroll1 from '../assets/scroll1.webp'
 import scroll3 from '../assets/scroll3.webp'
@@ -69,34 +69,29 @@ const Home = () => {
   const secondaryColor = useColorModeValue('gray.600', 'gray.300');
   const backgroundColor = useColorModeValue('white', 'gray.900');
   const cardBg = useColorModeValue('background.light', 'background.dark');
-  const cardBorder = useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent');
-  const cardShadow = useColorModeValue(
-    '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
-    '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
-  );
-  const cardHoverShadow = useColorModeValue(
-    '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-    '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-  );
+  const cardBorder = useColorModeValue('gray.200', 'whiteAlpha.100');
+  const cardShadow = useColorModeValue('sm', 'darkSm');
+  const cardHoverShadow = useColorModeValue('lg', 'darkLg');
   const cardText = useColorModeValue('black', 'white');
   const dotActiveColor = useColorModeValue('green.600', 'green.200');
   const avatarRing = useColorModeValue('white', 'gray.800');
   const badgeBg = useColorModeValue('green.100', 'green.800');
   const keywordBg = useColorModeValue('primary.50', 'primary.900');
   const keywordColor = useColorModeValue('primary.600', 'primary.200');
-  const headingFont = '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif';
-  const bodyFont = '"Roboto", sans-serif';
 
   return (
-    <Box fontFamily={bodyFont} bg={backgroundColor} color={secondaryColor}>
+    <Box fontFamily="body" bg={backgroundColor} color={secondaryColor}>
       {/* Hero Section */}
       <Box
-        minH="100vh"
+        minH={{ base: "auto", md: "100dvh" }}
         display="flex"
         alignItems="center"
         bg={backgroundColor}
-        pt={{ base: "60px", md: 0 }}
+        pt={{ base: 16, md: 0 }}
+        pb={{ base: 16, md: 0 }}
         px={4}
+        position="relative"
+        overflow="hidden"
         animation={`${fadeIn} 1s ease-out`}
       >
         <Container maxW={'container.xl'}>
@@ -104,16 +99,17 @@ const Home = () => {
             direction={{ base: 'column', md: 'row' }}
             align="center"
             justify="space-between"
-            gap={8}
+            gap={{ base: 10, md: 12, lg: 20 }}
           >
             {/* Image Content - Moved before text content for mobile */}
             <Box
               position="relative"
-              height={{ base: "250px", sm: "300px", md: "400px" }}
+              height={{ base: "240px", sm: "300px", md: "440px" }}
               width="100%"
-              maxW={{ base: "100%", md: "50%" }}
+              flex={{ md: '5' }}
+              maxW={{ base: "100%", md: "46%" }}
               overflow="hidden"
-              borderRadius="xl"
+              borderRadius="2xl"
               boxShadow="xl"
               order={{ base: 1, md: 2 }}  // Order 1 puts it first on mobile, 2 on desktop
             >
@@ -166,21 +162,30 @@ const Home = () => {
             </Box>
 
             {/* Text Content */}
-            <VStack 
-              spacing={6} 
-              align={{ base: 'center', md: 'start' }} 
-              flex="1"
+            <VStack
+              spacing={6}
+              align={{ base: 'center', md: 'start' }}
+              flex={{ md: '7' }}
               order={{ base: 2, md: 1 }}  // Order 2 puts it second on mobile, 1 on desktop
             >
+              <Text
+                fontSize="sm"
+                fontWeight="600"
+                letterSpacing="0.14em"
+                textTransform="uppercase"
+                color={primaryColor}
+                opacity={0.85}
+              >
+                Qualitative research study
+              </Text>
               <Heading
                 as="h1"
-                size="2xl"
-                fontWeight="bold"
+                size="3xl"
+                fontWeight="600"
                 color={primaryColor}
-                lineHeight="1.2"
-                mb={4}
+                mb={2}
                 textAlign={{ base: 'center', md: 'left' }}
-                fontFamily={headingFont}
+                fontFamily="heading"
               >
                 Communication Challenges in the Implementation of Agricultural Office in LGU Goa
               </Heading>
@@ -247,23 +252,23 @@ const Home = () => {
             {/* Abstract Section */}
             <VStack spacing={8} align="stretch">
               <Box>
-                <Heading 
-                  size="xl" 
-                  mb={6} 
-                  textAlign="center"
+                <Heading
+                  size="xl"
+                  mb={6}
                   color={primaryColor}
                 >
                   Abstract
                 </Heading>
-                <Text 
-                  fontSize="lg" 
-                  lineHeight="tall" 
-                  textAlign="justify"
+                <Text
+                  fontSize={{ base: 'md', md: 'lg' }}
+                  lineHeight="1.75"
+                  textAlign="left"
+                  maxW="prose"
                   bg={cardBg}
                   p={6}
                   borderRadius="lg"
                   boxShadow={cardShadow}
-                  border="2px"
+                  border="1px solid"
                   borderColor={cardBorder}
                   transition="all 0.3s ease"
                   _hover={{
@@ -281,23 +286,23 @@ const Home = () => {
             {/* Introduction Section */}
             <VStack spacing={8} align="stretch">
               <Box>
-                <Heading 
-                  size="xl" 
-                  mb={6} 
-                  textAlign="center"
+                <Heading
+                  size="xl"
+                  mb={6}
                   color={primaryColor}
                 >
                   Introduction
                 </Heading>
-                <Text 
-                  fontSize="lg" 
-                  lineHeight="tall" 
-                  textAlign="justify"
+                <Text
+                  fontSize={{ base: 'md', md: 'lg' }}
+                  lineHeight="1.75"
+                  textAlign="left"
+                  maxW="prose"
                   bg={cardBg}
                   p={6}
                   borderRadius="lg"
                   boxShadow={cardShadow}
-                  border="2px"
+                  border="1px solid"
                   borderColor={cardBorder}
                   transition="all 0.3s ease"
                   _hover={{
@@ -329,7 +334,7 @@ const Home = () => {
                   p={6}
                   borderRadius="lg"
                   boxShadow={cardShadow}
-                  border="2px"
+                  border="1px solid"
                   borderColor={cardBorder}
                   transition="all 0.3s ease"
                   _hover={{
@@ -338,7 +343,7 @@ const Home = () => {
                   }}
                 >
                   <VStack spacing={6} align="start" width="100%">
-                    <Text textAlign="justify" fontSize="lg" lineHeight="1.8" color={cardText}>
+                    <Text textAlign="left" fontSize="lg" lineHeight="1.8" color={cardText}>
                       Generally, this study aims to explore the communication strategies, challenges, and implementation of outreach programs by the Local Agricultural Office.
                     </Text>
                     <Text fontWeight="bold" fontSize="lg" color={cardText}>
@@ -364,7 +369,7 @@ const Home = () => {
                 p={6} 
                 borderRadius="lg"
                 boxShadow={cardShadow}
-                border="2px"
+                border="1px solid"
                 borderColor={cardBorder}
                 transition="all 0.3s ease"
                 _hover={{
@@ -398,57 +403,68 @@ const Home = () => {
                 </Flex>
               </Box>
 
-              {/* Quick Links */}
-              <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6} mt={8}>
-                <Button
-                  as={Link}
-                  to="/methodology"
-                  colorScheme="green"
-                  size="lg"
-                  height="100px"
-                  leftIcon={<Icon as={FaBook} boxSize={6} />}
-                  _hover={{
-                    transform: 'translateY(-5px)',
-                    boxShadow: cardHoverShadow
-                  }}
-                  transition="all 0.3s ease"
-                  aria-label="Research Methodology"
-                >
-                  Research Methodology
-                </Button>
+              {/* Quick links. Previously three identical full-width towers;
+                  now one lead action with two lighter secondary routes, so the
+                  row has a hierarchy instead of three equal shouts. */}
+              <Box mt={10} w="100%">
                 <Button
                   as={Link}
                   to="/results"
                   colorScheme="green"
                   size="lg"
-                  height="100px"
-                  leftIcon={<Icon as={FaChartBar} boxSize={6} />}
-                  _hover={{
-                    transform: 'translateY(-5px)',
-                    boxShadow: cardHoverShadow
-                  }}
-                  transition="all 0.3s ease"
-                  aria-label="Results & Discussion"
+                  h="auto"
+                  py={6}
+                  px={7}
+                  w="100%"
+                  justifyContent="space-between"
+                  rightIcon={<Icon as={PiArrowRight} boxSize={5} />}
+                  borderRadius="xl"
+                  textAlign="left"
+                  _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
                 >
-                  Results & Discussion
+                  <Box>
+                    <Text fontSize="lg" fontWeight="600" lineHeight="1.3">
+                      Results and discussion
+                    </Text>
+                    <Text fontSize="sm" fontWeight="400" opacity={0.85} lineHeight="1.4">
+                      Communication strategies and the barriers farmers described
+                    </Text>
+                  </Box>
                 </Button>
-                <Button
-                  as={Link}
-                  to="/conclusion"
-                  colorScheme="green"
-                  size="lg"
-                  height="100px"
-                  leftIcon={<Icon as={FaLightbulb} boxSize={6} />}
-                  _hover={{
-                    transform: 'translateY(-5px)',
-                    boxShadow: cardHoverShadow
-                  }}
-                  transition="all 0.3s ease"
-                  aria-label="Conclusion & Recommendations"
-                >
-                  Conclusion & Recommendations
-                </Button>
-              </SimpleGrid>
+
+                <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={4} mt={4}>
+                  {[
+                    { to: '/methodology', icon: PiBookOpenText, label: 'Methodology', hint: 'How the study was run' },
+                    { to: '/conclusion', icon: PiLightbulb, label: 'Conclusion', hint: 'Findings and recommendations' },
+                  ].map((link) => (
+                    <Button
+                      key={link.to}
+                      as={Link}
+                      to={link.to}
+                      variant="outline"
+                      colorScheme="green"
+                      size="lg"
+                      h="auto"
+                      py={5}
+                      px={5}
+                      justifyContent="flex-start"
+                      leftIcon={<Icon as={link.icon} boxSize={5} />}
+                      borderRadius="lg"
+                      textAlign="left"
+                      _hover={{ transform: 'translateY(-2px)', bg: keywordBg }}
+                    >
+                      <Box>
+                        <Text fontSize="md" fontWeight="600" lineHeight="1.3">
+                          {link.label}
+                        </Text>
+                        <Text fontSize="xs" fontWeight="400" opacity={0.75} lineHeight="1.4">
+                          {link.hint}
+                        </Text>
+                      </Box>
+                    </Button>
+                  ))}
+                </SimpleGrid>
+              </Box>
             </VStack>
           </VStack>
         </Container>

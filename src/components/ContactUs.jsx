@@ -19,7 +19,7 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { FaEnvelope, FaPhone } from 'react-icons/fa'
+import { PiEnvelopeSimple, PiPhone } from 'react-icons/pi'
 
 // The adviser has no published address, so messages for her are routed through
 // the lead researcher rather than silently going nowhere.
@@ -134,7 +134,7 @@ const ContactUs = () => {
             p={{ base: 5, md: 8 }}
             borderRadius="xl"
             boxShadow="xl"
-            border="2px"
+            border="1px solid"
             borderColor={cardBorder}
             maxW="3xl"
             mx="auto"
@@ -230,7 +230,7 @@ const ContactUs = () => {
                     colorScheme="green"
                     size="lg"
                     width="full"
-                    leftIcon={<Icon as={FaEnvelope} />}
+                    leftIcon={<Icon as={PiEnvelopeSimple} />}
                     _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
                   >
                     Send Message
@@ -248,11 +248,11 @@ const ContactUs = () => {
             </Heading>
             <VStack spacing={2}>
               <HStack color={mutedColor}>
-                <Icon as={FaEnvelope} />
+                <Icon as={PiEnvelopeSimple} />
                 <Link href={`mailto:${LEAD_EMAIL}`}>{LEAD_EMAIL}</Link>
               </HStack>
               <HStack color={mutedColor}>
-                <Icon as={FaPhone} />
+                <Icon as={PiPhone} />
                 <Link href="tel:+639109681266">0910 968 1266</Link>
               </HStack>
             </VStack>

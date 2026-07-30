@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { IconButton, useColorModeValue } from '@chakra-ui/react'
-import { FaArrowUp } from 'react-icons/fa'
+import { PiArrowUp } from 'react-icons/pi'
 
 // The research pages are long; this gives readers a way back to the navigation
 // without dragging the scrollbar all the way up.
@@ -19,12 +19,12 @@ const BackToTop = () => {
   return (
     <IconButton
       aria-label="Back to top"
-      icon={<FaArrowUp />}
+      icon={<PiArrowUp />}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       position="fixed"
       bottom={{ base: 4, md: 8 }}
       right={{ base: 4, md: 8 }}
-      zIndex={999}
+      zIndex="sticky"
       isRound
       size="lg"
       bg={bg}

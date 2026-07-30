@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/react';
 import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, Image, Grid, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Flex, IconButton } from '@chakra-ui/react';
-import { FaClipboardList, FaUsers, FaTools, FaPenFancy, FaChartLine, FaCamera, FaChevronLeft, FaChevronRight, FaPause, FaPlay } from 'react-icons/fa';
+import { PiClipboardText, PiUsersThree, PiWrench, PiPencilLine, PiChartLineUp, PiCamera, PiCaretLeft, PiCaretRight, PiPause, PiPlay } from 'react-icons/pi';
 import { useState, useEffect, useCallback } from 'react';
 
 // Import all data gathering images
@@ -26,28 +26,19 @@ const MethodologySection = ({ title, content, icon }) => (
     bg={useColorModeValue('background.light', 'background.dark')} 
     p={6} 
     borderRadius="lg"
-    boxShadow={useColorModeValue(
-      '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-      '0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2)'
-    )}
-    border="2px"
-    borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+    boxShadow={useColorModeValue('sm', 'darkSm')}
+    border="1px solid"
+    borderColor={useColorModeValue('gray.200', 'whiteAlpha.100')}
     animation={`${fadeIn} 0.5s ease-out`}
     transition="all 0.3s ease"
     _hover={{
       transform: 'translateY(-4px)',
-      boxShadow: useColorModeValue(
-        '0 12px 20px -6px rgba(0, 0, 0, 0.15), 0 4px 8px -4px rgba(0, 0, 0, 0.08)',
-        '0 12px 20px -6px rgba(0, 0, 0, 0.5), 0 4px 8px -4px rgba(0, 0, 0, 0.3)'
-      ),
+      boxShadow: useColorModeValue('lg', 'darkLg'),
       cursor: 'pointer'
     }}
     _active={{
       transform: 'translateY(-2px)',
-      boxShadow: useColorModeValue(
-        '0 6px 10px -3px rgba(0, 0, 0, 0.12), 0 3px 6px -2px rgba(0, 0, 0, 0.07)',
-        '0 6px 10px -3px rgba(0, 0, 0, 0.45), 0 3px 6px -2px rgba(0, 0, 0, 0.25)'
-      )
+      boxShadow: useColorModeValue('md', 'darkMd')
     }}
     backdropFilter="blur(10px)"
   >
@@ -72,7 +63,7 @@ const MethodologySection = ({ title, content, icon }) => (
       <Box as="span">{title}</Box>
     </Heading>
     <Text 
-      textAlign="justify" 
+      textAlign="left" 
       fontFamily={'body'} 
       color={useColorModeValue('black', 'white')}
       lineHeight="1.7"
@@ -187,7 +178,7 @@ const DataGatheringCarousel = () => {
         >
           <IconButton
             aria-label="Previous slide"
-            icon={<FaChevronLeft />}
+            icon={<PiCaretLeft />}
             onClick={() => {
               prevSlide();
               setIsPlaying(false);
@@ -200,7 +191,7 @@ const DataGatheringCarousel = () => {
           />
           <IconButton
             aria-label="Next slide"
-            icon={<FaChevronRight />}
+            icon={<PiCaretRight />}
             onClick={() => {
               nextSlide();
               setIsPlaying(false);
@@ -216,7 +207,7 @@ const DataGatheringCarousel = () => {
         {/* Play/Pause Button */}
         <IconButton
           aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
-          icon={isPlaying ? <FaPause /> : <FaPlay />}
+          icon={isPlaying ? <PiPause /> : <PiPlay />}
           onClick={togglePlayPause}
           position="absolute"
           top={4}
@@ -332,27 +323,27 @@ const Methodology = () => {
     {
       title: "Research Design",
       content: "This study used the qualitative method to investigate the effectiveness of communication strategies utilized by the Local Agriculture Office to improve agricultural outreach. The purpose is to learn about the perspectives, experiences, and insights of key stakeholders, notably rice farmers and agricultural office staff, regarding the communication techniques and strategies used.",
-      icon: <FaClipboardList />
+      icon: <PiClipboardText />
     },
     {
       title: "Participants",
       content: "The participants in this study were rice farmers from Goa in Partido, with a target sample size of ten (10), who had previously participated in or profited from outreach initiatives and were carefully selected to participate in the study. The sample included a variety of farms, both small and large-scale operations.",
-      icon: <FaUsers />
+      icon: <PiUsersThree />
     },
     {
       title: "Data Gathering Procedures",
       content: "Semi-structured, in-depth interviews with agriculture office personnel and rice farmers were performed to collect a variety of opinions and thoughts. The interviews focused on farmers' understanding, opinions, and experiences with the office's agricultural communication techniques. Discussions centered on the strategies' perceived utility, accessibility, and general effectiveness.",
-      icon: <FaTools />
+      icon: <PiWrench />
     },
     {
       title: "Data Gathering Instruments",
       content: "The researchers conducted semi-structured interviews with agricultural office workers as well as in-depth interviews with rice farmers. Interviews with farmers were done to learn more about their perspectives on communication tactics, the utility of various technologies, how well they suited their needs, the obstacles they faced, and suggestions for improvement.",
-      icon: <FaPenFancy />
+      icon: <PiPencilLine />
     },
     {
       title: "Data Analysis",
       content: "This study's qualitative data analysis used a systematic coding method. Initially, open coding was employed, with transcripts from in-depth interviews being rigorously analyzed to identify relevant subjects and categories. Following that, axial coding grouped these initial codes into bigger categories, resulting in links between different concepts.",
-      icon: <FaChartLine />
+      icon: <PiChartLineUp />
     }
   ]
 
@@ -389,7 +380,7 @@ const Methodology = () => {
               alignItems="center"
               gap={3}
             >
-              <FaCamera />
+              <PiCamera />
               Data Gathering Documentation
             </Heading>
             <Text 

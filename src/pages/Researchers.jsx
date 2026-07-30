@@ -1,5 +1,5 @@
 import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, Image, Collapse, IconButton, Flex } from '@chakra-ui/react'
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa'
+import { PiEnvelopeSimple, PiPhone, PiMapPin, PiCaretDown, PiCaretUp } from 'react-icons/pi'
 import { useState } from 'react'
 import { keyframes } from '@emotion/react'
 import m1 from '../assets/members/M4.webp'
@@ -40,10 +40,10 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
   // Hoisted so none of these hooks sit inside the conditional `image &&` /
   // `contacts &&` branches below.
   const cardColor1 = useColorModeValue('background.light', 'background.dark');
-  const cardColor2 = useColorModeValue('0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)', '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)');
-  const cardColor3 = useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent');
-  const cardColor4 = useColorModeValue('0 20px 30px -10px rgba(0, 0, 0, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1)', '0 20px 30px -10px rgba(0, 0, 0, 0.6), 0 10px 15px -5px rgba(0, 0, 0, 0.4)');
-  const cardColor5 = useColorModeValue('0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -4px rgba(0, 0, 0, 0.06)', '0 8px 16px -4px rgba(0, 0, 0, 0.4), 0 4px 8px -4px rgba(0, 0, 0, 0.3)');
+  const cardColor2 = useColorModeValue('sm', 'darkSm');
+  const cardColor3 = useColorModeValue('gray.200', 'whiteAlpha.100');
+  const cardColor4 = useColorModeValue('xl', 'darkXl');
+  const cardColor5 = useColorModeValue('md', 'darkMd');
   const cardColor6 = useColorModeValue('green.600', 'green.200');
   const cardColor7 = useColorModeValue('black', 'white');
   const cardColor8 = useColorModeValue('green.50', 'green.900');
@@ -59,7 +59,7 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
       boxShadow={cardColor2}
       rounded={'xl'}
       textAlign={'center'}
-      border="2px"
+      border="1px solid"
       borderColor={cardColor3}
       transition="all 0.3s ease"
       animation={`${slideInUp} ${0.5 + index * 0.2}s ease-out`}
@@ -70,6 +70,9 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
       position="relative"
       overflow="hidden"
       width="100%"
+      height="100%"
+      display="flex"
+      flexDirection="column"
     >
       {image && (
         <Box
@@ -78,7 +81,7 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
           width={{ base: "150px", sm: "180px" }}
           height={{ base: "150px", sm: "180px" }}
           mx="auto"
-          borderRadius="full"
+          borderRadius="2xl"
           overflow="hidden"
           boxShadow={cardColor5}
           transition="all 0.3s ease"
@@ -99,7 +102,7 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
           />
         </Box>
       )}
-      <VStack spacing={{ base: 3, md: 4 }}>
+      <VStack spacing={{ base: 3, md: 4 }} flex="1" width="100%">
         <Heading 
           size={{ base: "md", sm: "lg" }}
           fontFamily={'heading'} 
@@ -109,20 +112,19 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
         >
           {name}
         </Heading>
-        <Text 
-          color={cardColor7} 
-          fontWeight="bold" 
-          fontFamily={'body'}
-          fontSize={{ base: "md", sm: "lg", md: "xl" }}
+        <Text
+          color={cardColor7}
+          fontFamily="body"
           bg={cardColor8}
-          px={4}
-          py={2}
-          borderRadius="full"
+          px={3}
+          py={1}
+          borderRadius="sm"
+          fontSize="xs"
+          fontWeight="600"
+          letterSpacing="0.08em"
+          textTransform="uppercase"
           transition="all 0.3s ease"
-          _groupHover={{
-            bg: cardColor9,
-            transform: 'scale(1.05)'
-          }}
+          _groupHover={{ bg: cardColor9 }}
         >
           {role}
         </Text>
@@ -137,10 +139,10 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
         </Text>
         
         {contacts && (
-          <>
+          <Box mt="auto" pt={2} width="100%">
             <IconButton
-              aria-label="Show contacts"
-              icon={showContacts ? <FaChevronUp /> : <FaChevronDown />}
+              aria-label={showContacts ? 'Hide contact details' : 'Show contact details'}
+              icon={showContacts ? <PiCaretUp /> : <PiCaretDown />}
               onClick={() => setShowContacts(!showContacts)}
               variant="ghost"
               color={cardColor11}
@@ -160,12 +162,12 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
                 borderRadius="lg"
                 width="100%"
               >
-                <ContactInfo icon={FaEnvelope} value={contacts.email} />
-                <ContactInfo icon={FaPhone} value={contacts.phone} />
-                <ContactInfo icon={FaMapMarkerAlt} value={contacts.address} />
+                <ContactInfo icon={PiEnvelopeSimple} value={contacts.email} />
+                <ContactInfo icon={PiPhone} value={contacts.phone} />
+                <ContactInfo icon={PiMapPin} value={contacts.address} />
               </VStack>
             </Collapse>
-          </>
+          </Box>
         )}
       </VStack>
     </Box>

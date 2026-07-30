@@ -1,5 +1,14 @@
 import { Box, Container, Heading, Text, VStack, useColorModeValue, Image, SimpleGrid, Card, CardBody, CardFooter, Button, Icon, Stack, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react'
-import { FaComments, FaUsers, FaFileAlt, FaMobileAlt, FaExclamationTriangle, FaUserClock, FaTablet, FaArrowRight } from 'react-icons/fa'
+import {
+  PiChats,
+  PiUsersThree,
+  PiFileText,
+  PiDeviceMobile,
+  PiWarningCircle,
+  PiClockCountdown,
+  PiDeviceTablet,
+  PiArrowRight,
+} from 'react-icons/pi'
 import { keyframes } from '@emotion/react'
 
 // Import illustrations
@@ -38,7 +47,6 @@ const Results = () => {
   const headingColor = useColorModeValue('primary.600', 'primary.200');
   const overlaySoft = useColorModeValue('rgba(0, 0, 0, 0.05)', 'rgba(255, 255, 255, 0.05)');
   const overlayStrong = useColorModeValue('rgba(0, 0, 0, 0.1)', 'rgba(255, 255, 255, 0.1)');
-  const accentColor = useColorModeValue('green.500', 'green.200');
   const cardBg = useColorModeValue('white', 'gray.800');
   const accentStrong = useColorModeValue('green.700', 'green.200');
   const accentBorder = useColorModeValue('green.200', 'green.600');
@@ -110,7 +118,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-      icon: FaComments,
+      icon: PiChats,
       hasImage: true
     },
     {
@@ -134,7 +142,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-      icon: FaUsers,
+      icon: PiUsersThree,
       hasImage: true
     },
     {
@@ -168,7 +176,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-      icon: FaFileAlt,
+      icon: PiFileText,
       hasImage: true
     },
     {
@@ -202,7 +210,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-      icon: FaMobileAlt,
+      icon: PiDeviceMobile,
       hasImage: true
     }
   ];
@@ -238,7 +246,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-          icon: FaUsers
+          icon: PiUsersThree
         },
         {
       title: "Time Management",
@@ -270,7 +278,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-          icon: FaUserClock
+          icon: PiClockCountdown
         },
         {
       title: "Digital Divide",
@@ -302,7 +310,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-          icon: FaTablet
+          icon: PiDeviceTablet
     },
     {
       title: "Communication Barriers",
@@ -334,7 +342,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-      icon: FaComments
+      icon: PiChats
     },
     {
       title: "Overcrowding During Distribution",
@@ -366,7 +374,7 @@ const Results = () => {
           </Box>
         </VStack>
       ),
-      icon: FaExclamationTriangle
+      icon: PiWarningCircle
     }
   ];
 
@@ -413,8 +421,8 @@ const Results = () => {
             }}>
               <Box
                 minW={{ base: '800px', lg: '100%' }}
-                border="2px"
-                borderColor={accentColor}
+                border="1px solid"
+                borderColor={cardBorder}
                 borderRadius="lg"
                 overflow="hidden"
               >
@@ -809,8 +817,8 @@ const Results = () => {
             }}>
               <Box
                 minW={{ base: '800px', lg: '100%' }}
-                border="2px"
-                borderColor={accentColor}
+                border="1px solid"
+                borderColor={cardBorder}
                 borderRadius="lg"
                 overflow="hidden"
               >

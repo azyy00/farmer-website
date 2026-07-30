@@ -1,5 +1,5 @@
 import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue } from '@chakra-ui/react'
-import { FaLayerGroup, FaNetworkWired, FaMobileAlt } from 'react-icons/fa'
+import { PiStack, PiShareNetwork, PiDeviceMobile } from 'react-icons/pi'
 import { keyframes } from '@emotion/react'
 
 // Animation keyframes
@@ -23,28 +23,19 @@ const Section = ({ title, content, isLeft }) => (
     bg={useColorModeValue('background.light', 'background.dark')}
     p={6}
     borderRadius="lg"
-    boxShadow={useColorModeValue(
-      '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
-      '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
-    )}
-    border="2px"
-    borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+    boxShadow={useColorModeValue('sm', 'darkSm')}
+    border="1px solid"
+    borderColor={useColorModeValue('gray.200', 'whiteAlpha.100')}
     transition="all 0.3s ease"
     animation={`${isLeft ? slideInLeft : slideInRight} 0.8s ease-out`}
     _hover={{
       transform: 'translateY(-5px)',
-      boxShadow: useColorModeValue(
-        '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-        '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-      ),
+      boxShadow: useColorModeValue('lg', 'darkLg'),
       cursor: 'pointer'
     }}
     _active={{
       transform: 'translateY(-2px)',
-      boxShadow: useColorModeValue(
-        '0 8px 12px -4px rgba(0, 0, 0, 0.15), 0 4px 8px -3px rgba(0, 0, 0, 0.08)',
-        '0 8px 12px -4px rgba(0, 0, 0, 0.5), 0 4px 8px -3px rgba(0, 0, 0, 0.3)'
-      )
+      boxShadow: useColorModeValue('md', 'darkMd')
     }}
   >
     <Heading 
@@ -58,7 +49,7 @@ const Section = ({ title, content, isLeft }) => (
       {title}
     </Heading>
     <Text 
-      textAlign="justify" 
+      textAlign="left" 
       fontSize="lg" 
       fontFamily={'body'} 
       color={useColorModeValue('black', 'white')}
@@ -75,20 +66,14 @@ const KeyTakeaway = ({ title, content, icon: Icon, index }) => (
     p={6}
     borderRadius="lg"
     textAlign="center"
-    boxShadow={useColorModeValue(
-      '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
-      '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
-    )}
-    border="2px"
-    borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+    boxShadow={useColorModeValue('sm', 'darkSm')}
+    border="1px solid"
+    borderColor={useColorModeValue('gray.200', 'whiteAlpha.100')}
     transition="all 0.3s ease"
     animation={`${fadeIn} ${0.5 + index * 0.2}s ease-out`}
     _hover={{
       transform: 'translateY(-5px)',
-      boxShadow: useColorModeValue(
-        '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-        '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-      )
+      boxShadow: useColorModeValue('lg', 'darkLg')
     }}
   >
     <VStack spacing={4} align="center">
@@ -133,17 +118,17 @@ const Conclusion = () => {
     {
       title: "Communication Diversity",
       content: "Multiple communication channels are essential for reaching all farmers effectively",
-      icon: FaLayerGroup
+      icon: PiStack
     },
     {
       title: "Infrastructure Needs",
       content: "Improved infrastructure is crucial for better program implementation",
-      icon: FaNetworkWired
+      icon: PiShareNetwork
     },
     {
       title: "Digital Integration",
       content: "Gradual integration of digital tools while maintaining traditional methods",
-      icon: FaMobileAlt
+      icon: PiDeviceMobile
     }
   ];
 

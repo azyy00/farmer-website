@@ -1,11 +1,13 @@
 import { lazy, Suspense } from 'react'
-import { ChakraProvider, Box, Center, Spinner, useColorModeValue, Link as ChakraLink } from '@chakra-ui/react'
+import { ChakraProvider, ColorModeScript, Box, useColorModeValue, Link as ChakraLink } from '@chakra-ui/react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import PageMeta from './components/PageMeta'
 import BackToTop from './components/BackToTop'
+import GrainOverlay from './components/GrainOverlay'
+import PageSkeleton from './components/PageSkeleton'
 import theme from './theme'
 
 // Each route is loaded on demand so a visitor landing on the home page does not
@@ -19,25 +21,19 @@ const Conclusion = lazy(() => import('./pages/Conclusion'))
 const ContactUs = lazy(() => import('./components/ContactUs'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
-const RouteFallback = () => (
-  <Center minH="60vh">
-    <Spinner size="xl" thickness="4px" speed="0.7s" color="primary.500" label="Loading page" />
-  </Center>
-)
-
 const AppShell = () => {
   const bg = useColorModeValue('gray.50', 'gray.900')
   const skipLinkBg = useColorModeValue('primary.600', 'primary.200')
   const skipLinkColor = useColorModeValue('white', 'gray.900')
 
   return (
-    <Box minH="100vh" bg={bg} display="flex" flexDirection="column" margin={0} padding={0}>
+    <Box minH="100dvh" bg={bg} display="flex" flexDirection="column" margin={0} padding={0}>
       <ChakraLink
         href="#main-content"
         position="absolute"
         left="-9999px"
         top={2}
-        zIndex={2000}
+        zIndex="skipLink"
         bg={skipLinkBg}
         color={skipLinkColor}
         px={4}
@@ -51,8 +47,8 @@ const AppShell = () => {
 
       <Navbar />
 
-      <Box as="main" id="main-content" pt="60px" flex="1">
-        <Suspense fallback={<RouteFallback />}>
+      <Box as="main" id="main-content" pt="64px" flex="1">
+        <Suspense fallback={<PageSkeleton />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/researchers" element={<Researchers />} />
@@ -68,6 +64,7 @@ const AppShell = () => {
 
       <Footer />
       <BackToTop />
+      <GrainOverlay />
     </Box>
   )
 }
@@ -75,6 +72,7 @@ const AppShell = () => {
 function App() {
   return (
     <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <Router>
         <ScrollToTop />
         <PageMeta />
