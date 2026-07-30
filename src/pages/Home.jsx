@@ -1,11 +1,11 @@
 import { Box, Container, Heading, Text, VStack, Button, SimpleGrid, useColorModeValue, Icon, Flex, Image, Avatar, AvatarGroup } from '@chakra-ui/react'
 import { keyframes } from '@emotion/react'
 import { Link } from 'react-router-dom'
-import { PiBookOpenText, PiLightbulb, PiArrowRight } from 'react-icons/pi'
-import { useState, useEffect } from 'react'
-import scroll1 from '../assets/scroll1.webp'
-import scroll3 from '../assets/scroll3.webp'
-import scroll4 from '../assets/scroll4.webp'
+import { PiArrowRight, PiBookOpenText, PiLightbulb } from 'react-icons/pi'
+import fieldPoster from '../assets/field-farmer.webp'
+import fieldFarmer from '../assets/field-farmer.webp'
+import fieldPair from '../assets/field-pair.webp'
+import fieldPlanting from '../assets/field-planting.webp'
 import m1 from '../assets/members/m1.webp'
 import m2 from '../assets/members/m2.webp'
 import m3 from '../assets/members/m3.webp'
@@ -16,52 +16,15 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `
 
-// Module scope keeps this a stable reference across renders.
-const images = [scroll1, scroll3, scroll4];
+// The farmer photographs supplied for the study. Real documentary images of
+// the community the research is about.
+const fieldPhotos = [
+  { src: fieldFarmer, alt: 'A farmer working a rice paddy at golden hour in Goa, Camarines Sur' },
+  { src: fieldPair, alt: 'Two farmers inspecting a crop together in the field' },
+  { src: fieldPlanting, alt: 'A farmer planting seed by hand along a tilled row' },
+]
 
 const Home = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const getImagePosition = (index) => {
-    const diff = (index - currentImage + images.length) % images.length;
-    if (diff === 0) return 'center';
-    if (diff === 1 || diff === -(images.length - 1)) return 'right';
-    return 'left';
-  };
-
-  const getImageStyle = (position) => {
-    switch (position) {
-      case 'left':
-        return {
-          transform: 'translateX(-100%) scale(0.8)',
-          opacity: 0.5,
-          zIndex: 0
-        };
-      case 'center':
-        return {
-          transform: 'translateX(0) scale(1)',
-          opacity: 1,
-          zIndex: 1
-        };
-      case 'right':
-        return {
-          transform: 'translateX(100%) scale(0.8)',
-          opacity: 0.5,
-          zIndex: 0
-        };
-      default:
-        return {};
-    }
-  };
-
   // Colors and typography. Every colour-mode hook is resolved here so that none
   // of them end up inside a loop or conditional further down the tree, which
   // would break the rules of hooks.
@@ -73,170 +36,145 @@ const Home = () => {
   const cardShadow = useColorModeValue('sm', 'darkSm');
   const cardHoverShadow = useColorModeValue('lg', 'darkLg');
   const cardText = useColorModeValue('black', 'white');
-  const dotActiveColor = useColorModeValue('green.600', 'green.200');
-  const avatarRing = useColorModeValue('white', 'gray.800');
+  const avatarRing = 'whiteAlpha.700';
   const badgeBg = useColorModeValue('green.100', 'green.800');
   const keywordBg = useColorModeValue('primary.50', 'primary.900');
   const keywordColor = useColorModeValue('primary.600', 'primary.200');
+  const bandBg = useColorModeValue('gray.100', 'gray.800');
+  const bandBorder = useColorModeValue('gray.200', 'whiteAlpha.100');
 
   return (
     <Box fontFamily="body" bg={backgroundColor} color={secondaryColor}>
-      {/* Hero Section */}
+      {/* Hero: the supplied aerial field video plays behind a dark scrim, with
+          the title and call to action over it. Under reduced-motion the video
+          is hidden and the poster photograph shows through instead. */}
       <Box
-        minH={{ base: 'auto', md: '100dvh' }}
+        as="section"
+        minH={{ base: '88vh', md: '100dvh' }}
         display="flex"
-        alignItems={{ base: 'flex-start', md: 'center' }}
-        bg={backgroundColor}
-        pt={{ base: 12, md: 20 }}
-        pb={{ base: 14, md: 20 }}
-        px={4}
+        alignItems={{ base: 'flex-end', md: 'center' }}
         position="relative"
         overflow="hidden"
-        animation={`${fadeIn} 1s ease-out`}
+        px={4}
+        pt={{ base: 24, md: 0 }}
+        pb={{ base: 16, md: 0 }}
+        bgImage={`url(${fieldPoster})`}
+        bgSize="cover"
+        bgPosition="center"
       >
-        <Container maxW={'container.xl'}>
-          <Flex
-            direction={{ base: 'column', md: 'row' }}
-            align="center"
-            justify="space-between"
-            gap={{ base: 10, md: 12, lg: 20 }}
-          >
-            {/* Image Content - Moved before text content for mobile */}
-            <Box
-              position="relative"
-              height={{ base: "240px", sm: "300px", md: "440px" }}
-              width="100%"
-              flex={{ md: '5' }}
-              maxW={{ base: "100%", md: "46%" }}
-              overflow="hidden"
-              borderRadius="2xl"
-              boxShadow="xl"
-              order={{ base: 1, md: 2 }}  // Order 1 puts it first on mobile, 2 on desktop
-            >
-              <Flex
-                position="relative"
-                width="100%"
-                height="100%"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {images.map((img, index) => (
-                  <Box
-                    key={index}
-                    position="absolute"
-                    width="100%"
-                    height="100%"
-                    transition="all 0.5s ease-in-out"
-                    style={getImageStyle(getImagePosition(index))}
-                  >
-                    <Image
-                      src={img}
-                      alt={`Farmer illustration ${index + 1}`}
-                      width="100%"
-                      height="100%"
-                      objectFit="cover"
-                      loading={index === 0 ? "eager" : "lazy"}
-                    />
-                  </Box>
-                ))}
-              </Flex>
-              <Flex
-                position="absolute"
-                bottom="4"
-                left="50%"
-                transform="translateX(-50%)"
-                gap={2}
-                zIndex="2"
-              >
-                {images.map((_, index) => (
-                  <Box
-                    key={index}
-                    w="2"
-                    h="2"
-                    borderRadius="full"
-                    bg={currentImage === index ? dotActiveColor : 'gray.300'}
-                    transition="background-color 0.3s ease"
-                  />
-                ))}
-              </Flex>
-            </Box>
+        {/* Ambient video layer */}
+        <Box
+          as="video"
+          src="/field-aerial.mp4"
+          poster={fieldPoster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+          position="absolute"
+          inset={0}
+          width="100%"
+          height="100%"
+          objectFit="cover"
+          sx={{
+            '@media (prefers-reduced-motion: reduce)': { display: 'none' },
+          }}
+        />
+        {/* Scrim for text legibility (WCAG AA over the moving footage) */}
+        <Box
+          position="absolute"
+          inset={0}
+          bgGradient="linear(to-r, rgba(20,28,20,0.86), rgba(20,28,20,0.55) 55%, rgba(20,28,20,0.35))"
+        />
+        <Box
+          position="absolute"
+          inset={0}
+          bgGradient="linear(to-t, rgba(16,24,16,0.8), transparent 45%)"
+        />
 
-            {/* Text Content */}
-            <VStack
-              spacing={6}
-              align={{ base: 'center', md: 'start' }}
-              flex={{ md: '7' }}
-              order={{ base: 2, md: 1 }}  // Order 2 puts it second on mobile, 1 on desktop
+        <Container maxW="container.xl" position="relative" zIndex={1}>
+          <VStack
+            spacing={6}
+            align={{ base: 'center', md: 'start' }}
+            maxW={{ md: '3xl' }}
+            textAlign={{ base: 'center', md: 'left' }}
+            animation={`${fadeIn} 1s ease-out`}
+          >
+            <Text
+              fontSize="sm"
+              fontWeight="600"
+              letterSpacing="0.16em"
+              textTransform="uppercase"
+              color="primary.100"
             >
-              <Text
-                fontSize="sm"
-                fontWeight="600"
-                letterSpacing="0.14em"
-                textTransform="uppercase"
-                color={primaryColor}
-                opacity={0.85}
-              >
-                Qualitative research study
+              Qualitative research study
+            </Text>
+            <Heading
+              as="h1"
+              fontSize={{ base: '2rem', md: '2.6rem', lg: '3.2rem' }}
+              lineHeight={1.08}
+              letterSpacing="-0.03em"
+              fontWeight="600"
+              color="white"
+              fontFamily="heading"
+              sx={{ textShadow: '0 2px 18px rgba(0,0,0,0.35)' }}
+            >
+              Communication Challenges in the Implementation of Agricultural Office in LGU Goa
+            </Heading>
+            <Flex align="center" gap={3} wrap="wrap" justify={{ base: 'center', md: 'flex-start' }}>
+              <AvatarGroup size="md" max={3} spacing="-0.75rem">
+                <Avatar name="Madelo Biando" src={m3} borderWidth="2px" borderColor={avatarRing} />
+                <Avatar name="Apple Jewel Borais" src={m1} borderWidth="2px" borderColor={avatarRing} />
+                <Avatar name="Apple Mae Castor" src={m2} borderWidth="2px" borderColor={avatarRing} />
+              </AvatarGroup>
+              <Text fontSize={{ base: 'md', md: 'lg' }} color="whiteAlpha.900" maxW="46ch">
+                A research study by Madelo B. Biando, Apple Mae R. Castor, and Apple Jewel S. Borais
               </Text>
-              <Heading
-                as="h1"
-                fontSize={{ base: '1.9rem', md: '2.4rem', lg: '2.9rem' }}
-                lineHeight={1.1}
-                letterSpacing="-0.03em"
-                fontWeight="600"
-                color={primaryColor}
-                mb={1}
-                textAlign={{ base: 'center', md: 'left' }}
-                fontFamily="heading"
+            </Flex>
+            <Button
+              as={Link}
+              to="/results"
+              size="lg"
+              px={8}
+              bg="white"
+              color="primary.700"
+              rightIcon={<Icon as={PiArrowRight} boxSize={5} />}
+              _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg', bg: 'primary.50' }}
+              _active={{ transform: 'translateY(0)' }}
+            >
+              Read the findings
+            </Button>
+          </VStack>
+        </Container>
+      </Box>
+
+      {/* Field photographs supplied for the study, shown as a full-width band
+          between the hero and the abstract. */}
+      <Box as="section" bg={bandBg} borderY="1px solid" borderColor={bandBorder} py={{ base: 8, md: 12 }} px={4}>
+        <Container maxW="container.xl">
+          <SimpleGrid columns={{ base: 1, sm: 3 }} spacing={{ base: 4, md: 6 }}>
+            {fieldPhotos.map((photo, i) => (
+              <Box
+                key={photo.src}
+                overflow="hidden"
+                borderRadius="xl"
+                boxShadow={cardShadow}
+                sx={{ aspectRatio: '4 / 3' }}
               >
-                Communication Challenges in the Implementation of Agricultural Office in LGU Goa
-              </Heading>
-              <Flex
-                align="center"
-                justify={{ base: 'center', md: 'flex-start' }}
-                gap={4}
-                width="100%"
-                wrap="wrap"
-              >
-                {/* The avatars used to be squeezed into the leftover sliver of
-                    the byline row; they now sit ahead of it at a readable size. */}
-                <AvatarGroup size="md" max={3} spacing="-0.75rem">
-                  <Avatar 
-                    name="Madelo Biando"
-                    src={m3}
-                    borderWidth="2px"
-                    borderColor={avatarRing}
-                  />
-                  <Avatar 
-                    name="Apple Jewel Borais"
-                    src={m1}
-                    borderWidth="2px"
-                    borderColor={avatarRing}
-                  />
-                  <Avatar 
-                    name="Apple Mae Castor"
-                    src={m2}
-                    borderWidth="2px"
-                    borderColor={avatarRing}
-                  />
-                </AvatarGroup>
-                <Text fontSize="xl" color={secondaryColor} flex="1" minW="260px">
-                  A research study by Madelo B. Biando, Apple Mae R. Castor, and Apple Jewel S. Borais
-                </Text>
-              </Flex>
-              <Button
-                as={Link}
-                to="/results"
-                colorScheme="green"
-                size="lg"
-                px={8}
-                rightIcon={<Icon as={PiArrowRight} boxSize={5} />}
-                _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
-              >
-                Read the findings
-              </Button>
-            </VStack>
-          </Flex>
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  width="100%"
+                  height="100%"
+                  objectFit="cover"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  transition="transform 0.5s ease"
+                  _hover={{ transform: 'scale(1.04)' }}
+                />
+              </Box>
+            ))}
+          </SimpleGrid>
         </Container>
       </Box>
 
