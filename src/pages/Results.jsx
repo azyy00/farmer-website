@@ -3,22 +3,21 @@ import { FaComments, FaUsers, FaFileAlt, FaMobileAlt, FaExclamationTriangle, FaU
 import { keyframes } from '@emotion/react'
 
 // Import illustrations
-import communicationIllustration from '../assets/communication-illustration.png'
-import faceToFaceIllustration from '../assets/face-to-face-illustration.png'
-import traditionalMethodIllustration from '../assets/traditional-method-illustration.png'
-import printedMaterialIllustration from '../assets/printed-material-illustration.png'
-import digitalMethodIllustration from '../assets/digital-method-illustration.png'
-import c1Image from '../assets/cmethods/C1.png'
-import c2Image from '../assets/cmethods/C2.png'
-import c3Image from '../assets/cmethods/C3.png'
-import c4Image from '../assets/cmethods/C4.png'
-import c5Image from '../assets/cmethods/C5.png'
-import c6Image from '../assets/cmethods/C6.png'
-import c7Image from '../assets/cmethods/C7.png'
-import c8Image from '../assets/cmethods/C8.png'
-import c9Image from '../assets/cmethods/C9.png'
-import c10Image from '../assets/cmethods/C10.png'
-import c11Image from '../assets/cmethods/C11.png'
+import faceToFaceIllustration from '../assets/face-to-face-illustration.webp'
+import traditionalMethodIllustration from '../assets/traditional-method-illustration.webp'
+import printedMaterialIllustration from '../assets/printed-material-illustration.webp'
+import digitalMethodIllustration from '../assets/digital-method-illustration.webp'
+import c1Image from '../assets/cmethods/C1.webp'
+import c2Image from '../assets/cmethods/C2.webp'
+import c3Image from '../assets/cmethods/C3.webp'
+import c4Image from '../assets/cmethods/C4.webp'
+import c5Image from '../assets/cmethods/C5.webp'
+import c6Image from '../assets/cmethods/C6.webp'
+import c7Image from '../assets/cmethods/C7.webp'
+import c8Image from '../assets/cmethods/C8.webp'
+import c9Image from '../assets/cmethods/C9.webp'
+import c10Image from '../assets/cmethods/C10.webp'
+import c11Image from '../assets/cmethods/C11.webp'
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(20px); }
@@ -26,7 +25,26 @@ const fadeIn = keyframes`
 `
 
 const Results = () => {
-  const backgroundColor = useColorModeValue('white', 'gray.900');
+  // All colour-mode values are resolved once, at the top level of the
+  // component. Several of these used to be called inside .map() callbacks,
+  // which violates the rules of hooks.
+  const pageBg = useColorModeValue('white', 'gray.900');
+  const bodyText = useColorModeValue('black', 'white');
+  const subtleBg = useColorModeValue('gray.50', 'gray.800');
+  const scrollTrack = useColorModeValue('gray.100', 'gray.700');
+  const mutedText = useColorModeValue('gray.600', 'gray.400');
+  const quoteBg = useColorModeValue('green.50', 'green.900');
+  const quoteText = useColorModeValue('gray.700', 'gray.300');
+  const headingColor = useColorModeValue('primary.600', 'primary.200');
+  const overlaySoft = useColorModeValue('rgba(0, 0, 0, 0.05)', 'rgba(255, 255, 255, 0.05)');
+  const overlayStrong = useColorModeValue('rgba(0, 0, 0, 0.1)', 'rgba(255, 255, 255, 0.1)');
+  const accentColor = useColorModeValue('green.500', 'green.200');
+  const cardBg = useColorModeValue('white', 'gray.800');
+  const accentStrong = useColorModeValue('green.700', 'green.200');
+  const accentBorder = useColorModeValue('green.200', 'green.600');
+  const cardBorder = useColorModeValue('green.100', 'green.700');
+  const tagBg = useColorModeValue('primary.50', 'primary.900');
+  const sectionHeading = useColorModeValue('green.600', 'green.200');
 
   // Add table data
   const tableData = [
@@ -65,7 +83,7 @@ const Results = () => {
       title: "Traditional Communication Methods",
       content: (
         <VStack spacing={4}>
-          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+          <Text color={bodyText} lineHeight="1.8">
             Conventional methods of communication, such as letters and text messages, are most commonly used. Letters are used to formalize information dissemination, while text messages serve for follow-ups. This dual approach ensures both formal documentation and immediate communication capabilities.
           </Text>
           <Box
@@ -81,11 +99,11 @@ const Results = () => {
             />
             <Box 
               p={3} 
-              bg={useColorModeValue('gray.50', 'gray.800')}
+              bg={subtleBg}
               borderTop="1px"
-              borderColor={useColorModeValue('gray.100', 'gray.700')}
+              borderColor={scrollTrack}
             >
-              <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')} textAlign="center">
+              <Text fontSize="sm" color={mutedText} textAlign="center">
                 "Salamat sa saindong mga mungkahi! Susubukan namon ayuson an saaomong komunikasyon tanganing mas dakul an makinabang sa saaomong mga programa."
               </Text>
             </Box>
@@ -99,7 +117,7 @@ const Results = () => {
       title: "Face-to-Face and Group Announcements",
       content: (
         <VStack spacing={4}>
-          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+          <Text color={bodyText} lineHeight="1.8">
             Farmers primarily learn about available aid through barangay meetings, where local authorities make announcements and provide updates. These meetings serve as formal venues for discussing agricultural support programs and other community matters.
           </Text>
           <Box
@@ -123,7 +141,7 @@ const Results = () => {
       title: "Use of Printed Materials",
       content: (
         <VStack spacing={4}>
-          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+          <Text color={bodyText} lineHeight="1.8">
             Farmers actively verify their eligibility for programs by checking posted lists at the barangay hall. This proactive approach helps prevent miscommunications and missed opportunities related to aid distribution. The combination of printed materials and personal verification ensures transparency and accuracy.
           </Text>
           <Box
@@ -139,11 +157,11 @@ const Results = () => {
             />
             <Box 
               p={3} 
-              bg={useColorModeValue('gray.50', 'gray.800')}
+              bg={subtleBg}
               borderTop="1px"
-              borderColor={useColorModeValue('gray.100', 'gray.700')}
+              borderColor={scrollTrack}
             >
-              <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')} textAlign="center">
+              <Text fontSize="sm" color={mutedText} textAlign="center">
                 "Ipinapahiling kan opisyal kan LAO na nagpapaliwanag nin mga paagi nin komunikasyon: may mga nakapaskil na listahan, may nagtetext sa cellphone, asin may sarong sa barangay."
               </Text>
             </Box>
@@ -157,7 +175,7 @@ const Results = () => {
       title: "Digital Communication Platforms",
       content: (
         <VStack spacing={4}>
-          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+          <Text color={bodyText} lineHeight="1.8">
             Social media platforms like Facebook and group chats are emerging as useful tools, particularly among those with access to these platforms. However, digital platforms are not universally accessible, especially for older farmers or those without regular internet access.
           </Text>
           <Box
@@ -173,11 +191,11 @@ const Results = () => {
             />
             <Box 
               p={3} 
-              bg={useColorModeValue('gray.50', 'gray.800')}
+              bg={subtleBg}
               borderTop="1px"
-              borderColor={useColorModeValue('gray.100', 'gray.700')}
+              borderColor={scrollTrack}
             >
-              <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')} textAlign="center">
+              <Text fontSize="sm" color={mutedText} textAlign="center">
                 "Ipinapakita an mas organisadong paagi kan komunikasyon: may opisyal na nag-oofirer kan malinaw na paliwanag sa pulong, may aktibong Facebook group, asin may hotline para sa mga tanong kan mga maggurang."
               </Text>
             </Box>
@@ -194,11 +212,11 @@ const Results = () => {
       title: "Trust Issues and Misinformation",
       content: (
         <VStack spacing={4} align="start">
-          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+          <Text color={bodyText} lineHeight="1.8">
             Participant 1 stated that relying on word-of-mouth communication frequently results in disinformation since things might become twisted or inflated along the way. This can lead to confusion among farmers, particularly when it comes to comprehending the exact types of agricultural supplies given. For example, some farmers may feel they are receiving inbred seeds when in fact hybrid seeds are being supplied. Such misunderstandings can have an impact on planting selections and overall agricultural productivity. Participant 1 emphasized the importance of better, more dependable communication mechanisms to guarantee farmers receive correct, unaltered information.
           </Text>
           <Box
-            bg={useColorModeValue('green.50', 'green.900')}
+            bg={quoteBg}
             p={4}
             borderRadius="md"
             width="100%"
@@ -206,14 +224,14 @@ const Results = () => {
             <Text
               fontSize="md"
               fontStyle="italic"
-              color={useColorModeValue('gray.700', 'gray.300')}
+              color={quoteText}
               mb={2}
             >
               "Ta pagano ito bagang masabi ka sana itext mo sana si sarong tawo na mayo man ning kompletong na information tungkol duman sa pameeting or topic or seminars, oh eh anong information hali sa agency minsan sala baga ano arog kaito na ang paapod palan is maorient nanaman sa ano sa highbrid huna ninda kaibahan so inbrid oh di kaya mas maray ano itong surat."
             </Text>
             <Text
               fontSize="sm"
-              color={useColorModeValue('gray.600', 'gray.400')}
+              color={mutedText}
             >
               ["Because it seems like you should have texted someone who has complete information about the meeting or topic or seminars, or what information comes from the agency. Sometimes, it's like this, that the purpose is to orient them again on what is in their hybrid minds, so in hybrid, or maybe this letter is better."]
             </Text>
@@ -226,11 +244,11 @@ const Results = () => {
       title: "Time Management",
       content: (
         <VStack spacing={4} align="start">
-          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+          <Text color={bodyText} lineHeight="1.8">
             According to one participant, farmers frequently struggle to balance farm work and outreach efforts. Many meetings and seminars are organized during peak agricultural seasons, such as planting or harvesting, when farmers are the busiest. This timing encourages farmers to prioritize their livelihood above potentially beneficial programs, even if they wish to participate. As a result, they overlook important information and tools that could help them improve their farming techniques.
           </Text>
           <Box
-            bg={useColorModeValue('green.50', 'green.900')}
+            bg={quoteBg}
             p={4}
             borderRadius="md"
             width="100%"
@@ -238,14 +256,14 @@ const Results = () => {
             <Text
               fontSize="md"
               fontStyle="italic"
-              color={useColorModeValue('gray.700', 'gray.300')}
+              color={quoteText}
               mb={2}
             >
               "Kami sa Co-off busy kami dahil duman sa ano sa pag ano kang paroy tapos mayo kami ning ano ning maipadara saro lang ang nagatindir basta itong nagkakaano ang schedule tapos minsan ang kumunikasyon is syempre pinapadara baga iyan dae taman aram na maabot siya tulos minsan nagaabot sa aga di kulang na si ano halimbawa kami sa Co-off ohh ano na kung baga gahol na isay na ang itatao mi igde arog kayan yan ang kadalasan arog kaan."
             </Text>
             <Text
               fontSize="sm"
-              color={useColorModeValue('gray.600', 'gray.400')}
+              color={mutedText}
             >
               [We at Co-off are busy because of the work, and we don't have enough to send. Only one person is managing everything, and when the schedule gets tight, sometimes communication is delayed. Of course, we send it, but sometimes it doesn't reach on time, and it arrives very early. For example, we at Co-off, oh, it's like we're in a hurry to send it, and that's usually how it goes.]
             </Text>
@@ -258,11 +276,11 @@ const Results = () => {
       title: "Digital Divide",
       content: (
         <VStack spacing={4} align="start">
-          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+          <Text color={bodyText} lineHeight="1.8">
             While social media and group chats are used for communication, not all farmers are familiar with these platforms. Some rely on their children or others to access information on their behalf, limiting their direct engagement with digital outreach efforts. The digital divide among farmers is highlighted by this situation, especially the difference between those who feel comfortable utilizing technology and those who don't. This dependence indicates the need for more inclusive approaches that serve both conventional and tech-savvy farmers.
           </Text>
           <Box
-            bg={useColorModeValue('green.50', 'green.900')}
+            bg={quoteBg}
             p={4}
             borderRadius="md"
             width="100%"
@@ -270,14 +288,14 @@ const Results = () => {
             <Text
               fontSize="md"
               fontStyle="italic"
-              color={useColorModeValue('gray.700', 'gray.300')}
+              color={quoteText}
               mb={2}
             >
               "Dae ako tatao mag gamit ning cellphone, so aki ko pig pahiling ko na lang."
             </Text>
             <Text
               fontSize="sm"
-              color={useColorModeValue('gray.600', 'gray.400')}
+              color={mutedText}
             >
               [I won't know how to use a cell phone, so I just let my child show me.]
             </Text>
@@ -290,11 +308,11 @@ const Results = () => {
       title: "Communication Barriers",
       content: (
         <VStack spacing={4} align="start">
-          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+          <Text color={bodyText} lineHeight="1.8">
             According to Participant 1, many farmers rely on writing for official communication, but this method can be slow and sometimes ineffective. Farmers also highlighted that information relayed through word of mouth can be inaccurate or incomplete. The statement draws attention to the shortcomings of farmers' conventional means of communication. Despite being seen as official, written communication is frequently delayed and may not always be successful.
           </Text>
           <Box
-            bg={useColorModeValue('green.50', 'green.900')}
+            bg={quoteBg}
             p={4}
             borderRadius="md"
             width="100%"
@@ -302,14 +320,14 @@ const Results = () => {
             <Text
               fontSize="md"
               fontStyle="italic"
-              color={useColorModeValue('gray.700', 'gray.300')}
+              color={quoteText}
               mb={2}
             >
               "Dapat pag nagdedeseminate kang information, dapat klaro... minsan kasi pag text lang, kulang ang impormasyon o minsan sala ang pagkaintindi."
             </Text>
             <Text
               fontSize="sm"
-              color={useColorModeValue('gray.600', 'gray.400')}
+              color={mutedText}
             >
               [When disseminating information, it should be clear... sometimes, when it's just text, the information is lacking or the understanding is sometimes wrong.]
             </Text>
@@ -322,11 +340,11 @@ const Results = () => {
       title: "Overcrowding During Distribution",
       content: (
         <VStack spacing={4} align="start">
-          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+          <Text color={bodyText} lineHeight="1.8">
             According to Participant 9, aid delivery can easily become disorganized, causing confusion among recipients and slowing the process. People may fail to comprehend where and when to claim their benefits, resulting in long lineups and overcrowding. This misconception can lead to some people missing out on aid entirely, particularly those who are underinformed or physically unable to compete for scarce resources. Effective planning and communication are critical to ensuring that aid is distributed properly and efficiently.
           </Text>
           <Box
-            bg={useColorModeValue('green.50', 'green.900')}
+            bg={quoteBg}
             p={4}
             borderRadius="md"
             width="100%"
@@ -334,14 +352,14 @@ const Results = () => {
             <Text
               fontSize="md"
               fontStyle="italic"
-              color={useColorModeValue('gray.700', 'gray.300')}
+              color={quoteText}
               mb={2}
             >
               "Ano pagkuyan halimbawa nagkasarabay sabay ang mga nagkukua ning mga abono libre gulping tawo nadidipisilan kami ta syempre surusuan minsan mariribok, oo dae mo maaaraman kaya ang gibo ning DA pagmay libre, paaramayan kung isay ang maamay tas may lista duman nalang magsunod sa number."
             </Text>
             <Text
               fontSize="sm"
-              color={useColorModeValue('gray.600', 'gray.400')}
+              color={mutedText}
             >
               [For example, when people simultaneously come to get free fertilizer, we struggle because, of course, everyone rushes in, and sometimes it gets chaotic. Yes, you wouldn't know because when the DA (Department of Agriculture) gives freebies, people inform each other about it. Whoever gets there first gets it, and there's a list where people just follow their number.]
             </Text>
@@ -353,84 +371,92 @@ const Results = () => {
   ];
 
   return (
-    <Box py={12} bg={backgroundColor} color={useColorModeValue('black', 'white')}>
+    <Box py={12} bg={pageBg} color={bodyText}>
       <Container maxW={'container.xl'}>
         <VStack spacing={12} animation={`${fadeIn} 1s ease-out`}>
           {/* Main Heading */}
           <Box width="100%" mb={8}>
             <VStack spacing={6}>
-          <Heading size="xl" textAlign="center" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+          <Heading as="h1" size="xl" textAlign="center" fontFamily={'heading'} color={headingColor}>
             Results and Discussion
           </Heading>
-              <Text fontSize="lg" textAlign="center" maxW="3xl" fontFamily={'body'} color={useColorModeValue('black', 'white')}>
+              <Text fontSize="lg" textAlign="center" maxW="3xl" fontFamily={'body'} color={bodyText}>
             Analysis of communication strategies and challenges in agricultural program implementation
           </Text>
             </VStack>
           </Box>
 
           {/* Communication Strategies Table */}
-          <Box width="100%" overflowX="auto" maxW="100vw" sx={{
-            WebkitOverflowScrolling: 'touch',
-            '&::-webkit-scrollbar': {
-              height: '8px',
-              borderRadius: '8px',
-              backgroundColor: useColorModeValue('rgba(0, 0, 0, 0.05)', 'rgba(255, 255, 255, 0.05)')
-            },
-            '&::-webkit-scrollbar-thumb': {
-              borderRadius: '8px',
-              backgroundColor: useColorModeValue('rgba(0, 0, 0, 0.1)', 'rgba(255, 255, 255, 0.1)')
-            }
-          }}>
-            <VStack align="start" spacing={4} mb={8} minW={{ base: "800px", lg: "100%" }}>
-              <Heading size="md" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+          {/* The caption used to sit inside the horizontally scrolling box, so
+              on narrow screens it was cut off along with the table. Only the
+              table scrolls now. */}
+          <Box width="100%" mb={8}>
+            <VStack align="start" spacing={2} mb={4}>
+              <Heading size="md" fontFamily={'heading'} color={headingColor}>
                 Table 1: Communication Strategies in Agricultural Programs
               </Heading>
-              <Box 
-                width="100%" 
+              <Text fontSize="sm" color={mutedText} display={{ base: 'block', lg: 'none' }}>
+                Swipe the table sideways to see all columns.
+              </Text>
+            </VStack>
+            <Box width="100%" overflowX="auto" sx={{
+              WebkitOverflowScrolling: 'touch',
+              '&::-webkit-scrollbar': {
+                height: '8px',
+                borderRadius: '8px',
+                backgroundColor: overlaySoft
+              },
+              '&::-webkit-scrollbar-thumb': {
+                borderRadius: '8px',
+                backgroundColor: overlayStrong
+              }
+            }}>
+              <Box
+                minW={{ base: '800px', lg: '100%' }}
                 border="2px"
-                borderColor={useColorModeValue('green.500', 'green.200')} 
-                borderRadius="lg" 
+                borderColor={accentColor}
+                borderRadius="lg"
                 overflow="hidden"
               >
-                <Table variant="simple" size="md" bg={useColorModeValue('white', 'gray.800')}>
-                  <Thead bg={useColorModeValue('green.50', 'green.900')}>
+                <Table variant="simple" size="md" bg={cardBg}>
+                  <Thead bg={quoteBg}>
                     <Tr>
                       <Th 
-                        color={useColorModeValue('green.700', 'green.200')}
+                        color={accentStrong}
                         borderBottom="2px"
-                        borderColor={useColorModeValue('green.200', 'green.600')}
+                        borderColor={accentBorder}
                         textAlign="center"
                       >
                         Communication Method
                       </Th>
                       <Th 
-                        color={useColorModeValue('green.700', 'green.200')}
+                        color={accentStrong}
                         borderBottom="2px"
-                        borderColor={useColorModeValue('green.200', 'green.600')}
+                        borderColor={accentBorder}
                         textAlign="center"
                       >
                         Description
                       </Th>
                       <Th 
-                        color={useColorModeValue('green.700', 'green.200')}
+                        color={accentStrong}
                         borderBottom="2px"
-                        borderColor={useColorModeValue('green.200', 'green.600')}
+                        borderColor={accentBorder}
                         textAlign="center"
                       >
                         Strengths
                       </Th>
                       <Th 
-                        color={useColorModeValue('green.700', 'green.200')}
+                        color={accentStrong}
                         borderBottom="2px"
-                        borderColor={useColorModeValue('green.200', 'green.600')}
+                        borderColor={accentBorder}
                         textAlign="center"
                       >
                         Weaknesses
                       </Th>
                       <Th 
-                        color={useColorModeValue('green.700', 'green.200')}
+                        color={accentStrong}
                         borderBottom="2px"
-                        borderColor={useColorModeValue('green.200', 'green.600')}
+                        borderColor={accentBorder}
                         textAlign="center"
                       >
                         Supporting Theory
@@ -441,35 +467,35 @@ const Results = () => {
                     {tableData.map((row, index) => (
                       <Tr 
                         key={index} 
-                        _hover={{ bg: useColorModeValue('green.50', 'green.900') }}
+                        _hover={{ bg: quoteBg }}
                         borderBottom="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                       >
                         <Td 
                           fontWeight="medium"
                           borderRight="1px"
-                          borderColor={useColorModeValue('green.100', 'green.700')}
+                          borderColor={cardBorder}
                           p={4}
                         >
                           {row.method}
                         </Td>
                         <Td 
                           borderRight="1px"
-                          borderColor={useColorModeValue('green.100', 'green.700')}
+                          borderColor={cardBorder}
                           p={4}
                         >
                           {row.description}
                         </Td>
                         <Td 
                           borderRight="1px"
-                          borderColor={useColorModeValue('green.100', 'green.700')}
+                          borderColor={cardBorder}
                           p={4}
                         >
                           {row.strengths}
                         </Td>
                         <Td 
                           borderRight="1px"
-                          borderColor={useColorModeValue('green.100', 'green.700')}
+                          borderColor={cardBorder}
                   p={4}
                         >
                           {row.weaknesses}
@@ -482,26 +508,26 @@ const Results = () => {
                   </Tbody>
                 </Table>
               </Box>
-            </VStack>
+            </Box>
           </Box>
 
           {/* Communication Methods Section */}
           <VStack width="100%" spacing={8}>
-            <Heading size="lg" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+            <Heading size="lg" fontFamily={'heading'} color={headingColor}>
               Communication Methods
             </Heading>
             <VStack spacing={4} mb={6}>
               <Heading 
                 size="md" 
                 fontFamily={'heading'} 
-                color={useColorModeValue('primary.600', 'primary.200')}
+                color={headingColor}
                 textAlign="center"
               >
                 Hagong sa Komunikasyon sa Pag-uma kan LGU Goa
               </Heading>
               <Text
                 fontSize="md"
-                color={useColorModeValue('gray.600', 'gray.400')}
+                color={mutedText}
                 fontStyle="italic"
                 textAlign="center"
               >
@@ -509,7 +535,7 @@ const Results = () => {
               </Text>
               <Text
                 fontSize="md"
-                color={useColorModeValue('gray.600', 'gray.400')}
+                color={mutedText}
                 fontStyle="italic"
                 textAlign="center"
               >
@@ -521,7 +547,7 @@ const Results = () => {
                 <Card
                   key={index}
                   variant="elevated"
-                  bg={useColorModeValue('white', 'gray.800')}
+                  bg={cardBg}
                   borderRadius="xl"
                   overflow="hidden"
                   boxShadow="lg"
@@ -537,15 +563,15 @@ const Results = () => {
                       <Box
                         p={3}
                         borderRadius="lg"
-                        bg={useColorModeValue('primary.50', 'primary.900')}
+                        bg={tagBg}
                       >
                         <Icon
                       as={finding.icon} 
                           boxSize={6}
-                      color={useColorModeValue('primary.600', 'primary.200')}
+                      color={headingColor}
                         />
                       </Box>
-                    <Heading size="md" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+                    <Heading size="md" fontFamily={'heading'} color={headingColor}>
                       {finding.title}
                     </Heading>
                       {finding.content}
@@ -561,14 +587,14 @@ const Results = () => {
               borderRadius="xl"
               overflow="hidden"
               boxShadow="xl"
-              bg={useColorModeValue('white', 'gray.800')}
+              bg={cardBg}
               p={6}
             >
               <VStack spacing={6}>
                 <Text 
                   fontSize="lg" 
                   fontStyle="italic" 
-                  color={useColorModeValue('gray.600', 'gray.400')}
+                  color={mutedText}
                   textAlign="center"
                 >
                   Sarong grupo nin mga para uma an nag-iistorya habang may opisyal kan LAO na namatmat.
@@ -684,7 +710,7 @@ const Results = () => {
                   <Text
                     fontSize="xl"
                     fontWeight="bold"
-                    color={useColorModeValue('green.600', 'green.200')}
+                    color={sectionHeading}
                     textAlign="center"
                     mb={4}
                   >
@@ -705,7 +731,7 @@ const Results = () => {
 
           {/* Challenges Section */}
           <VStack width="100%" spacing={8}>
-            <Heading size="lg" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+            <Heading size="lg" fontFamily={'heading'} color={headingColor}>
               Communication Challenges
             </Heading>
             <VStack spacing={6} width="100%">
@@ -713,7 +739,7 @@ const Results = () => {
                 <Card
                   key={index}
                   variant="elevated"
-                  bg={useColorModeValue('white', 'gray.800')}
+                  bg={cardBg}
                   borderRadius="xl"
                   overflow="hidden"
                   boxShadow="lg"
@@ -735,17 +761,17 @@ const Results = () => {
                     <Icon
                       as={challenge.icon}
                       boxSize={10}
-                      color={useColorModeValue('green.600', 'green.200')}
+                      color={sectionHeading}
                     />
                   </Box>
                   <Box flex="1">
                     <CardBody>
                       <VStack align="start" spacing={4}>
-                        <Heading size="md" fontFamily={'heading'} color={useColorModeValue('green.600', 'green.200')}>
+                        <Heading size="md" fontFamily={'heading'} color={sectionHeading}>
                           {challenge.title}
                           </Heading>
                         {typeof challenge.content === 'string' ? (
-                          <Text color={useColorModeValue('black', 'white')} lineHeight="1.8">
+                          <Text color={bodyText} lineHeight="1.8">
                             {challenge.content}
                           </Text>
                         ) : (
@@ -760,52 +786,57 @@ const Results = () => {
           </VStack>
 
           {/* Challenges Table */}
-          <Box width="100%" overflowX="auto" maxW="100vw" sx={{
-            WebkitOverflowScrolling: 'touch',
-            '&::-webkit-scrollbar': {
-              height: '8px',
-              borderRadius: '8px',
-              backgroundColor: useColorModeValue('rgba(0, 0, 0, 0.05)', 'rgba(255, 255, 255, 0.05)')
-            },
-            '&::-webkit-scrollbar-thumb': {
-              borderRadius: '8px',
-              backgroundColor: useColorModeValue('rgba(0, 0, 0, 0.1)', 'rgba(255, 255, 255, 0.1)')
-            }
-          }}>
-            <VStack align="start" spacing={4} mb={8} minW={{ base: "800px", lg: "100%" }}>
-              <Heading size="md" fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+          <Box width="100%" mb={8}>
+            <VStack align="start" spacing={2} mb={4}>
+              <Heading size="md" fontFamily={'heading'} color={headingColor}>
                 Table 2: Challenges in the Implementation of Outreach Programs
               </Heading>
-              <Box 
-                width="100%" 
-                border="2px" 
-                borderColor={useColorModeValue('green.500', 'green.200')} 
-                borderRadius="lg" 
+              <Text fontSize="sm" color={mutedText} display={{ base: 'block', lg: 'none' }}>
+                Swipe the table sideways to see all columns.
+              </Text>
+            </VStack>
+            <Box width="100%" overflowX="auto" sx={{
+              WebkitOverflowScrolling: 'touch',
+              '&::-webkit-scrollbar': {
+                height: '8px',
+                borderRadius: '8px',
+                backgroundColor: overlaySoft
+              },
+              '&::-webkit-scrollbar-thumb': {
+                borderRadius: '8px',
+                backgroundColor: overlayStrong
+              }
+            }}>
+              <Box
+                minW={{ base: '800px', lg: '100%' }}
+                border="2px"
+                borderColor={accentColor}
+                borderRadius="lg"
                 overflow="hidden"
               >
-                <Table variant="simple" size="md" bg={useColorModeValue('white', 'gray.800')}>
-                  <Thead bg={useColorModeValue('green.50', 'green.900')}>
+                <Table variant="simple" size="md" bg={cardBg}>
+                  <Thead bg={quoteBg}>
                     <Tr>
                       <Th 
-                        color={useColorModeValue('green.700', 'green.200')}
+                        color={accentStrong}
                         borderBottom="2px"
-                        borderColor={useColorModeValue('green.200', 'green.600')}
+                        borderColor={accentBorder}
                         textAlign="center"
                       >
                         Challenges
                       </Th>
                       <Th 
-                        color={useColorModeValue('green.700', 'green.200')}
+                        color={accentStrong}
                         borderBottom="2px"
-                        borderColor={useColorModeValue('green.200', 'green.600')}
+                        borderColor={accentBorder}
                         textAlign="center"
                       >
                         Description
                       </Th>
                       <Th 
-                        color={useColorModeValue('green.700', 'green.200')}
+                        color={accentStrong}
                         borderBottom="2px"
-                        borderColor={useColorModeValue('green.200', 'green.600')}
+                        borderColor={accentBorder}
                         textAlign="center"
                       >
                         Key Issues
@@ -815,20 +846,20 @@ const Results = () => {
                   <Tbody>
                     <Tr 
                       borderBottom="1px"
-                      borderColor={useColorModeValue('green.100', 'green.700')}
-                      _hover={{ bg: useColorModeValue('green.50', 'green.900') }}
+                      borderColor={cardBorder}
+                      _hover={{ bg: quoteBg }}
                     >
                       <Td 
                         fontWeight="medium"
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Trust Issues and Misinformation
                       </Td>
                       <Td 
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Farmers misunderstood information when shared through word of mouth, leading to confusion (e.g., mistaking hybrid seeds for inbred).
@@ -839,20 +870,20 @@ const Results = () => {
                     </Tr>
                     <Tr 
                       borderBottom="1px"
-                      borderColor={useColorModeValue('green.100', 'green.700')}
-                      _hover={{ bg: useColorModeValue('green.50', 'green.900') }}
+                      borderColor={cardBorder}
+                      _hover={{ bg: quoteBg }}
                     >
                       <Td 
                         fontWeight="medium"
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Time Management
                       </Td>
                       <Td 
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Farmers struggle to attend meetings due to conflicts with farm activities (planting/harvesting). Communication is delayed.
@@ -863,20 +894,20 @@ const Results = () => {
                     </Tr>
                     <Tr 
                       borderBottom="1px"
-                      borderColor={useColorModeValue('green.100', 'green.700')}
-                      _hover={{ bg: useColorModeValue('green.50', 'green.900') }}
+                      borderColor={cardBorder}
+                      _hover={{ bg: quoteBg }}
                     >
                       <Td 
                         fontWeight="medium"
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Low Engagement in Digital Platforms
                       </Td>
                       <Td 
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Some farmers are unfamiliar with digital tools and rely on family members to acquire information.
@@ -887,20 +918,20 @@ const Results = () => {
                     </Tr>
                     <Tr 
                       borderBottom="1px"
-                      borderColor={useColorModeValue('green.100', 'green.700')}
-                      _hover={{ bg: useColorModeValue('green.50', 'green.900') }}
+                      borderColor={cardBorder}
+                      _hover={{ bg: quoteBg }}
                     >
                       <Td 
                         fontWeight="medium"
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Communication Barriers
                       </Td>
                       <Td 
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Text communications may be incomplete or misconstrued, while written notices are sluggish.
@@ -910,19 +941,19 @@ const Results = () => {
                       </Td>
                     </Tr>
                     <Tr 
-                      _hover={{ bg: useColorModeValue('green.50', 'green.900') }}
+                      _hover={{ bg: quoteBg }}
                     >
                       <Td 
                         fontWeight="medium"
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Overcrowding During Distribution
                       </Td>
                       <Td 
                         borderRight="1px"
-                        borderColor={useColorModeValue('green.100', 'green.700')}
+                        borderColor={cardBorder}
                         p={4}
                       >
                         Poor planning leads to chaotic relief delivery, resulting in long lines and confusion.
@@ -934,7 +965,7 @@ const Results = () => {
                   </Tbody>
                 </Table>
               </Box>
-            </VStack>
+            </Box>
           </Box>
         </VStack>
       </Container>

@@ -29,6 +29,8 @@ Under the guidance of Ruth Daphne Prila Pesimo (Adviser)
 - Interactive data visualization
 - Responsive design for all devices
 - Bilingual content (English and Bicol)
+- Light and dark colour modes
+- Per-page titles, Open Graph metadata, sitemap and robots.txt
 
 ## Built With
 
@@ -36,6 +38,22 @@ Under the guidance of Ruth Daphne Prila Pesimo (Adviser)
 - Chakra UI
 - React Router
 - Emotion
+
+## Development
+
+```bash
+npm install
+npm run dev      # local dev server on port 3000
+npm run lint     # eslint, no warnings allowed
+npm run build    # production build into dist/
+npm run preview  # serve the production build locally
+```
+
+### Images
+
+Photographs and illustrations under `src/assets/` are stored as WebP and
+resized to the largest size the layout actually displays. Add new images the
+same way — a 3 MB PNG will otherwise dominate the page weight.
 
 ## Deployment
 

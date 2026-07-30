@@ -8,7 +8,7 @@ const About = () => {
       <Container maxW={'container.xl'}>
         <VStack spacing={8} align="stretch">
           <Box textAlign="center">
-            <Heading mb={4} fontFamily={'heading'} color={useColorModeValue('black', 'white')}>About the Research</Heading>
+            <Heading as="h1" mb={4} fontFamily={'heading'} color={useColorModeValue('black', 'white')}>About the Research</Heading>
             <Text fontSize="xl" color={useColorModeValue('black', 'white')} fontFamily={'body'}>
               Understanding Communication Challenges in Agricultural Implementation
             </Text>

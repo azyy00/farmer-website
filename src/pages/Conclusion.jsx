@@ -153,7 +153,7 @@ const Conclusion = () => {
         <VStack spacing={12} animation={`${fadeIn} 1s ease-out`}>
           {/* Conclusion Section */}
           <Box width="full">
-            <Heading size="xl" textAlign="center" mb={8} fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+            <Heading as="h1" size="xl" textAlign="center" mb={8} fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
               Conclusion and Recommendations
             </Heading>
             

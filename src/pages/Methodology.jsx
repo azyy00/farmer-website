@@ -1,19 +1,19 @@
 import { keyframes } from '@emotion/react';
 import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, Image, Grid, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Flex, IconButton } from '@chakra-ui/react';
 import { FaClipboardList, FaUsers, FaTools, FaPenFancy, FaChartLine, FaCamera, FaChevronLeft, FaChevronRight, FaPause, FaPlay } from 'react-icons/fa';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 // Import all data gathering images
-import Dg1 from '../assets/datagathering-pictures/Dg1.png';
-import Dg2 from '../assets/datagathering-pictures/Dg2.png';
-import Dg3 from '../assets/datagathering-pictures/Dg3.png';
-import Dg4 from '../assets/datagathering-pictures/Dg4.png';
-import Dg5 from '../assets/datagathering-pictures/Dg5.png';
-import Dg6 from '../assets/datagathering-pictures/Dg6.png';
-import Dg7 from '../assets/datagathering-pictures/Dg7.png';
-import Dg8 from '../assets/datagathering-pictures/Dg8.png';
-import Dg9 from '../assets/datagathering-pictures/Dg9.png';
-import D10 from '../assets/datagathering-pictures/D10.png';
+import Dg1 from '../assets/datagathering-pictures/Dg1.webp';
+import Dg2 from '../assets/datagathering-pictures/Dg2.webp';
+import Dg3 from '../assets/datagathering-pictures/Dg3.webp';
+import Dg4 from '../assets/datagathering-pictures/Dg4.webp';
+import Dg5 from '../assets/datagathering-pictures/Dg5.webp';
+import Dg6 from '../assets/datagathering-pictures/Dg6.webp';
+import Dg7 from '../assets/datagathering-pictures/Dg7.webp';
+import Dg8 from '../assets/datagathering-pictures/Dg8.webp';
+import Dg9 from '../assets/datagathering-pictures/Dg9.webp';
+import D10 from '../assets/datagathering-pictures/D10.webp';
 
 // Keyframe animation for fade-in effect
 const fadeIn = keyframes`
@@ -82,6 +82,13 @@ const MethodologySection = ({ title, content, icon }) => (
   </Box>
 )
 
+// Kept at module scope so it is not a new array on every render, which would
+// otherwise make every callback below unstable.
+const images = [Dg1, Dg2, Dg3, Dg4, Dg5, Dg6, Dg7, Dg8, Dg9, D10].map((src, i) => ({
+  src,
+  alt: `Photograph from the data gathering interviews (${i + 1} of 10)`,
+}));
+
 const DataGatheringCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
@@ -90,30 +97,17 @@ const DataGatheringCarousel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const images = [
-    { src: Dg1, alt: "Data Gathering 1" },
-    { src: Dg2, alt: "Data Gathering 2" },
-    { src: Dg3, alt: "Data Gathering 3" },
-    { src: Dg4, alt: "Data Gathering 4" },
-    { src: Dg5, alt: "Data Gathering 5" },
-    { src: Dg6, alt: "Data Gathering 6" },
-    { src: Dg7, alt: "Data Gathering 7" },
-    { src: Dg8, alt: "Data Gathering 8" },
-    { src: Dg9, alt: "Data Gathering 9" },
-    { src: D10, alt: "Data Gathering 10" }
-  ];
-
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % images.length);
-  };
+  }, []);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
-  };
+  }, []);
 
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
+  const togglePlayPause = useCallback(() => {
+    setIsPlaying((prev) => !prev);
+  }, []);
 
   const handleTouchStart = (e) => {
     setTouchStart(e.touches[0].clientX);
@@ -133,33 +127,32 @@ const DataGatheringCarousel = () => {
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'ArrowLeft') {
-      prevSlide();
-      setIsPlaying(false);
-    } else if (e.key === 'ArrowRight') {
-      nextSlide();
-      setIsPlaying(false);
-    } else if (e.key === ' ') {
-      togglePlayPause();
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+        setIsPlaying(false);
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+        setIsPlaying(false);
+      } else if (e.key === ' ') {
+        togglePlayPause();
+      }
+    },
+    [prevSlide, nextSlide, togglePlayPause]
+  );
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [handleKeyDown]);
 
   // Auto-play effect
   useEffect(() => {
-    let interval;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        nextSlide();
-      }, 4000); // Change slide every 4 seconds
-    }
+    if (!isPlaying) return undefined;
+    const interval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
     return () => clearInterval(interval);
-  }, [isPlaying, currentSlide]);
+  }, [isPlaying, nextSlide]);
 
   const slideAnimation = keyframes`
     from { transform: translateX(50px); opacity: 0; }
@@ -371,7 +364,7 @@ const Methodology = () => {
         <VStack spacing={12}>
           {/* Methodology Section */}
           <VStack spacing={8}>
-            <Heading size="xl" textAlign="center" mb={4} fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
+            <Heading as="h1" size="xl" textAlign="center" mb={4} fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
               Research Methodology
             </Heading>
             <Text fontSize="lg" textAlign="center" maxW="3xl" fontFamily={'body'} color={useColorModeValue('black', 'white')}>

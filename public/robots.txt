@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bacom-researchs-site.vercel.app/sitemap.xml

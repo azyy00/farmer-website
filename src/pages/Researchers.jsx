@@ -2,10 +2,10 @@ import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, I
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import { useState } from 'react'
 import { keyframes } from '@emotion/react'
-import m1 from '../assets/members/M4.png'
-import m2 from '../assets/members/m2.png'
-import m3 from '../assets/members/m3.jpg'
-import Ad from '../assets/members/Ads.png'
+import m1 from '../assets/members/M4.webp'
+import m2 from '../assets/members/m2.webp'
+import m3 from '../assets/members/m3.webp'
+import Ad from '../assets/members/Ads.webp'
 
 // Animation keyframes
 const fadeIn = keyframes`
@@ -18,7 +18,7 @@ const slideInUp = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `
 
-const ContactInfo = ({ icon: Icon, label, value }) => (
+const ContactInfo = ({ icon: Icon, value }) => (
   <Flex 
     align="center" 
     gap={3} 
@@ -37,27 +37,35 @@ const ContactInfo = ({ icon: Icon, label, value }) => (
 
 const ResearcherCard = ({ name, role, description, image, contacts, index }) => {
   const [showContacts, setShowContacts] = useState(false);
+  // Hoisted so none of these hooks sit inside the conditional `image &&` /
+  // `contacts &&` branches below.
+  const cardColor1 = useColorModeValue('background.light', 'background.dark');
+  const cardColor2 = useColorModeValue('0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)', '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)');
+  const cardColor3 = useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent');
+  const cardColor4 = useColorModeValue('0 20px 30px -10px rgba(0, 0, 0, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1)', '0 20px 30px -10px rgba(0, 0, 0, 0.6), 0 10px 15px -5px rgba(0, 0, 0, 0.4)');
+  const cardColor5 = useColorModeValue('0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -4px rgba(0, 0, 0, 0.06)', '0 8px 16px -4px rgba(0, 0, 0, 0.4), 0 4px 8px -4px rgba(0, 0, 0, 0.3)');
+  const cardColor6 = useColorModeValue('green.600', 'green.200');
+  const cardColor7 = useColorModeValue('black', 'white');
+  const cardColor8 = useColorModeValue('green.50', 'green.900');
+  const cardColor9 = useColorModeValue('green.100', 'green.800');
+  const cardColor10 = useColorModeValue('gray.600', 'gray.300');
+  const cardColor11 = useColorModeValue('primary.600', 'primary.200');
+  const cardColor12 = useColorModeValue('primary.50', 'primary.900');
 
   return (
     <Box
       p={{ base: 6, md: 8 }}
-      bg={useColorModeValue('background.light', 'background.dark')}
-      boxShadow={useColorModeValue(
-        '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
-        '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
-      )}
+      bg={cardColor1}
+      boxShadow={cardColor2}
       rounded={'xl'}
       textAlign={'center'}
       border="2px"
-      borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+      borderColor={cardColor3}
       transition="all 0.3s ease"
       animation={`${slideInUp} ${0.5 + index * 0.2}s ease-out`}
       _hover={{
         transform: 'translateY(-8px)',
-        boxShadow: useColorModeValue(
-          '0 20px 30px -10px rgba(0, 0, 0, 0.2), 0 10px 15px -5px rgba(0, 0, 0, 0.1)',
-          '0 20px 30px -10px rgba(0, 0, 0, 0.6), 0 10px 15px -5px rgba(0, 0, 0, 0.4)'
-        ),
+        boxShadow: cardColor4,
       }}
       position="relative"
       overflow="hidden"
@@ -72,10 +80,7 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
           mx="auto"
           borderRadius="full"
           overflow="hidden"
-          boxShadow={useColorModeValue(
-            '0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -4px rgba(0, 0, 0, 0.06)',
-            '0 8px 16px -4px rgba(0, 0, 0, 0.4), 0 4px 8px -4px rgba(0, 0, 0, 0.3)'
-          )}
+          boxShadow={cardColor5}
           transition="all 0.3s ease"
           _groupHover={{
             transform: 'scale(1.05)',
@@ -98,31 +103,31 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
         <Heading 
           size={{ base: "md", sm: "lg" }}
           fontFamily={'heading'} 
-          color={useColorModeValue('green.600', 'green.200')}
+          color={cardColor6}
           transition="all 0.3s ease"
           _hover={{ transform: 'scale(1.05)' }}
         >
           {name}
         </Heading>
         <Text 
-          color={useColorModeValue('black', 'white')} 
+          color={cardColor7} 
           fontWeight="bold" 
           fontFamily={'body'}
           fontSize={{ base: "md", sm: "lg", md: "xl" }}
-          bg={useColorModeValue('green.50', 'green.900')}
+          bg={cardColor8}
           px={4}
           py={2}
           borderRadius="full"
           transition="all 0.3s ease"
           _groupHover={{
-            bg: useColorModeValue('green.100', 'green.800'),
+            bg: cardColor9,
             transform: 'scale(1.05)'
           }}
         >
           {role}
         </Text>
         <Text 
-          color={useColorModeValue('gray.600', 'gray.300')} 
+          color={cardColor10} 
           fontFamily={'body'}
           fontSize={{ base: "md", md: "lg" }}
           lineHeight="1.8"
@@ -138,9 +143,9 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
               icon={showContacts ? <FaChevronUp /> : <FaChevronDown />}
               onClick={() => setShowContacts(!showContacts)}
               variant="ghost"
-              color={useColorModeValue('primary.600', 'primary.200')}
+              color={cardColor11}
               _hover={{
-                bg: useColorModeValue('primary.50', 'primary.900'),
+                bg: cardColor12,
                 transform: 'scale(1.1)'
               }}
               transition="all 0.2s"
@@ -150,7 +155,7 @@ const ResearcherCard = ({ name, role, description, image, contacts, index }) => 
                 spacing={3} 
                 pt={2} 
                 align="start"
-                bg={useColorModeValue('green.50', 'green.900')}
+                bg={cardColor8}
                 p={4}
                 borderRadius="lg"
                 width="100%"
@@ -221,7 +226,8 @@ const Researchers = () => {
       <Container maxW={'container.xl'} px={{ base: 4, md: 8 }}>
         <VStack spacing={{ base: 10, md: 16 }} animation={`${fadeIn} 1s ease-out`}>
           <Box textAlign="center">
-            <Heading 
+            <Heading
+              as="h1"
               mb={{ base: 3, md: 4 }}
               fontFamily={'heading'} 
               color={useColorModeValue('green.600', 'green.200')}

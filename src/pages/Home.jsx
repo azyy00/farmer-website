@@ -3,12 +3,12 @@ import { keyframes } from '@emotion/react'
 import { Link } from 'react-router-dom'
 import { FaBook, FaChartBar, FaLightbulb } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
-import scroll1 from '../assets/scroll1.png'
-import scroll3 from '../assets/scroll3.png'
-import scroll4 from '../assets/scroll4.jpg'
-import m1 from '../assets/members/m1.png'
-import m2 from '../assets/members/m2.png'
-import m3 from '../assets/members/m3.jpg'
+import scroll1 from '../assets/scroll1.webp'
+import scroll3 from '../assets/scroll3.webp'
+import scroll4 from '../assets/scroll4.webp'
+import m1 from '../assets/members/m1.webp'
+import m2 from '../assets/members/m2.webp'
+import m3 from '../assets/members/m3.webp'
 
 // Keyframe animations
 const fadeIn = keyframes`
@@ -16,14 +16,11 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `
 
-const slideIn = keyframes`
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-`
+// Module scope keeps this a stable reference across renders.
+const images = [scroll1, scroll3, scroll4];
 
 const Home = () => {
   const [currentImage, setCurrentImage] = useState(0);
-  const images = [scroll1, scroll3, scroll4];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -65,10 +62,28 @@ const Home = () => {
     }
   };
 
-  // Colors and typography
+  // Colors and typography. Every colour-mode hook is resolved here so that none
+  // of them end up inside a loop or conditional further down the tree, which
+  // would break the rules of hooks.
   const primaryColor = useColorModeValue('green.600', 'green.200');
   const secondaryColor = useColorModeValue('gray.600', 'gray.300');
   const backgroundColor = useColorModeValue('white', 'gray.900');
+  const cardBg = useColorModeValue('background.light', 'background.dark');
+  const cardBorder = useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent');
+  const cardShadow = useColorModeValue(
+    '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
+    '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
+  );
+  const cardHoverShadow = useColorModeValue(
+    '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
+    '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
+  );
+  const cardText = useColorModeValue('black', 'white');
+  const dotActiveColor = useColorModeValue('green.600', 'green.200');
+  const avatarRing = useColorModeValue('white', 'gray.800');
+  const badgeBg = useColorModeValue('green.100', 'green.800');
+  const keywordBg = useColorModeValue('primary.50', 'primary.900');
+  const keywordColor = useColorModeValue('primary.600', 'primary.200');
   const headingFont = '"Segoe UI", Tahoma, Geneva, Verdana, sans-serif';
   const bodyFont = '"Roboto", sans-serif';
 
@@ -143,7 +158,7 @@ const Home = () => {
                     w="2"
                     h="2"
                     borderRadius="full"
-                    bg={currentImage === index ? useColorModeValue('green.600', 'green.200') : "gray.300"}
+                    bg={currentImage === index ? dotActiveColor : 'gray.300'}
                     transition="background-color 0.3s ease"
                   />
                 ))}
@@ -169,38 +184,38 @@ const Home = () => {
               >
                 Communication Challenges in the Implementation of Agricultural Office in LGU Goa
               </Heading>
-              <Flex 
+              <Flex
                 align="center"
                 justify={{ base: 'center', md: 'flex-start' }}
-                gap={2}
+                gap={4}
                 width="100%"
+                wrap="wrap"
               >
-                <Text
-                  fontSize="xl" 
-                  color={secondaryColor}
-                >
-                  A research study by Madelo B. Biando, Apple Mae R. Castor, and Apple Jewel S. Borais
-                </Text>
-                <AvatarGroup size='sm' max={3} spacing='-1.5rem'>
+                {/* The avatars used to be squeezed into the leftover sliver of
+                    the byline row; they now sit ahead of it at a readable size. */}
+                <AvatarGroup size="md" max={3} spacing="-0.75rem">
                   <Avatar 
                     name="Madelo Biando"
                     src={m3}
                     borderWidth="2px"
-                    borderColor={useColorModeValue('white', 'gray.800')}
+                    borderColor={avatarRing}
                   />
                   <Avatar 
                     name="Apple Jewel Borais"
                     src={m1}
                     borderWidth="2px"
-                    borderColor={useColorModeValue('white', 'gray.800')}
+                    borderColor={avatarRing}
                   />
                   <Avatar 
                     name="Apple Mae Castor"
                     src={m2}
                     borderWidth="2px"
-                    borderColor={useColorModeValue('white', 'gray.800')}
+                    borderColor={avatarRing}
                   />
                 </AvatarGroup>
+                <Text fontSize="xl" color={secondaryColor} flex="1" minW="260px">
+                  A research study by Madelo B. Biando, Apple Mae R. Castor, and Apple Jewel S. Borais
+                </Text>
               </Flex>
               <Text 
                 fontSize="lg" 
@@ -213,7 +228,7 @@ const Home = () => {
               <Text 
                 fontSize="md" 
                 color={secondaryColor}
-                bg={useColorModeValue('green.100', 'green.800')}
+                bg={badgeBg}
                 px={4}
                 py={2}
                 borderRadius="full"
@@ -236,7 +251,7 @@ const Home = () => {
                   size="xl" 
                   mb={6} 
                   textAlign="center"
-                  color={useColorModeValue('green.600', 'green.200')}
+                  color={primaryColor}
                 >
                   Abstract
                 </Heading>
@@ -244,24 +259,18 @@ const Home = () => {
                   fontSize="lg" 
                   lineHeight="tall" 
                   textAlign="justify"
-                  bg={useColorModeValue('background.light', 'background.dark')}
+                  bg={cardBg}
                   p={6}
                   borderRadius="lg"
-                  boxShadow={useColorModeValue(
-                    '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
-                    '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
-                  )}
+                  boxShadow={cardShadow}
                   border="2px"
-                  borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+                  borderColor={cardBorder}
                   transition="all 0.3s ease"
                   _hover={{
                     transform: 'translateY(-5px)',
-                    boxShadow: useColorModeValue(
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-                    )
+                    boxShadow: cardHoverShadow
                   }}
-                  color={useColorModeValue('black', 'white')}
+                  color={cardText}
                 >
                   The Local Agricultural Office (LAO) in Goa, Partido, Camarines Sur, has carried out several agricultural projects in the barangays of Matacla, Digdigon, and Hiwacloy to assist local farmers and raise agricultural output. Through an analysis of important elements like the difficulties faced during implementation, the communication tactics used by the LAO, and the programs' overall effects on the farming community, this study assessed the efficacy of these initiatives. 
                   Using semi-structured interviews with ten local registered farmers, the study used a qualitative research approach to obtain in-depth perspectives. Although the LAO used various communication techniques, such as face-to-face farmer encounters, community gatherings, and other outreach techniques, the results showed that several obstacles prevented these initiatives from being fully effective.
@@ -276,7 +285,7 @@ const Home = () => {
                   size="xl" 
                   mb={6} 
                   textAlign="center"
-                  color={useColorModeValue('green.600', 'green.200')}
+                  color={primaryColor}
                 >
                   Introduction
                 </Heading>
@@ -284,24 +293,18 @@ const Home = () => {
                   fontSize="lg" 
                   lineHeight="tall" 
                   textAlign="justify"
-                  bg={useColorModeValue('background.light', 'background.dark')}
+                  bg={cardBg}
                   p={6}
                   borderRadius="lg"
-                  boxShadow={useColorModeValue(
-                    '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
-                    '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
-                  )}
+                  boxShadow={cardShadow}
                   border="2px"
-                  borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+                  borderColor={cardBorder}
                   transition="all 0.3s ease"
                   _hover={{
                     transform: 'translateY(-5px)',
-                    boxShadow: useColorModeValue(
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-                    )
+                    boxShadow: cardHoverShadow
                   }}
-                  color={useColorModeValue('black', 'white')}
+                  color={cardText}
                 >
                   The growth of the farming industry, especially in rural areas, greatly depends on the execution of local agricultural initiatives. The main objective of this study is to assess how well the Local Agricultural Office's 
                   programs serve farmers. The outreach program under consideration specifically offers several support channels for farmers who are enrolled with authorized cooperatives and the Registry System for the Basic Sectors in Agriculture (RSBSA).  
@@ -317,41 +320,35 @@ const Home = () => {
                 <Heading 
                   size="xl" 
                   mb={6}
-                  color={useColorModeValue('green.600', 'green.200')}
+                  color={primaryColor}
                 >
                   Objectives
                 </Heading>
                 <Box
-                  bg={useColorModeValue('background.light', 'background.dark')}
+                  bg={cardBg}
                   p={6}
                   borderRadius="lg"
-                  boxShadow={useColorModeValue(
-                    '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
-                    '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
-                  )}
+                  boxShadow={cardShadow}
                   border="2px"
-                  borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+                  borderColor={cardBorder}
                   transition="all 0.3s ease"
                   _hover={{
                     transform: 'translateY(-5px)',
-                    boxShadow: useColorModeValue(
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-                    )
+                    boxShadow: cardHoverShadow
                   }}
                 >
                   <VStack spacing={6} align="start" width="100%">
-                    <Text textAlign="justify" fontSize="lg" lineHeight="1.8" color={useColorModeValue('black', 'white')}>
+                    <Text textAlign="justify" fontSize="lg" lineHeight="1.8" color={cardText}>
                       Generally, this study aims to explore the communication strategies, challenges, and implementation of outreach programs by the Local Agricultural Office.
                     </Text>
-                    <Text fontWeight="bold" fontSize="lg" color={useColorModeValue('black', 'white')}>
+                    <Text fontWeight="bold" fontSize="lg" color={cardText}>
                       Specifically, this study aims to:
                     </Text>
                     <VStack spacing={4} align="start" pl={6}>
-                      <Text fontSize="lg" lineHeight="1.8" color={useColorModeValue('black', 'white')}>
+                      <Text fontSize="lg" lineHeight="1.8" color={cardText}>
                         1. Explore the communication strategies and tools employed by the Local Agricultural Office in the implementation of Agricultural Programs.
                       </Text>
-                      <Text fontSize="lg" lineHeight="1.8" color={useColorModeValue('black', 'white')}>
+                      <Text fontSize="lg" lineHeight="1.8" color={cardText}>
                         2. Explore the challenges encountered in implementing the outreach Programs.
                       </Text>
                     </VStack>
@@ -363,28 +360,22 @@ const Home = () => {
             {/* Keywords Section */}
             <VStack spacing={8} align="stretch">
               <Box 
-                bg={useColorModeValue('background.light', 'background.dark')}
+                bg={cardBg}
                 p={6} 
                 borderRadius="lg"
-                boxShadow={useColorModeValue(
-                  '0 4px 8px -2px rgba(0, 0, 0, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.08)',
-                  '0 4px 8px -2px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.3)'
-                )}
+                boxShadow={cardShadow}
                 border="2px"
-                borderColor={useColorModeValue('rgba(195, 226, 194, 0.5)', 'transparent')}
+                borderColor={cardBorder}
                 transition="all 0.3s ease"
                 _hover={{
                   transform: 'translateY(-5px)',
-                  boxShadow: useColorModeValue(
-                    '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-                    '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-                  )
+                  boxShadow: cardHoverShadow
                 }}
               >
                 <Heading 
                   size="md" 
                   mb={4}
-                  color={useColorModeValue('primary.600', 'primary.200')}
+                  color={keywordColor}
                   fontFamily={'heading'}
                 >
                   Keywords
@@ -395,8 +386,8 @@ const Home = () => {
                       key={keyword}
                       px={3}
                       py={1}
-                      bg={useColorModeValue('primary.50', 'primary.900')}
-                      color={useColorModeValue('primary.600', 'primary.200')}
+                      bg={keywordBg}
+                      color={keywordColor}
                       borderRadius="full"
                       fontSize="sm"
                       fontWeight="medium"
@@ -418,10 +409,7 @@ const Home = () => {
                   leftIcon={<Icon as={FaBook} boxSize={6} />}
                   _hover={{
                     transform: 'translateY(-5px)',
-                    boxShadow: useColorModeValue(
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-                    )
+                    boxShadow: cardHoverShadow
                   }}
                   transition="all 0.3s ease"
                   aria-label="Research Methodology"
@@ -437,10 +425,7 @@ const Home = () => {
                   leftIcon={<Icon as={FaChartBar} boxSize={6} />}
                   _hover={{
                     transform: 'translateY(-5px)',
-                    boxShadow: useColorModeValue(
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-                    )
+                    boxShadow: cardHoverShadow
                   }}
                   transition="all 0.3s ease"
                   aria-label="Results & Discussion"
@@ -456,10 +441,7 @@ const Home = () => {
                   leftIcon={<Icon as={FaLightbulb} boxSize={6} />}
                   _hover={{
                     transform: 'translateY(-5px)',
-                    boxShadow: useColorModeValue(
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.2), 0 6px 10px -5px rgba(0, 0, 0, 0.1)',
-                      '0 15px 25px -8px rgba(0, 0, 0, 0.6), 0 6px 10px -5px rgba(0, 0, 0, 0.4)'
-                    )
+                    boxShadow: cardHoverShadow
                   }}
                   transition="all 0.3s ease"
                   aria-label="Conclusion & Recommendations"
