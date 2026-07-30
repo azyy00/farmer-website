@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, Image, Collapse, IconButton, Flex } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, VStack, Grid, GridItem, useColorModeValue, Image, Collapse, IconButton, Flex } from '@chakra-ui/react'
 import { PiEnvelopeSimple, PiPhone, PiMapPin, PiCaretDown, PiCaretUp } from 'react-icons/pi'
 import { useState } from 'react'
 import { keyframes } from '@emotion/react'
@@ -252,15 +252,21 @@ const Researchers = () => {
           
           {/* Research Team Section */}
           <Box width="full">
-            <SimpleGrid 
-              columns={{ base: 1, md: 2, lg: 3 }} 
-              spacing={{ base: 6, md: 8, lg: 10 }} 
+            {/* Three equal columns is the banned default. The lead researcher
+                takes a wider cell and the two co-researchers share the other,
+                which also reflects the actual authorship order. */}
+            <Grid
+              templateColumns={{ base: '1fr', lg: '1.25fr 1fr 1fr' }}
+              gap={{ base: 6, md: 8, lg: 10 }}
               width="full"
+              alignItems="stretch"
             >
               {researchTeam.map((researcher, index) => (
-                <ResearcherCard key={index} {...researcher} index={index} />
+                <GridItem key={researcher.name}>
+                  <ResearcherCard {...researcher} index={index} />
+                </GridItem>
               ))}
-            </SimpleGrid>
+            </Grid>
           </Box>
 
           {/* Adviser Section */}

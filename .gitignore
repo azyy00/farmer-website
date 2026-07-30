@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# taste-skill (agent tooling, not app code)
+.agents/
+.claude/
+skills-lock.json

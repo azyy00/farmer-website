@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, VStack, SimpleGrid, Grid, GridItem, useColorModeValue } from '@chakra-ui/react'
 import { PiStack, PiShareNetwork, PiDeviceMobile } from 'react-icons/pi'
 import { keyframes } from '@emotion/react'
 
@@ -60,8 +60,12 @@ const Section = ({ title, content, isLeft }) => (
   </Box>
 )
 
-const KeyTakeaway = ({ title, content, icon: Icon, index }) => (
+const KeyTakeaway = ({ title, content, icon: Icon, index, isLead = false }) => (
   <Box
+    height="100%"
+    display="flex"
+    flexDirection="column"
+    justifyContent="center"
     bg={useColorModeValue('background.light', 'background.dark')}
     p={6}
     borderRadius="lg"
@@ -93,8 +97,8 @@ const KeyTakeaway = ({ title, content, icon: Icon, index }) => (
           color={useColorModeValue('primary.600', 'primary.200')}
         />
       </Box>
-      <Heading 
-        size="sm"
+      <Heading
+        size={isLead ? 'md' : 'sm'}
         fontFamily={'heading'}
         color={useColorModeValue('primary.600', 'primary.200')}
       >
@@ -162,11 +166,21 @@ const Conclusion = () => {
             <Heading size="lg" textAlign="center" mb={6} fontFamily={'heading'} color={useColorModeValue('primary.600', 'primary.200')}>
               Key Takeaways
             </Heading>
-            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6}>
-              {keyTakeaways.map((takeaway, index) => (
-                <KeyTakeaway key={index} {...takeaway} index={index} />
-              ))}
-            </SimpleGrid>
+            <Grid
+              templateColumns={{ base: '1fr', md: '1.35fr 1fr' }}
+              templateRows={{ md: 'auto auto' }}
+              gap={6}
+            >
+              <GridItem rowSpan={{ md: 2 }}>
+                <KeyTakeaway {...keyTakeaways[0]} index={0} isLead />
+              </GridItem>
+              <GridItem>
+                <KeyTakeaway {...keyTakeaways[1]} index={1} />
+              </GridItem>
+              <GridItem>
+                <KeyTakeaway {...keyTakeaways[2]} index={2} />
+              </GridItem>
+            </Grid>
           </Box>
         </VStack>
       </Container>

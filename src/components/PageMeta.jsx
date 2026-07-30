@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
-const SITE_NAME = 'Communication Challenges in Agricultural Programs — LGU Goa'
+const SITE_NAME = 'Communication Challenges in Agricultural Programs - LGU Goa'
 
 // Per-route document title and description. Keeping this in one place means
 // search engines and shared links describe each page instead of the whole site.
 const pageMeta = {
   '/': {
-    title: 'Communication Challenges in Agricultural Programs — LGU Goa',
+    title: 'Communication Challenges in Agricultural Programs - LGU Goa',
     description:
       'A qualitative study on the communication strategies and challenges of the Local Agricultural Office in Goa, Partido, Camarines Sur.',
   },
@@ -54,7 +54,7 @@ const PageMeta = () => {
       title: 'Page not found',
       description: SITE_NAME,
     }
-    const title = pathname === '/' ? meta.title : `${meta.title} — ${SITE_NAME}`
+    const title = pathname === '/' ? meta.title : `${meta.title} - ${SITE_NAME}`
 
     document.title = title
     setMeta('meta[name="description"]', 'content', meta.description)

@@ -99,7 +99,7 @@ const theme = extendTheme({
   },
 
   sizes: {
-    // Roughly 65 characters at the body size — the readable measure for the
+    // Roughly 65 characters at the body size - the readable measure for the
     // long research passages on Home, Methodology and Conclusion.
     prose: '65ch',
   },

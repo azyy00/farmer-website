@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 // These were previously hard-coded string paths under /assets, which never
-// existed in `public/` — every slide 404'd. Importing them lets Vite resolve
+// existed in `public/` - every slide 404'd. Importing them lets Vite resolve
 // and fingerprint the real files.
 import Dg1 from '../assets/datagathering-pictures/Dg1.webp';
 import Dg2 from '../assets/datagathering-pictures/Dg2.webp';

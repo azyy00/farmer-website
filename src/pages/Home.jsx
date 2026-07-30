@@ -83,12 +83,12 @@ const Home = () => {
     <Box fontFamily="body" bg={backgroundColor} color={secondaryColor}>
       {/* Hero Section */}
       <Box
-        minH={{ base: "auto", md: "100dvh" }}
+        minH={{ base: 'auto', md: '100dvh' }}
         display="flex"
-        alignItems="center"
+        alignItems={{ base: 'flex-start', md: 'center' }}
         bg={backgroundColor}
-        pt={{ base: 16, md: 0 }}
-        pb={{ base: 16, md: 0 }}
+        pt={{ base: 12, md: 20 }}
+        pb={{ base: 14, md: 20 }}
         px={4}
         position="relative"
         overflow="hidden"
@@ -180,10 +180,12 @@ const Home = () => {
               </Text>
               <Heading
                 as="h1"
-                size="3xl"
+                fontSize={{ base: '1.9rem', md: '2.4rem', lg: '2.9rem' }}
+                lineHeight={1.1}
+                letterSpacing="-0.03em"
                 fontWeight="600"
                 color={primaryColor}
-                mb={2}
+                mb={1}
                 textAlign={{ base: 'center', md: 'left' }}
                 fontFamily="heading"
               >
@@ -222,25 +224,48 @@ const Home = () => {
                   A research study by Madelo B. Biando, Apple Mae R. Castor, and Apple Jewel S. Borais
                 </Text>
               </Flex>
-              <Text 
-                fontSize="lg" 
-                color={secondaryColor}
-                fontStyle="italic"
-                textAlign={{ base: 'center', md: 'left' }}
+              <Button
+                as={Link}
+                to="/results"
+                colorScheme="green"
+                size="lg"
+                px={8}
+                rightIcon={<Icon as={PiArrowRight} boxSize={5} />}
+                _hover={{ transform: 'translateY(-2px)', boxShadow: 'lg' }}
               >
-                Under the guidance of Ruth Daphne Prila Pesimo (Adviser)
-              </Text>
-              <Text 
-                fontSize="md" 
-                color={secondaryColor}
-                bg={badgeBg}
-                px={4}
-                py={2}
-                borderRadius="full"
-              >
-                Bachelor of Arts in Communication
-              </Text>
+                Read the findings
+              </Button>
             </VStack>
+          </Flex>
+        </Container>
+      </Box>
+
+      {/* Study credits. These two lines used to sit inside the hero, which
+          pushed it past the four-element cap; they belong directly beneath it. */}
+      <Box bg={backgroundColor} px={4} pb={{ base: 4, md: 8 }}>
+        <Container maxW="container.xl">
+          <Flex
+            align="center"
+            gap={{ base: 3, md: 5 }}
+            wrap="wrap"
+            borderTop="1px solid"
+            borderColor={cardBorder}
+            pt={6}
+          >
+            <Text fontSize="md" color={secondaryColor} fontStyle="italic" lineHeight={1.6}>
+              Under the guidance of Ruth Daphne Prila Pesimo, Adviser
+            </Text>
+            <Text
+              fontSize="sm"
+              color={primaryColor}
+              bg={badgeBg}
+              px={3}
+              py={1}
+              borderRadius="sm"
+              fontWeight="500"
+            >
+              Bachelor of Arts in Communication
+            </Text>
           </Flex>
         </Container>
       </Box>

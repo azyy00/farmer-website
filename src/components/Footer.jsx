@@ -34,9 +34,6 @@ const Footer = () => {
           {/* Every page reachable from the bottom of every page, so long reads
               never dead-end. */}
           <VStack align="start" spacing={2}>
-            <Text fontSize="xs" fontWeight="600" letterSpacing="0.1em" textTransform="uppercase" color={faint}>
-              Sections
-            </Text>
             <SimpleGrid columns={2} spacingX={6} spacingY={1} width="100%">
               {sections.map((item) => (
                 <ChakraLink
@@ -83,7 +80,7 @@ const Footer = () => {
             © 2024 Madelo B. Biando, Apple Mae R. Castor, Apple Jewel S. Borais. All rights reserved.
           </Text>
           <Text>
-            Bachelor of Arts in Communication, Partido State University · Site by Anthony B. Azuela
+            Bachelor of Arts in Communication, Partido State University. Site by Anthony B. Azuela.
           </Text>
         </HStack>
       </Container>
