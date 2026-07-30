@@ -1,7 +1,8 @@
 import { keyframes } from '@emotion/react';
-import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, Image, Grid, useDisclosure, Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton, Flex, IconButton } from '@chakra-ui/react';
-import { PiClipboardText, PiUsersThree, PiWrench, PiPencilLine, PiChartLineUp, PiCamera, PiCaretLeft, PiCaretRight, PiPause, PiPlay } from 'react-icons/pi';
-import { useState, useEffect, useCallback } from 'react';
+import { Box, Container, Heading, Text, VStack, SimpleGrid, useColorModeValue, Flex } from '@chakra-ui/react';
+import { PiClipboardText, PiUsersThree, PiWrench, PiPencilLine, PiChartLineUp, PiCamera } from 'react-icons/pi';
+import { lazy, Suspense } from 'react';
+const InfiniteGallery = lazy(() => import('../components/InfiniteGallery'));
 
 // Import all data gathering images
 import Dg1 from '../assets/datagathering-pictures/Dg1.webp';
@@ -80,244 +81,6 @@ const images = [Dg1, Dg2, Dg3, Dg4, Dg5, Dg6, Dg7, Dg8, Dg9, D10].map((src, i) =
   alt: `Photograph from the data gathering interviews (${i + 1} of 10)`,
 }));
 
-const DataGatheringCarousel = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % images.length);
-  }, []);
-
-  const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
-  }, []);
-
-  const togglePlayPause = useCallback(() => {
-    setIsPlaying((prev) => !prev);
-  }, []);
-
-  const handleTouchStart = (e) => {
-    setTouchStart(e.touches[0].clientX);
-    setIsPlaying(false); // Pause on touch
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 75) {
-      nextSlide();
-    }
-    if (touchStart - touchEnd < -75) {
-      prevSlide();
-    }
-  };
-
-  const handleKeyDown = useCallback(
-    (e) => {
-      if (e.key === 'ArrowLeft') {
-        prevSlide();
-        setIsPlaying(false);
-      } else if (e.key === 'ArrowRight') {
-        nextSlide();
-        setIsPlaying(false);
-      } else if (e.key === ' ') {
-        togglePlayPause();
-      }
-    },
-    [prevSlide, nextSlide, togglePlayPause]
-  );
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
-
-  // Auto-play effect
-  useEffect(() => {
-    if (!isPlaying) return undefined;
-    const interval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
-    return () => clearInterval(interval);
-  }, [isPlaying, nextSlide]);
-
-  const slideAnimation = keyframes`
-    from { transform: translateX(50px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-  `;
-
-  return (
-    <Box>
-      <Box
-        position="relative"
-        height={{ base: "300px", md: "400px", lg: "500px" }}
-        width="100%"
-        overflow="hidden"
-        borderRadius="xl"
-        boxShadow="2xl"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        tabIndex={0}
-        role="region"
-        aria-label="Image carousel"
-      >
-        {/* Navigation Arrows and Play/Pause */}
-        <Flex
-          position="absolute"
-          width="100%"
-          justify="space-between"
-          align="center"
-          height="100%"
-          px={4}
-          zIndex={2}
-        >
-          <IconButton
-            aria-label="Previous slide"
-            icon={<PiCaretLeft />}
-            onClick={() => {
-              prevSlide();
-              setIsPlaying(false);
-            }}
-            variant="ghost"
-            color="white"
-            size="lg"
-            _hover={{ bg: 'rgba(0,0,0,0.5)' }}
-            _active={{ bg: 'rgba(0,0,0,0.7)' }}
-          />
-          <IconButton
-            aria-label="Next slide"
-            icon={<PiCaretRight />}
-            onClick={() => {
-              nextSlide();
-              setIsPlaying(false);
-            }}
-            variant="ghost"
-            color="white"
-            size="lg"
-            _hover={{ bg: 'rgba(0,0,0,0.5)' }}
-            _active={{ bg: 'rgba(0,0,0,0.7)' }}
-          />
-        </Flex>
-
-        {/* Play/Pause Button */}
-        <IconButton
-          aria-label={isPlaying ? "Pause slideshow" : "Play slideshow"}
-          icon={isPlaying ? <PiPause /> : <PiPlay />}
-          onClick={togglePlayPause}
-          position="absolute"
-          top={4}
-          right={4}
-          zIndex={2}
-          variant="ghost"
-          color="white"
-          _hover={{ bg: 'rgba(0,0,0,0.5)' }}
-          _active={{ bg: 'rgba(0,0,0,0.7)' }}
-        />
-
-        {/* Images */}
-        <Box
-          position="relative"
-          height="100%"
-          width="100%"
-          onClick={() => {
-            setSelectedImage(images[currentSlide]);
-            onOpen();
-            setIsPlaying(false);
-          }}
-          cursor="pointer"
-        >
-          <Image
-            key={currentSlide}
-            src={images[currentSlide].src}
-            alt={images[currentSlide].alt}
-            objectFit="cover"
-            w="100%"
-            h="100%"
-            animation={`${slideAnimation} 0.7s ease-out`}
-          />
-          <Box
-            position="absolute"
-            bottom={0}
-            left={0}
-            right={0}
-            p={4}
-            background="linear-gradient(to top, rgba(0,0,0,0.7), transparent)"
-            color="white"
-          >
-            <Text fontSize="lg" fontWeight="bold">
-              {images[currentSlide].alt}
-            </Text>
-          </Box>
-        </Box>
-
-        {/* Progress Indicators */}
-        <Flex
-          position="absolute"
-          bottom={4}
-          width="100%"
-          justify="center"
-          gap={2}
-          zIndex={2}
-        >
-          {images.map((_, index) => (
-            <Box
-              key={index}
-              w={index === currentSlide ? "8px" : "6px"}
-              h={index === currentSlide ? "8px" : "6px"}
-              borderRadius="full"
-              bg={index === currentSlide ? "white" : "rgba(255,255,255,0.5)"}
-              cursor="pointer"
-              onClick={() => {
-                setCurrentSlide(index);
-                setIsPlaying(false);
-              }}
-              transition="all 0.2s"
-              _hover={{ transform: "scale(1.2)" }}
-            />
-          ))}
-        </Flex>
-      </Box>
-
-      {/* Fullscreen Modal */}
-      <Modal isOpen={isOpen} onClose={onClose} size="full">
-        <ModalOverlay backdropFilter="blur(10px)" />
-        <ModalContent bg="transparent" boxShadow="none">
-          <ModalCloseButton 
-            color="white" 
-            bg="rgba(0,0,0,0.2)"
-            borderRadius="full"
-            _hover={{
-              bg: "rgba(0,0,0,0.3)"
-            }}
-          />
-          <ModalBody 
-            display="flex" 
-            alignItems="center" 
-            justifyContent="center"
-            p={0}
-          >
-            {selectedImage && (
-              <Image
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                maxH="90vh"
-                maxW="90vw"
-                objectFit="contain"
-                borderRadius="lg"
-              />
-            )}
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </Box>
-  );
-};
-
 const Methodology = () => {
   const sections = [
     {
@@ -394,7 +157,72 @@ const Methodology = () => {
               Visual documentation of our research process and interactions with the agricultural community
             </Text>
             
-            <DataGatheringCarousel />
+            {/* 3D infinite photo gallery (react-three-fiber). Brutalist-framed
+                plate over an ink ground, with a mono operating hint. */}
+            <Box
+              data-infinite-gallery-frame
+              width="100%"
+              maxW="6xl"
+              position="relative"
+              border="2px solid"
+              borderColor="ink.500"
+              bg="ink.500"
+              boxShadow="xl"
+            >
+              <Flex
+                justify="space-between"
+                align="center"
+                px={3}
+                py={2}
+                bg="red.500"
+                color="paper.500"
+                fontFamily="mono"
+                fontSize={{ base: '10px', md: '11px' }}
+                fontWeight={700}
+                letterSpacing="0.14em"
+                textTransform="uppercase"
+              >
+                <Text>[ FIG.02 // DATA GATHERING // 10 PLATES ]</Text>
+                <Text display={{ base: 'none', md: 'block' }}>WEBGL // R3F</Text>
+              </Flex>
+              <Suspense
+                fallback={
+                  <Flex
+                    align="center"
+                    justify="center"
+                    height="min(70vh, 560px)"
+                    fontFamily="mono"
+                    fontSize="xs"
+                    letterSpacing="0.16em"
+                    textTransform="uppercase"
+                    color="paper.500"
+                  >
+                    Loading gallery...
+                  </Flex>
+                }
+              >
+                <InfiniteGallery
+                  images={images}
+                  speed={1.1}
+                  visibleCount={10}
+                  className="dg-gallery"
+                  style={{ height: 'min(70vh, 560px)', width: '100%' }}
+                />
+              </Suspense>
+              <Text
+                px={3}
+                py={2}
+                borderTop="2px solid"
+                borderColor="red.500"
+                fontFamily="mono"
+                fontSize="10px"
+                letterSpacing="0.12em"
+                textTransform="uppercase"
+                color="paper.500"
+              >
+                Drag or use arrow keys to navigate &middot; autoplay resumes after 3s idle
+              </Text>
+            </Box>
           </VStack>
         </VStack>
       </Container>
