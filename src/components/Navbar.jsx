@@ -23,6 +23,7 @@ import {
   PiList,
 } from 'react-icons/pi'
 import ColorModeMenu from './ColorModeMenu'
+import { LogoMark } from './Logo'
 
 // Phosphor rather than the Font Awesome solid set: one consistent stroke
 // weight across the whole interface, and less of a default look.
@@ -49,6 +50,7 @@ const Navbar = () => {
   const hoverColor = useColorModeValue('primary.700', 'primary.200')
   const activeBg = useColorModeValue('primary.100', 'primary.800')
   const activeColor = useColorModeValue('primary.700', 'primary.200')
+  const logoGround = useColorModeValue('rgba(250,250,248,0.92)', 'rgba(26,26,23,0.92)')
 
   return (
     <Flex
@@ -72,19 +74,30 @@ const Navbar = () => {
       backdropFilter="blur(14px) saturate(140%)"
       margin={0}
     >
-      <Text
-        fontFamily="heading"
-        color={brandColor}
-        fontWeight="600"
-        fontSize={{ base: 'md', md: 'lg' }}
-        letterSpacing="-0.02em"
-        lineHeight={1.2}
-        noOfLines={2}
-        _hover={{ color: brandHoverColor }}
-        transition="color 0.2s"
+      <Box
+        as={Link}
+        to="/"
+        display="flex"
+        alignItems="center"
+        gap={2.5}
+        sx={{ '--logo-ground': logoGround }}
+        _hover={{ '& .brand-text': { color: brandHoverColor } }}
       >
-        <Link to="/">Agricultural Office Challenges in Goa</Link>
-      </Text>
+        <LogoMark size={30} color={brandColor} title="Home" />
+        <Text
+          className="brand-text"
+          fontFamily="heading"
+          color={brandColor}
+          fontWeight="600"
+          fontSize={{ base: 'sm', md: 'md', lg: 'lg' }}
+          letterSpacing="-0.02em"
+          lineHeight={1.15}
+          noOfLines={2}
+          transition="color 0.2s"
+        >
+          Agricultural Office Challenges in Goa
+        </Text>
+      </Box>
 
       {/* Desktop navigation */}
       <Flex display={{ base: 'none', lg: 'flex' }} align="center">

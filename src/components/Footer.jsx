@@ -1,5 +1,6 @@
 import { Box, Container, Text, Heading, SimpleGrid, VStack, HStack, Link as ChakraLink, Divider, useColorModeValue } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { LogoMark } from './Logo'
 
 const sections = [
   { label: 'Methodology', to: '/methodology' },
@@ -17,15 +18,19 @@ const Footer = () => {
   const faint = useColorModeValue('gray.500', 'gray.500')
   const headingColor = useColorModeValue('primary.600', 'primary.200')
   const linkHover = useColorModeValue('primary.700', 'primary.200')
+  const logoGround = useColorModeValue('#FFFFFF', '#2A2A26')
 
   return (
     <Box as="footer" bg={bg} color={muted} borderTop="1px solid" borderColor={border} mt="auto" width="100%">
       <Container maxW="6xl" py={{ base: 10, md: 14 }}>
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 8, md: 10 }}>
           <VStack align="start" spacing={3}>
-            <Heading as="h2" size="md" color={headingColor} fontFamily="heading">
-              Communication Challenges in Agricultural Programs
-            </Heading>
+            <HStack spacing={2.5} align="center" sx={{ '--logo-ground': logoGround }}>
+              <LogoMark size={26} color={headingColor} title="" />
+              <Heading as="h2" size="md" color={headingColor} fontFamily="heading">
+                Communication Challenges in Agricultural Programs
+              </Heading>
+            </HStack>
             <Text fontSize="sm" maxW="38ch">
               A qualitative study of the Local Agricultural Office in Goa, Partido, Camarines Sur.
             </Text>
