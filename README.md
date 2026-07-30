@@ -1,43 +1,74 @@
 # Communication Challenges in Agricultural Programs
 
-A research study website exploring the communication strategies and challenges in the implementation of agricultural programs by the Local Agricultural Office (LAO) in Goa, Partido, Camarines Sur.
+A single-page research website presenting a qualitative study of the
+communication strategies and challenges in the implementation of agricultural
+programs by the Local Agricultural Office (LAO) in Goa, Partido, Camarines Sur.
 
-## Project Overview
+Live site: https://bacom-researchs-site.vercel.app/
 
-This website presents the findings of a qualitative research study conducted by:
-- Madelo B. Biando
-- Apple Mae R. Castor
-- Apple Jewel S. Borais
+## Project overview
 
-Under the guidance of Ruth Daphne Prila Pesimo (Adviser)
+The study was conducted by:
 
-## Website Developer
+- Madelo B. Biando (Lead Researcher)
+- Apple Mae R. Castor (Researcher)
+- Apple Jewel S. Borais (Researcher)
 
-### Anthony B. Azuela
-- Lead Developer and UI/UX Designer
-- Implemented the entire website architecture using React and Chakra UI
-- Created responsive and interactive user interfaces
-- Developed data visualization components
-- Handled website deployment and maintenance
-- Integrated bilingual content support
-- Optimized performance and accessibility
+Under the guidance of Ruth Daphne Prila Pesimo (Adviser), for the Bachelor of
+Arts in Communication, Partido State University.
+
+## The site
+
+The whole study reads as one continuous scrolling document. The former routes
+(Methodology, Results, Conclusion, Researchers, Contact) are now anchored
+sections; the navigation scrolls to each and tracks the active section. Old
+paths such as `/results` redirect to the matching anchor.
+
+### Design system
+
+The interface uses a Swiss Industrial brutalist system, defined centrally in
+`src/theme.js`:
+
+- One light substrate: documentation paper `#F4F4F0`, carbon ink `#0A0A0A`, and
+  a single hazard-red `#E61919` accent. Light only, no dark mode.
+- Archivo Black for macro headers (uppercase, tight tracking), Archivo for body,
+  JetBrains Mono for telemetry and labels. All self-hosted via `@fontsource`.
+- Square corners throughout, hard offset shadows instead of soft blur, and a
+  faint mechanical grain over the document.
+- Numbered structural rules introduce each section as an operational unit.
+
+### Motion
+
+GSAP (`gsap` + `@gsap/react`) drives the motion layer: a staggered hero
+load-in, scroll-triggered section reveals, and image scale-and-fade on the field
+plates. All motion is disabled under `prefers-reduced-motion`.
+
+### Content and media
+
+- An aerial field video plays behind the hero as a degraded survey plate
+  (ink scrim + 1-bit dither), with a static poster fallback for reduced motion.
+- The Results section presents the communication-strategy and challenge tables,
+  with participant quotes in Bicol alongside English translations.
+- The contact form validates input and hands the composed message to the
+  visitor's own email client (no backend required).
 
 ## Features
 
-- Comprehensive research methodology
-- Detailed results and discussion
-- Interactive data visualization
-- Responsive design for all devices
-- Bilingual content (English and Bicol)
-- Light and dark colour modes
-- Per-page titles, Open Graph metadata, sitemap and robots.txt
+- Single continuous-scroll layout with anchor navigation and active tracking
+- Brutalist design system with a self-hosted type stack
+- GSAP scroll-reveal motion, reduced-motion safe
+- Video hero with poster fallback; hard-bordered photographic plates
+- Working contact form via mailto, with client-side validation
+- Per-page metadata, Open Graph tags, sitemap and robots.txt
+- WebP imagery, route code-splitting, tinted-favicon branding
 
-## Built With
+## Built with
 
 - React + Vite
-- Chakra UI
+- Chakra UI + Emotion
 - React Router
-- Emotion
+- GSAP + @gsap/react
+- @fontsource (Archivo Black, Archivo, JetBrains Mono)
 
 ## Development
 
@@ -51,28 +82,33 @@ npm run preview  # serve the production build locally
 
 ### Images
 
-Photographs and illustrations under `src/assets/` are stored as WebP and
-resized to the largest size the layout actually displays. Add new images the
-same way — a 3 MB PNG will otherwise dominate the page weight.
+Photographs under `src/assets/` are stored as WebP and sized to the largest
+dimensions the layout actually displays. The hero video lives in `public/` with
+a WebP poster. Add new media the same way; a multi-megabyte source will
+otherwise dominate the page weight.
 
 ## Deployment
 
-This project is deployed on Vercel. Visit [https://bacom-researchs-site.vercel.app/] to view the live website.
+Deployed on Vercel from the `main` branch. Pushing to `main` triggers a
+production build.
 
 ## Copyright
 
-© 2024 Madelo B. Biando, Apple Mae R. Castor, Apple Jewel S. Borais. All rights reserved.
+(c) 2024 Madelo B. Biando, Apple Mae R. Castor, Apple Jewel S. Borais. All
+rights reserved.
 
-This research website and its contents are protected by copyright law. No part of this website may be reproduced, distributed, or transmitted in any form or by any means without the prior written permission of the copyright holder.
+This research website and its contents are protected by copyright law. No part
+may be reproduced, distributed, or transmitted in any form without the prior
+written permission of the copyright holder.
 
-Research Content © 2024 Madelo B. Biando, Apple Mae R. Castor, Apple Jewel S. Borais. All rights reserved.
-Website Development © 2024 Anthony B. Azuela. All rights reserved.
+Research content (c) 2024 Madelo B. Biando, Apple Mae R. Castor, Apple Jewel S.
+Borais. Website development (c) 2024 Anthony B. Azuela.
 
-For permissions requests, please contact:
+For permissions requests, contact:
+
 - Email: biandomadelo847@gmail.com
-- Phone: 09109681266
+- Phone: 0910 968 1266
 
 ---
 
-Bachelor of Arts in Communication
-Partido State University
+Bachelor of Arts in Communication, Partido State University

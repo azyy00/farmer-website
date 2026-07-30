@@ -1,6 +1,9 @@
+import { useRef } from 'react'
 import { Box, Container, Heading, Text, VStack, Button, SimpleGrid, Icon, Flex, Image, Avatar, AvatarGroup } from '@chakra-ui/react'
-import { keyframes } from '@emotion/react'
+import { gsap } from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { PiArrowRight } from 'react-icons/pi'
+import Reveal from '../components/Reveal'
 import fieldPoster from '../assets/field-farmer.webp'
 import fieldFarmer from '../assets/field-farmer.webp'
 import fieldPair from '../assets/field-pair.webp'
@@ -8,12 +11,6 @@ import fieldPlanting from '../assets/field-planting.webp'
 import m1 from '../assets/members/m1.webp'
 import m2 from '../assets/members/m2.webp'
 import m3 from '../assets/members/m3.webp'
-
-// Keyframe animations
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-`
 
 // The farmer photographs supplied for the study. Real documentary images of
 // the community the research is about.
@@ -24,6 +21,25 @@ const fieldPhotos = [
 ]
 
 const Home = () => {
+  const heroRef = useRef(null)
+
+  // Hero load-in: the plate label, headline, byline and CTA rise in sequence
+  // (gpt-taste staggered entry). Skipped under reduced motion.
+  useGSAP(
+    () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+      gsap.from('[data-hero-item]', {
+        autoAlpha: 0,
+        y: 34,
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.12,
+        delay: 0.15,
+      })
+    },
+    { scope: heroRef }
+  )
+
   // Single Swiss-Industrial substrate: carbon ink on documentation paper.
   const primaryColor = 'ink.500';
   const secondaryColor = 'gray.700';
@@ -44,6 +60,7 @@ const Home = () => {
           the title and call to action over it. Under reduced-motion the video
           is hidden and the poster photograph shows through instead. */}
       <Box
+        ref={heroRef}
         as="section"
         minH={{ base: '88vh', md: '100dvh' }}
         display="flex"
@@ -98,6 +115,7 @@ const Home = () => {
 
         {/* Figure framing: hazard-red plate label + corner crosshairs */}
         <Text
+          data-hero-item
           position="absolute"
           top={{ base: 20, md: 24 }}
           left={{ base: 4, md: 8 }}
@@ -132,23 +150,28 @@ const Home = () => {
           )
         })}
 
-        <Container maxW="container.xl" position="relative" zIndex={1}>
+        <Container maxW="7xl" position="relative" zIndex={1}>
           <VStack
             spacing={6}
             align={{ base: 'center', md: 'start' }}
-            maxW={{ md: '4xl' }}
+            w="100%"
+            maxW={{ md: '72rem' }}
             textAlign={{ base: 'center', md: 'left' }}
-            animation={`${fadeIn} 1s ease-out`}
           >
+            {/* Wide container + tempered clamp so the H1 resolves in two to
+                three lines rather than a narrow six-line wall. */}
             <Heading
+              data-hero-item
               as="h1"
-              size="3xl"
               color="paper.500"
               mt={{ base: 6, md: 10 }}
+              fontSize={{ base: '1.85rem', md: '2.7rem', lg: '3.4rem' }}
+              lineHeight={0.95}
+              letterSpacing="-0.04em"
             >
               Communication Challenges in Agricultural Programs / LGU Goa
             </Heading>
-            <Flex align="center" gap={3} wrap="wrap" justify={{ base: 'center', md: 'flex-start' }}>
+            <Flex data-hero-item align="center" gap={3} wrap="wrap" justify={{ base: 'center', md: 'flex-start' }}>
               <AvatarGroup size="md" max={3} spacing="-0.5rem">
                 <Avatar name="Madelo Biando" src={m3} borderWidth="2px" borderRadius="0" borderColor={avatarRing} />
                 <Avatar name="Apple Jewel Borais" src={m1} borderWidth="2px" borderRadius="0" borderColor={avatarRing} />
@@ -159,6 +182,7 @@ const Home = () => {
               </Text>
             </Flex>
             <Button
+              data-hero-item
               onClick={() => document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' })}
               size="lg"
               px={8}
@@ -180,7 +204,7 @@ const Home = () => {
         <SimpleGrid columns={{ base: 1, sm: 3 }} gap="2px" bg="ink.500">
           {fieldPhotos.map((photo, i) => (
             <Box key={photo.src} bg="paper.500" position="relative">
-              <Box overflow="hidden" sx={{ aspectRatio: '4 / 3' }} borderBottom="2px solid" borderColor="ink.500">
+              <Reveal variant="plate" delay={i * 0.08} overflow="hidden" sx={{ aspectRatio: '4 / 3' }} borderBottom="2px solid" borderColor="ink.500">
                 <Image
                   src={photo.src}
                   alt={photo.alt}
@@ -189,10 +213,10 @@ const Home = () => {
                   objectFit="cover"
                   loading={i === 0 ? 'eager' : 'lazy'}
                   sx={{ filter: 'grayscale(1) contrast(1.08)' }}
-                  transition="filter 0.3s"
-                  _hover={{ sx: { filter: 'grayscale(0) contrast(1)' } }}
+                  transition="filter 0.4s, transform 0.6s"
+                  _hover={{ transform: 'scale(1.05)', sx: { filter: 'grayscale(0) contrast(1)' } }}
                 />
-              </Box>
+              </Reveal>
               <Flex justify="space-between" px={3} py={2} fontFamily="mono" fontSize="10px" letterSpacing="0.12em" textTransform="uppercase" color="ink.500">
                 <Text>PLATE 0{i + 1}</Text>
                 <Text color="red.500">FIELD / GOA</Text>
